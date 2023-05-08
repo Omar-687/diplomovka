@@ -1,0 +1,46 @@
+"Model Predictive Control: Theory and Design" by Rawlings, J.B., Mayne, D.Q., Diehl, M.O. and Engell, S. This book provides a comprehensive introduction to the theory and design of MPC, covering topics such as model formulation, prediction, optimization, stability analysis, and implementation. It also includes numerous examples and case studies illustrating the use of MPC in a wide range of applications.
+
+"Model Predictive Control for Industrial Processes" by Camacho, E.F. and Bordons, C. This book provides a practical guide to the implementation of MPC in industrial processes, covering topics such as model identification, controller design, and implementation issues. It includes numerous case studies illustrating the use of MPC in various industrial applications.
+
+"Predictive Control with Constraints" by Maciejowski, J.M. This book provides an in-depth treatment of MPC with constraints, covering topics such as model formulation, optimization, stability analysis, and implementation issues. It also includes numerous examples and case studies illustrating the use of MPC with constraints in a variety of applications.
+
+"A Review of Model Predictive Control: The Importance of the Terminal Constraint" by Grieder, P. and Morari, M. This paper provides an overview of MPC, focusing on the importance of the terminal constraint in ensuring stability and feasibility of the control law. It also includes a review of recent developments in MPC and its applications.
+
+"Model Predictive Control: Past, Present and Future" by Qiu, J. and Wang, H. This paper provides a comprehensive review of the history and development of MPC, as well as its current state and future prospects. It also includes a discussion of recent advances in MPC and its applications in various fields.
+
+
+
+
+There are several types of Model Predictive Control (MPC) schemes that exist, depending on the specific application and the features of the control problem. Here are some of the most common types of MPC schemes:
+
+Linear MPC: Linear MPC is the simplest and most widely used form of MPC. It is based on a linear model of the system, and the optimization problem is formulated as a linear program. Linear MPC is often used in applications where the system dynamics are relatively simple and linear, such as in process control.
+
+Nonlinear MPC: Nonlinear MPC is a more advanced form of MPC that is used when the system dynamics are nonlinear. Nonlinear MPC requires the use of nonlinear models and nonlinear optimization techniques, which can be more complex than linear MPC. Nonlinear MPC is often used in applications where the system dynamics are highly nonlinear, such as in robotics or control of power systems.
+
+Robust MPC: Robust MPC is a form of MPC that is designed to handle uncertainties and disturbances in the system. It involves the use of robust optimization techniques to ensure that the control law remains stable and feasible under a wide range of operating conditions. Robust MPC is often used in applications where the system dynamics are uncertain or where disturbances are expected, such as in aerospace or automotive control.
+
+Stochastic MPC: Stochastic MPC is a form of MPC that is designed to handle stochastic disturbances in the system. It involves the use of probabilistic models and stochastic optimization techniques to ensure that the control law remains stable and feasible under uncertain conditions. Stochastic MPC is often used in applications where the system dynamics are stochastic or where the disturbances are difficult to predict, such as in financial control or environmental control.
+
+
+
+
+        # for t in range(T):
+        # for j in range(0, count, 1):
+        #     x = inputs[:, j]
+        #     a_t_j = x[0]
+        #     d_t_j = x[1]
+        #     e_t_j = float(x[2])
+        #
+        #     a_t_j_timestamp = (time.mktime(time.strptime(a_t_j, "%a, %d %b %Y %H:%M:%S %Z")) - time.mktime(
+        #         time.strptime(self.min_timestamp, "%a, %d %b %Y %H:%M:%S %Z"))) / 3600
+        #     d_t_j_timestamp = (time.mktime(time.strptime(d_t_j, "%a, %d %b %Y %H:%M:%S %Z")) - time.mktime(
+        #         time.strptime(self.min_timestamp, "%a, %d %b %Y %H:%M:%S %Z"))) / 3600
+        #     a_t_j_timestamp = math.floor(a_t_j_timestamp)
+        #     d_t_j_timestamp = math.floor(d_t_j_timestamp)
+        #     x_t = [d_t_j_timestamp, e_t_j]
+        #     e_t_js = np.append(e_t_js, e_t_j)
+        #     d_t_js = np.append(d_t_js,d_t_j_timestamp)
+        #     a_t_js = np.append(a_t_js,a_t_j_timestamp)
+
+
+Distributed MPC: Distributed MPC is a form of MPC that is designed to handle large-scale control problems that cannot be solved by a single controller. It involves the use of multiple controllers that communicate with each other to coordinate their actions and ensure that the overall control objective is achieved. Distributed MPC is often used in applications where the control problem is too complex for a single controller, such as in traffic control or industrial automation.
