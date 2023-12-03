@@ -1,8 +1,0 @@
-1.	Li, T., Sun, B., Chen, Y., Ye, Z., Low, S. H., & Wierman, A. (2020). Real-time Aggregate Flexibility via Reinforcement Learning. 1–17. 
-
-http://arxiv.org/abs/2012.112612.	Fernando Lezama, Joao Soares, Bruno Canizes, Zita Vale: Flexibility management model of home appliances to support DSO requests in smart grids, 
-Sustainable Cities and Society, Volume 55, 2020, ISSN 2210-6707, https://doi.org/10.1016/j.scs.2020.102048
-3.	Tongxin Li and Bo Sun and Yue Chen and Zixin Ye and Steven H. Low and Adam Wierman: Learning-Based Predictive Control via Real-Time Aggregate 
-Flexibility, IEEE Transactions on Smart Grid, 12 (6), 2021, 97--4913, https://doi.org/10.1109%2Ftsg.2021.3094719.
-4.	Steve Wattam: Artificial intelligence and machine learning approaches to energy demand-side response: A systematic review, Renewable and 
-Sustainable Energy Reviews, Volume 130, 2020, 109899, ISSN 1364-0321, https://doi.org/10.1016/j.rser.2020.109899.
