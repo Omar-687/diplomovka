@@ -1,0 +1,39 @@
+% !Tex root = main.tex
+\chapter*{Úvod} % chapter* je necislovana kapitola
+\addcontentsline{toc}{chapter}{Úvod} % rucne pridanie do obsahu
+\markboth{Úvod}{Úvod} % vyriesenie hlaviciek
+
+%TODO vysvetlit co je agregátor a co je flexibilita
+
+S neustále pribúdajúcim množstvom elektromobilov na trhu sa zväčšuje množstvo elektrickej energie, ktorú treba dodať elektromobilom. Môže nastať situácia, že kapacity jednotlivých nabíjacích staníc nebudú stačiť pre nabitie každého elektromobilu požadovaným množstvom energie. Preto sa postupne aj odberatelia elektrickej energie stávajú výrobcami elektrickej energie pomocou obnoviteľných zdrojov. Tým sa jednosmerná sieť, v rámci ktorej veľkí výrobcovia dodávajú energiu spotrebiteľom, mení na obojsmernú sieť, kde odberatelia, ktorí sú výrobcami elektrickej energie môžu poskytovať za týmto účelom podporné služby.
+
+
+
+
+Riešením týchto problémov sú inteligentné takzvané smart siete. Tieto siete obsahujú agregátor flexibility, ktorému poskytujú flexibilitu používatelia nabíjacej siete. To znamená, že agregátor flexibility má právo riadiť odber elektrickej energie pre elektromobily a prispôsobovať ho podľa potrieb a podľa podmienok nabíjacej siete. Používatelia, ktorí sú tiež výrobcami elektrickej energie z obnoviteľných zdrojov, môžu poskytovať podporné služby prostredníctvom agregátora flexibility (takýchto používateľov nazývame prosumeri), a to tým, že napríklad agregátor flexibility od nich kúpi energiu.  Používatelia v takýchto sieťach môžu nastaviť svoje preferencie, ako napríklad preferovaný čas nabíjania a množstvo požadovanej energie. Agregátor flexibility vie následne pomocou inteligentných algoritmov  optimalizovať tok energie. Využíva pritom optimalizačné metódy alebo metódy strojového učenia (napr. neurónové siete). Agregátor flexibility tiež minimalizuje cenu elektrickej energie pre jej spotrebiteľov tým, že nakupuje elektrickú energiu v čase, keď je najlacnejšia a predáva elektrickú energiu v čase, keď je najdrahšia.
+%  Problémy, ktoré musíme riešiť pri takejto situacií sú: optimálny scheduling elektrických vozidiel a množstvo dodanej energie v každom časovom kroku, aby sme minimalizovali náklady nabíjacej stanice na energiu (za predpokladu, že je cena energie premenlivá v čase).
+
+
+Cieľom tejto práce je overiť model práce agregátora flexibility, ktorý vie pomocou inteligentných algoritmov a dátovej analýzy optimalizovať tok energie, zabezpečiť stabilné dodávky energie a zároveň minimalizovať náklady používateľov elektromobilov. Porovnáme naše riešenia tohoto problému s inými doterajšími riešeniami. \cite{lee2021acnsim}
+
+
+
+V prvej kapitole rozoberieme východiská pri tvorbe nášho modelu agregátora flexibility, opíšeme existujúce riešenia a aj obmedzenia infraštruktúry pri nabíjaní elektromobilov. V druhej kapitole predstavujeme model práce nášho agregátora flexibility a spomíname inteligentné algoritmy, ktoré sme v našom modeli použili. 
+
+
+V tretej kapitole overujeme model práce agregátora flexibility, kde porovnávame naše riešenie s existujúcimi riešeniami, a to vzhľadom na pomer dodanej energie, množstvo dodanej energie, cenu dodanej energie a počet výmen elektromobilov. Vstupné dáta o elektromobiloch získavame z nabíjacích staníc pre elektromobily: stanica ACN a stanica JPL. Výstupom našej implementácie je optimálny plán nabíjania elektrombilov vzhľadom k dodanej energii. V našej implementácii sa snažíme počet výmen elektromobilov minimalizovať, keďže to často vedie k nespokojnosti používateľov elektromobilov. 
+
+
+
+% pocet vymen vozidiel
+
+% po kazdej zmene overit vo worde text
+% Problematika zabezpečenia stabilných dodávok elektrickej energie pri používaní obnoviteľných zdrojov sa stáva čoraz dôležitejšou. Pomocou dobrého modelu vieme zabezpečiť komunikáciu medzi systémovým operátorom a agregátorom tak, aby fluktuácie elektrickej energie a náklady boli čo najmenšie. Cieľom tejto práce je implementovať komunikáciu medzi agregátorom a systémovým operátorom pomocou modelu PPC, tak aby sme vyriešili optimalizačný problém, čo zabezpečí, že používatelia budú mat stabilný prísun energie za minimálnu cenu. Bežne sa už na túto úlohu používal MPC už skôr, ale model PPC vie lepšie vyriešiť komunikáciu a aj optimalizačný problém. Model PPC je lepší než model MPC vo viacerých oblastiach, ale spomeňme tie najdôležitejšie - systémovému operátorovi stačí vedieť MEF (t. j. flexibilitu), vôbec nemusí vedieť o stavoch a požiadavkách jednotlivých spotrebiteľov. Po druhé, systémový operátor vie znížiť náklady spotrebiteľov elektrickej energie lepšie v modeli PPC než v modeli MPC.
+
+% Implementácia PPC sa od implementácie MPC veľmi nelíši - jediný rozdiel je v tom, že PPC používa MEF na sprostredkovanie požiadaviek spotrebiteľov systémovému operátorovi. MEF vieme vypočítať pomocou hlbokého učenia. Hlboké učenie používame najmä preto, že výpočet MEF môže byť výpočtovo náročný a vďaka hlbokému učeniu ho vieme aproximovať. Danú flexibilitu následne použijeme ako penalizujúci prvok v našom PPC systéme. Tento náš model naprogramujeme v programovacom jazyku Python.~\cite{Li_2021}
+
+% V prvej kapitole vysvetľujeme teoretické pojmy a knižnice, na ktoré sa odvolávame v ďalších kapitolách.
+
+% V druhej kapitole uvádzame náš návrh riešenia, ktorý ako sme už uviedli, sa zakladá na PPC modeli.
+
+% V tretej kapitole vysvetľujeme spôsob našej implementácie, jednotlivé metódy a aj kód.

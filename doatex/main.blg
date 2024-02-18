@@ -1,0 +1,53 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
+The style file: plain.bst
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Database file #1: literatura.bib
+Warning--entry type for "lecture_optimisation" isn't style-file defined
+--line 18 of file literatura.bib
+Warning--entry type for "iea2023" isn't style-file defined
+--line 79 of file literatura.bib
+You've used 28 entries,
+            2118 wiz_defined-function locations,
+            650 strings with 8911 characters,
+and the built_in function-call counts, 8278 in all, are:
+= -- 783
+> -- 441
+< -- 3
++ -- 178
+- -- 148
+* -- 484
+:= -- 1408
+add.period$ -- 90
+call.type$ -- 28
+change.case$ -- 158
+chr.to.int$ -- 0
+cite$ -- 28
+duplicate$ -- 275
+empty$ -- 657
+format.name$ -- 148
+if$ -- 1746
+int.to.chr$ -- 0
+int.to.str$ -- 28
+missing$ -- 11
+newline$ -- 148
+num.names$ -- 56
+pop$ -- 220
+preamble$ -- 1
+purify$ -- 130
+quote$ -- 0
+skip$ -- 230
+stack$ -- 0
+substring$ -- 305
+swap$ -- 57
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 110
+warning$ -- 0
+while$ -- 68
+width$ -- 30
+write$ -- 306
+(There were 2 warnings)

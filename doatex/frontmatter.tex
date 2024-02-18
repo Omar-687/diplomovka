@@ -1,0 +1,204 @@
+% !Tex root = main.tex
+% -------------------
+% --- Definicia zakladnych pojmov
+% --- Vyplnte podla vasho zadania
+% -------------------
+\def\mfrok{2023}
+\def\mfnazov{Podpora inteligentného riadenia energetických sietí}
+\def\mftyp{Diplomová práca}
+\def\mfautor{Bc. Omar Al-Shafe´i}
+\def\mfskolitel{prof. RNDr. Mária Lucká, PhD.}
+
+%ak mate konzultanta, odkomentujte aj jeho meno na titulnom liste
+% \def\mfkonzultant{tit. Meno Priezvisko, tit. }  
+
+\def\mfmiesto{Bratislava, \mfrok}
+
+% bioinformatici odkomentujú riadok s dvoma odbormi a iný program
+\def\mfodbor{ Aplikovaná informatika}
+%\def\mfodbor{ Informatika a Biológia } 
+\def\program{ Informatika }
+%\def\program{ Bioinformatika }
+
+% Ak je školiteľ z FMFI, uvádzate katedru školiteľa, zrejme by mala byť aj na zadaní z AIS2
+% Ak máte externého školiteľa, uvádzajte Katedru informatiky 
+\def\mfpracovisko{ Katedra aplikovanej informatiky }
+
+% -------------------
+% --- Obalka ------
+% -------------------
+\thispagestyle{empty}
+
+\begin{center}
+\sc\large
+Univerzita Komenského v Bratislave\\
+Fakulta matematiky, fyziky a informatiky
+
+\vfill
+\includegraphics[scale=0.2]{images/mdf3inf1.png}
+
+{\LARGE\mfnazov}\\
+\mftyp
+\end{center}
+
+\vfill
+
+{\sc\large 
+\noindent \mfrok\\
+\mfautor
+}
+
+\cleardoublepage
+% --- koniec obalky ----
+
+% -------------------
+% --- Titulný list
+% -------------------
+
+\thispagestyle{empty}
+\noindent
+
+\begin{center}
+\sc  
+\large
+Univerzita Komenského v Bratislave\\
+Fakulta matematiky, fyziky a informatiky
+
+\vfill
+\begin{center}
+\includegraphics[scale=0.2]{images/mdf3inf1.png}
+\end{center}
+
+
+{\LARGE\mfnazov}\\
+\mftyp
+\end{center}
+
+\vfill
+
+\noindent
+\begin{tabular}{ll}
+Študijný program: & \program \\
+Študijný odbor: & \mfodbor \\
+Školiace pracovisko: & \mfpracovisko \\
+Školiteľ: & \mfskolitel \\
+% Konzultant: & \mfkonzultant \\
+\end{tabular}
+
+\vfill
+
+
+\noindent \mfmiesto\\
+\mfautor
+
+\cleardoublepage
+% --- Koniec titulnej strany
+
+
+% -------------------
+% --- Zadanie z AIS
+% -------------------
+% v tlačenej verzii s podpismi zainteresovaných osôb.
+% v elektronickej verzii sa zverejňuje zadanie bez podpisov
+% v pracach v naglictine anglicke aj slovenske zadanie
+
+\newpage 
+\thispagestyle{empty}
+\hspace{-2cm}
+% \includepdf{images/zadanie}
+\includegraphics[width=1.1\textwidth]{images/zadanie-1}
+
+\includegraphics[width=1.1\textwidth]{images/zadanie-2}
+% --- Koniec zadania
+
+\frontmatter
+
+% -------------------
+%   Poďakovanie - nepovinné
+% -------------------
+%\setcounter{secnumdepth}{3}
+%\setcounter{page}{3}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+\setcounter{subsection}{0}
+%\setcounter{secnumdepth}{3}
+%\setcounter{subsubsection}{3}
+\newpage
+~ 
+
+\vfill
+{\bf Poďakovanie:} Chcel by som poďakovať mojej školiteľke za cenné rady počas tvorby diplomovej práce. 
+
+
+%Tu môžete poďakovať školiteľovi, prípadne ďalším osobám, ktoré vám s prácou nejako pomohli, poradili, poskytli dáta a podobne.
+
+% --- Koniec poďakovania
+
+% -------------------
+%   Abstrakt - Slovensky
+% -------------------
+\newpage 
+\section*{Abstrakt}
+
+
+Slovenský abstrakt v rozsahu 100-500 slov, jeden odstavec. Abstrakt
+stručne sumarizuje výsledky práce. Mal by byť pochopiteľný pre bežného
+informatika. Nemal by teda využívať skratky, termíny alebo označenie
+zavedené v práci, okrem tých, ktoré sú všeobecne známe.
+
+\paragraph*{Kľúčové slová:} jedno, druhé, tretie (prípadne štvrté, piate)
+% --- Koniec Abstrakt - Slovensky
+
+
+% -------------------
+% --- Abstrakt - Anglicky 
+% -------------------
+\newpage 
+\section*{Abstract}
+
+Abstract in the English language (translation of the abstract in the
+Slovak language).
+
+
+\paragraph*{Keywords:} 
+
+% --- Koniec Abstrakt - Anglicky
+
+% -------------------
+% --- Predhovor - v informatike sa zvacsa nepouziva
+% -------------------
+%\newpage 
+%\thispagestyle{empty}
+%
+%\huge{Predhovor}
+%\normalsize
+%\newline
+%Predhovor je všeobecná informácia o práci, obsahuje hlavnú charakteristiku práce 
+%a okolnosti jej vzniku. Autor zdôvodní výber témy, stručne informuje o cieľoch 
+%a význame práce, spomenie domáci a zahraničný kontext, komu je práca určená, 
+%použité metódy, stav poznania; autor stručne charakterizuje svoj prístup a svoje 
+%hľadisko. 
+%
+% --- Koniec Predhovor
+
+
+% -------------------
+% --- Obsah
+% -------------------
+
+\newpage 
+
+\tableofcontents
+
+% ---  Koniec Obsahu
+
+% -------------------
+% --- Zoznamy tabuliek, obrázkov - nepovinne
+% -------------------
+
+\newpage 
+
+\listoffigures
+\listoftables
+
+% ---  Koniec Zoznamov
