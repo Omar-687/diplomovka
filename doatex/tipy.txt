@@ -1,0 +1,40 @@
+NÁZVY KAPITOL VAŠEJ PRÁCE
+Vo vedeckých a odborných prácach má jadro spravidla tieto hlavné časti:
+
+a) súčasný stav riešenej problematiky doma a v zahraničí,
+b) cieľ práce,
+c) metodika práce a metódy skúmania,
+d) návrh softvérového diela,
+e) výskum, výsledky práce, grafy, obrázky, animácie, ukážky, štatistiky
+f) interpretácia výsledkov, diskusia kedy Vaša metóda funguje a kedy nefunguje,
+g) krátky manuál vo forme txt na médiu alebo v práci 1 strana.
+
+
+
+Zretelným oddelením prevzatých vedomostí od svojich sa zbavujete jednak zodpovednosti za možné chyby a druhak sa vyhýbate možnému až právnemu postihu za plagiátorstvo. Obzvlášť rozumné je prevziať PRESNÉ definície pojmov z renomovanej knihy. S vlastnými nedomyslenými definíciami v diplomovkách z matematiky a informatiky niekedy totiž vznikajú neobyčajne zapeklité komplikácie, ktoré môžu prinajhoršom zdevalvovať celú hodnotu Vašej práce.
+
+
+Vážení diplomanti,
+
+nasledujúci prehľad najčastejších zbytočných chýb Vás môže už teraz autorsky inšpirovať a zároveň môže ušetriť v diplomovkovom procese veľa času a (ne)kvality. Chyby nie sú všetky, zozbierali sme ich v diplomovkách z grafiky začiatkom 90. rokov a sú usporiadané podľa rastúcej závažnosti:
+
+Úprava textu a obrázkov, chýbajúce mená obrázkov.
+Chaotický citačný (na pramene) a odkazový (na iné časti textu) aparát.
+Terminologické chyby, "svoje" pojmy.
+Neúplný, zastaraný (za 2 roky vyšli stovky článkov) alebo nepresný zoznam prameňov.
+Používanie v práci nedefinovaných pojmov, spoliehanie sa na samozrejmosť výkladu, stotožňovanie adresáta textu a programu so sebou.
+Rozpory v označení (vhodné je zaradiť prehľad označení).
+Začiatočnické chyby v zobrazovaní a interakcii, napr. chýbajúca úvodná obrazovka či neponúknutá funkčná vetva.
+Neokomentovanosť programu, nepriznané použitie práce iných autorov (unity, procedury, hedre).
+Nerozlíšenie prevzatých a svojich myšlienok.
+Nezadaný alebo matne zadaný cieľ a/alebo metóda práce.
+V závere práce nezrekapitulovaný svoj autorský prínos v teoretickej a praktickej časti práce.
+Chýbajúca diskusia o výhodách a nevýhodách navrhnutého riešenia.
+Neproporčnosť, napr. priveľa textu o naštudovanej teórii a skoro nič o vlastnom postupe, o alternatívach svojho rozhodovania.
+Nedodržanie dohodnutého rozsahu práce (max. objem textu do 50 strán po 30 riadkov a 60 znakov), priloženie listingov namiesto diskety či cédéčka.
+Dôsledky časovej tiesne tam, kde sa diplomovka nepochopila ako dvojročná pravidelná a systematická práca, čiže skutočná príprava na kaýždodennosť budúceho povolania.
+Nesúlad obsahu a vlastného prínosu práce s prezentáciou na obhajobe.
+Uvedené chyby su zväčša chyby spôsobu podania svojich výsledkov a niekedy zbytočne prispievaju ku zníženiu hodnotenia diplomovej práce. Diplomovka je Vaša prvá kniha, a práve preto by mala byť čo najlepšia.
+
+
+

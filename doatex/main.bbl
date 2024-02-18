@@ -1,0 +1,177 @@
+\begin{thebibliography}{10}
+
+\bibitem{websiteacndata2023}
+Caltech.
+\newblock Acn-data.
+\newblock \url{https://ev.caltech.edu/dataset}, 2023.
+\newblock Accessed: 3rd December, 2023.
+
+\bibitem{chen2021smoothed}
+Niangjun Chen, Christian Kurniawan, Yorie Nakahira, Lijun Chen, and Steven~H.
+  Low.
+\newblock Smoothed least-laxity-first algorithm for ev charging, 2021.
+
+\bibitem{websitecontrolalg2023}
+Collimator.
+\newblock What is a control algorithm?
+\newblock
+  \url{https://www.collimator.ai/reference-guides/what-is-a-control-algorithm#:~:text=Definition%20of%20a%20control%20algorithm&text=These%20algorithms%20are%20designed%20to,is%20either%20undesirable%20or%20impossible.},
+  2023.
+\newblock Accessed: 3rd December, 2023.
+
+\bibitem{websitecontrolalgMPC2023}
+Collimator.
+\newblock What is model predictive control?
+\newblock
+  \url{https://www.collimator.ai/reference-guides/what-is-model-predictive-control},
+  2023.
+\newblock Accessed: 3rd December, 2023.
+
+\bibitem{Granado2023}
+Pedro Crespo~del Granado, Jayaprakash Rajasekharan, Surya~Venkatesh Pandiyan,
+  Asgeir Tomasgard, G{\"u}ray Kara, Hossein Farahmand, and Stefan Jaehnert.
+\newblock Flexibility characterization, aggregation, and market design trends
+  with a high share of renewables: a review.
+\newblock {\em Current Sustainable/Renewable Energy Reports}, 10(1):12--21, Mar
+  2023.
+
+\bibitem{iea2023}
+International Energy~Agency (IEA).
+\newblock Global ev outlook 2023, 2023.
+\newblock License: CC BY 4.0.
+
+\bibitem{acnportalexperimentsrepository}
+Z.~J. Lee and S.~Sharma.
+\newblock acnportal-experiments.
+\newblock \url{https://github.com/caltech-netlab/acnportal-experiments}, Dec.
+  2023.
+
+\bibitem{adachargerepository}
+Z.~J. Lee and S.~Sharma.
+\newblock adacharge.
+\newblock \url{https://github.com/caltech-netlab/adacharge}, Dec. 2023.
+
+\bibitem{acnportalrepository}
+Z.~J. Lee, S.~Sharma, and D.~Johansson.
+\newblock acnportal.
+\newblock \url{https://github.com/zach401/acnportal}, Dec. 2023.
+
+\bibitem{evpricingsystem}
+Zachary Lee, John Pang, and Steven Low.
+\newblock Pricing ev charging service with demand charge.
+\newblock {\em Electric Power Systems Research}, 189:106694, 12 2020.
+
+\bibitem{Lee2018LargeScaleAE}
+Zachary~J. Lee, Daniel Chang, Cheng Jin, George~S. Lee, Rand Lee, Ted Lee, and
+  Steven~H. Low.
+\newblock Large-scale adaptive electric vehicle charging.
+\newblock {\em 2018 IEEE International Conference on Communications, Control,
+  and Computing Technologies for Smart Grids (SmartGridComm)}, pages 1--7,
+  2018.
+
+\bibitem{8909765}
+Zachary~J. Lee, Daniel Johansson, and Steven~H. Low.
+\newblock Acn-sim: An open-source simulator for data-driven electric vehicle
+  charging research.
+\newblock In {\em 2019 IEEE International Conference on Communications,
+  Control, and Computing Technologies for Smart Grids (SmartGridComm)}, pages
+  1--6, 2019.
+
+\bibitem{lee2020adaptive}
+Zachary~J. Lee, George Lee, Ted Lee, Cheng Jin, Rand Lee, Zhi Low, Daniel
+  Chang, Christine Ortega, and Steven~H. Low.
+\newblock Adaptive charging networks: A framework for smart electric vehicle
+  charging, 2020.
+
+\bibitem{10.1145/3307772.3328313}
+Zachary~J. Lee, Tongxin Li, and Steven~H. Low.
+\newblock Acn-data: Analysis and applications of an open ev charging dataset.
+\newblock In {\em Proceedings of the Tenth ACM International Conference on
+  Future Energy Systems}, e-Energy '19, page 139–149, New York, NY, USA,
+  2019. Association for Computing Machinery.
+
+\bibitem{lee2021acnsim}
+Zachary~J. Lee, Sunash Sharma, Daniel Johansson, and Steven~H. Low.
+\newblock Acn-sim: An open-source simulator for data-driven electric vehicle
+  charging research, 2021.
+
+\bibitem{lee2021adaptivephd}
+Zachary~Jordan Lee.
+\newblock {\em The Adaptive Charging Network Research Portal: Systems, Tools,
+  and Algorithms}.
+\newblock Dissertation, California Institute of Technology, 2021.
+
+\bibitem{Li_2021}
+Tongxin Li, Bo~Sun, Yue Chen, Zixin Ye, Steven~H. Low, and Adam Wierman.
+\newblock Learning-based predictive control via real-time aggregate
+  flexibility.
+\newblock {\em {IEEE} Transactions on Smart Grid}, 12(6):4897--4913, nov 2021.
+
+\bibitem{websiteaggregatorflex2024}
+Sofie Mannerstråle.
+\newblock Flexibility aggregators in the future energy system.
+\newblock
+  \url{https://www.capgemini.com/se-en/insights/research-library/flexibility-aggregators-in-the-future-energy-system/},
+  2023.
+\newblock Accessed: 4th January, 2024.
+
+\bibitem{websiteenhancedllf}
+microcontrollerslab.
+\newblock Least laxity first (llf) scheduling algorithm.
+\newblock \url{https://microcontrollerslab.com/least-laxity-first-llf/}, 2023.
+\newblock Accessed: 3rd December, 2023.
+
+\bibitem{shcedulingdetailexplanbook}
+Joy~Chandra Mukherjee and Arobinda Gupta.
+\newblock A review of charge scheduling of electric vehicles in smart grid.
+\newblock {\em IEEE Systems Journal}, 9(4):1541--1553, 2015.
+
+\bibitem{lecture_optimisation}
+Lothar Reichel.
+\newblock Lecture 8: Optimization.
+\newblock Accessed: 13th February, 2023.
+
+\bibitem{comparisonofalg}
+Vijayshree Shinde and Seema C.
+\newblock Comparison of real time task scheduling algorithms.
+\newblock {\em International Journal of Computer Applications}, 158:37--41, 01
+  2017.
+
+\bibitem{Tang2016OnlineCS}
+Wanrong Tang, Suzhi Bi, and Ying Jun~Angela Zhang.
+\newblock Online charging scheduling algorithms of electric vehicles in smart
+  grid: An overview.
+\newblock {\em IEEE Communications Magazine}, 54:76--83, 2016.
+
+\bibitem{websitecroundrobin2023}
+TechTarget.
+\newblock round robin.
+\newblock \url{https://www.techtarget.com/whatis/definition/round-robin}, 2023.
+\newblock Accessed: 3rd December, 2023.
+
+\bibitem{usef2018}
+USEF.
+\newblock Usef white paper - flexibility value chain 1.0.
+\newblock Technical report, Arnhem, 2018.
+
+\bibitem{vanderplas2016python}
+Jake VanderPlas.
+\newblock {\em Python data science handbook : essential tools for working with
+  data}.
+\newblock O'Reilly Media, Inc, Sebastopol, CA, 2016.
+
+\bibitem{websitpricecharging2023}
+Steven H.~Low Zachary J.~Lee, John Z.F.~Pang.
+\newblock Pricing ev charging service with demand charge.
+\newblock
+  \url{https://resnick.caltech.edu/documents/17395/RSIonline-RH-Lee-Z-SEPT-2020.pdf},
+  2020.
+\newblock Accessed: 3rd December, 2023.
+
+\bibitem{websitecharginglevels2023}
+ZDWL.
+\newblock Ev charger levels.
+\newblock \url{https://zdwl-tec.com/news/ev-charger-levels/}, 2023.
+\newblock Accessed: 3rd December, 2023.
+
+\end{thebibliography}

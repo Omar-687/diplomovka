@@ -1,0 +1,174 @@
+% !Tex root = main.tex
+%%
+%% bakalárska práca
+%%
+
+\documentclass[12pt,oneside,pdftex]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%
+%% babel – Multilingual support for Plain TeX or LaTeX https://ctan.org/pkg/babel
+%%
+
+\usepackage[slovak]{babel}
+
+%%
+%% indentfirst – Indent first paragraph after section header https://ctan.org/pkg/indentfirst
+%%
+
+\usepackage{indentfirst}
+
+%%
+%% mathptmx – Use Times as default text font, and provide maths support https://ctan.org/pkg/mathptmx
+%%
+
+\usepackage{mathptmx}
+
+%%
+%% newunicodechar – Definitions of the meaning of Unicode characters https://ctan.org/pkg/newunicodechar
+%%
+
+\usepackage{newunicodechar}
+
+%%
+%% geometry – Flexible and complete interface to document dimensions https://ctan.org/pkg/geometry
+%%
+
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=3.5cm,right=2cm]{geometry}
+
+%%
+%% leading – Define leading with a length https://ctan.org/pkg/leading
+%%
+
+\usepackage{leading}
+\leading{18pt} % 1,5 riadkovanie: 18 pt = 12 pt x 1,5
+
+
+\usepackage{float}
+
+
+
+% environment suitable for creating tables
+\usepackage{tabularx}
+
+\usepackage{mathtools}
+
+% include image of more than 1 page 
+\usepackage{pdfpages}
+
+
+%%
+%% titlesec – Select alternative section titles https://ctan.org/pkg/titlesec
+%%
+
+\usepackage{titlesec}
+
+\titleformat{\chapter}[block]{\Huge\bfseries}{\thechapter}{1.0em}{}
+%\titleformat{\section}[block]{\Large\bfseries}{\thesection}{1.0em}{}
+%\titleformat{\subsection}[block]{\large\bfseries}{\thesubsection}{1.0em}{}
+
+
+\titleformat{\subsubsection}[block]{\normalsize\bfseries}{\thesubsection}{}{}
+% \titleformat{\subsubsection}[runin]{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+% \titleformat{\subsubsection}[runin]{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+
+
+% \titleformat{\paragraph}[runin]{\normalsize\itshape}{\theparagraph}{}{}
+%\titleformat{\subparagraph}[runin]{\normalsize\itshape}{\thesubparagraph}{}{}
+
+%%
+%% amsmath – AMS mathematical facilities for LaTeX https://ctan.org/pkg/amsmath
+%%
+
+\usepackage{amsmath}
+
+%%
+%% bussproofs – Proof trees in the style of the sequent calculus https://ctan.org/pkg/bussproofs
+%%
+
+\usepackage{bussproofs}
+\renewcommand{\fCenter}{\ensuremath{\Rightarrow}}
+
+%%
+%% bussproofs-extra – Extra commands for bussproofs.sty https://ctan.org/pkg/bussproofs-extra
+%%
+
+\usepackage{bussproofs-extra}
+
+%%
+%% url – Verbatim with URL-sensitive line breaks https://ctan.org/pkg/url
+%%
+
+\usepackage{url}
+
+%%
+%% hyperref – Extensive support for hypertext in LaTeX https://ctan.org/pkg/hyperref
+%%
+
+\usepackage[pdftex]{hyperref} 
+%\usepackage[pdftex,bookmarksnumbered]{hyperref} 
+%\usepackage[pdftex,bookmarksnumbered,pagebackref]{hyperref} 
+
+
+\usepackage{listings}
+
+
+\hypersetup{
+ pdftitle={Podpora inteligentného riadenia energetických sietí},
+ pdfauthor={Bc. Omar Al-Shafe´i},
+% pdfsubject={},
+% pdfkeywords={},
+}
+
+\hypersetup{
+ unicode,
+% hidelinks=true,
+% colorlinks=true,
+% allcolors=[rgb]{0,0.5,0.5},
+% urlcolor=[rgb]{0.58,0.0,0.83},
+% breaklinks=true,
+}
+
+%%
+%% vlastné makrá
+%%
+
+\input{vlastnemakra}
+
+
+\newcommand{\Tau}{\mathrm{T}}
+
+
+\begin{document}     
+
+\frontmatter
+
+\input{frontmatter}
+
+\mainmatter
+
+\input{uvod}
+
+\input{kapitola1}
+
+\input{kapitola2}
+
+\input{kapitola3}
+
+\input{kapitoladoplnena.tex}
+
+
+\input{kapitola4}
+
+\input{zaver}
+
+\newpage	
+
+\backmatter
+
+\input{backmatter}
+
+\end{document}
