@@ -1,47 +1,36 @@
 \babel@toc {slovak}{}\relax 
 \contentsline {chapter}{Úvod}{1}{chapter*.4}%
 \contentsline {chapter}{\numberline {1}Opis problému}{3}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Formulácia problému.}{3}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Súčasný stav riešenej problematiky.}{4}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Súčasný stav riešenej problematiky v reálnom živote.}{4}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Súčasný stav riešenej problematiky v literatúre.}{4}{section.1.4}%
-\contentsline {chapter}{\numberline {2}Cieľ práce}{6}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Úlohy agregátora flexibility}{6}{section.2.1}%
-\contentsline {chapter}{\numberline {3}Návrh riešenia}{8}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Model Predictive Control.}{8}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Metóda zlatého rezu.}{9}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Metóda dichotómie.}{9}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Metóda rovnomerného delenia intervalu.}{9}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Neriadené nabíjanie.}{9}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Round Robin.}{9}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Triediace plánovacie algoritmy}{10}{section.3.7}%
-\contentsline {subsection}{\numberline {3.7.1}Least Laxity First.}{11}{subsection.3.7.1}%
-\contentsline {subsection}{\numberline {3.7.2}Smoothed Least Laxity First.}{11}{subsection.3.7.2}%
-\contentsline {subsection}{\numberline {3.7.3}Enhanced Least Laxity First.}{11}{subsection.3.7.3}%
-\contentsline {subsection}{\numberline {3.7.4}Earliest Deadline First.}{11}{subsection.3.7.4}%
-\contentsline {subsection}{\numberline {3.7.5}Group Earliest Deadline First.}{12}{subsection.3.7.5}%
-\contentsline {subsection}{\numberline {3.7.6}First-Come First-Served.}{12}{subsection.3.7.6}%
-\contentsline {subsection}{\numberline {3.7.7}Last-Come First-Served.}{12}{subsection.3.7.7}%
-\contentsline {subsection}{\numberline {3.7.8}Longest Remaining Processing Time.}{12}{subsection.3.7.8}%
-\contentsline {subsection}{\numberline {3.7.9}Shortest Job Next.}{12}{subsection.3.7.9}%
-\contentsline {section}{\numberline {3.8}Cena nabíjania.}{13}{section.3.8}%
-\contentsline {section}{\numberline {3.9}Least Laxity First}{13}{section.3.9}%
-\contentsline {chapter}{\numberline {4}Implementácia}{14}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Optimalizačné metódy}{14}{section.4.1}%
-\contentsline {chapter}{\numberline {5}Experimenty}{16}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Ukážka vstupných dát ACN-Data}{16}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Využité technológie}{16}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Balík acnportal.}{17}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Architektúra simulátora ACN-Sim}{18}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Balík adacharge.}{18}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Balík acnportal-experiments.}{19}{subsection.5.2.4}%
-\contentsline {section}{\numberline {5.3}Konfigurácia a obmedzenia nabíjacích sietí}{19}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Typy nabíjania.}{19}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Infraštruktúra nabíjacej stanice.}{20}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Obmedzenia pri nabíjaní.}{21}{subsection.5.3.3}%
-\contentsline {section}{\numberline {5.4}Prvý experiment}{21}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Druhý experiment}{21}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Tretí experiment}{21}{section.5.6}%
-\contentsline {chapter}{Záver}{22}{chapter*.5}%
-\contentsline {chapter}{Príloha A}{26}{chapter*.7}%
-\contentsline {chapter}{Príloha B}{27}{chapter*.8}%
+\contentsline {section}{\numberline {1.1}Súčasný stav riešenej problematiky.}{3}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Formulácia problému.}{5}{section.1.2}%
+\contentsline {chapter}{\numberline {2}Cieľ práce}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Úlohy agregátora flexibility}{7}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Návrh riešenia}{9}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Smoothed Least Laxity First.}{9}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Penalised Predictive Control.}{10}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Učenie a testovanie}{11}{subsection.3.2.1}%
+\contentsline {chapter}{\numberline {4}Implementácia}{12}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Model predictive control}{12}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Experimenty}{13}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Ukážka vstupných dát ACN-Data}{13}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Využité technológie}{14}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Balík acnportal.}{14}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Architektúra simulátora ACN-Sim}{15}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Balík adacharge.}{16}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Balík acnportal-experiments.}{16}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Balík stable-baselines3.}{16}{subsection.5.2.5}%
+\contentsline {section}{\numberline {5.3}Konfigurácia a obmedzenia nabíjacích sietí}{17}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Typy nabíjania.}{17}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Infraštruktúra nabíjacej stanice.}{18}{subsection.5.3.2}%
+\contentsline {section}{\numberline {5.4}Prvý experiment}{18}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Vstupné dáta}{18}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Hárdverové nastavenia}{19}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Výsledky}{19}{subsection.5.4.3}%
+\contentsline {section}{\numberline {5.5}Druhý experiment}{19}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Vstupné dáta}{19}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Nastavenia}{20}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Výsledky}{20}{subsection.5.5.3}%
+\contentsline {section}{\numberline {5.6}Tretí experiment}{20}{section.5.6}%
+\contentsline {chapter}{Záver}{21}{chapter*.5}%
+\contentsline {chapter}{Príloha A}{24}{chapter*.7}%
+\contentsline {chapter}{Príloha B}{25}{chapter*.8}%
