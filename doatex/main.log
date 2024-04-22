@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12.10) (preloaded format=pdflatex 2022.1.23)  17 FEB 2024 22:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12.10) (preloaded format=pdflatex 2022.1.23)  22 APR 2024 15:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -624,7 +624,7 @@ File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
 File: listings.cfg 2020/03/24 1.8d listings configuration
 ))
 Package: listings 2020/03/24 1.8d (Carsten Heinz)
-Package hyperref Info: Option `unicode' set `true' on input line 133.
+Package hyperref Info: Option `unicode' set `true' on input line 143.
  (vlastnemakra.tex
 
 Package newunicodechar Warning: Redefining Unicode character on input line 4.
@@ -636,7 +636,7 @@ Package newunicodechar Warning: Redefining Unicode character on input line 7.
 Package newunicodechar Warning: Redefining Unicode character on input line 21.
 
 )
-LaTeX Font Info:    Trying to load font information for T1+ptm on input line 145.
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 155.
  (C:\Users\OMI\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 ) (C:\Users\OMI\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
@@ -653,24 +653,24 @@ LaTeX Warning: Label `acndata:obr' multiply defined.
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
 
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -728,7 +728,7 @@ Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
  (C:\Users\OMI\AppData\Local\Programs\MiKTeX\tex/latex/graphics\lscape.sty
 Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
 ))
-Package hyperref Info: Link coloring OFF on input line 145.
+Package hyperref Info: Link coloring OFF on input line 155.
  (C:\Users\OMI\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (C:\Users\OMI\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
@@ -738,16 +738,16 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count333
 )
-LaTeX Info: Redefining \ref on input line 145.
-LaTeX Info: Redefining \pageref on input line 145.
-LaTeX Info: Redefining \nameref on input line 145.
+LaTeX Info: Redefining \ref on input line 155.
+LaTeX Info: Redefining \pageref on input line 155.
+LaTeX Info: Redefining \nameref on input line 155.
  (main.out) (main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
 \c@lstlisting=\count334
  (frontmatter.tex
-<images/mdf3inf1.png, id=190, 1186.4325pt x 1186.4325pt>
+<images/mdf3inf1.png, id=146, 1186.4325pt x 1186.4325pt>
 File: images/mdf3inf1.png Graphic file (type png)
 <use images/mdf3inf1.png>
 Package pdftex.def Info: images/mdf3inf1.png  used on input line 38.
@@ -801,7 +801,7 @@ LaTeX Info: Symbol \textasciiacute not provided by
  [2
 
 ]
-<images/zadanie-1.pdf, id=205, 597.50731pt x 845.04607pt>
+<images/zadanie-1.pdf, id=161, 597.50731pt x 845.04607pt>
 File: images/zadanie-1.pdf Graphic file (type pdf)
 <use images/zadanie-1.pdf>
 Package pdftex.def Info: images/zadanie-1.pdf  used on input line 109.
@@ -811,7 +811,7 @@ Overfull \hbox (7.1038pt too wide) in paragraph at lines 107--110
 []  [] 
  []
 
-<images/zadanie-2.pdf, id=206, 597.50731pt x 845.04607pt>
+<images/zadanie-2.pdf, id=162, 597.50731pt x 845.04607pt>
 File: images/zadanie-2.pdf Graphic file (type pdf)
 <use images/zadanie-2.pdf>
 Package pdftex.def Info: images/zadanie-2.pdf  used on input line 111.
@@ -844,7 +844,7 @@ l.189 \newpage
 pdfTeX warning (ext4): destination with the same identifier (name{page.iv}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.29 ...mberline {4}ImplementÃ¡cia}{14}{chapter.4}
+l.30 ....5.1}VstupnÃ© dÃ¡ta}{19}{subsection.5.5.1}
                                                   % [4
 
 ])
@@ -868,150 +868,112 @@ l.29 ...mberline {4}ImplementÃ¡cia}{14}{chapter.4}
 
 ]) (kapitola1.tex [2]
 Kapitola 1.
-
-LaTeX Warning: Reference `eq:einstein' on page 3 undefined on input line 97.
-
+<images/future_knowledge_cars.png, id=313, 436.63126pt x 283.55937pt>
+File: images/future_knowledge_cars.png Graphic file (type png)
+<use images/future_knowledge_cars.png>
+Package pdftex.def Info: images/future_knowledge_cars.png  used on input line 45.
+(pdftex.def)             Requested size: 441.01773pt x 286.41pt.
 [3
 
-] [4] [5]
-Kapitola 2.
-<images/prosumers_aggregator.png, id=407, 708.14563pt x 265.49188pt>
-File: images/prosumers_aggregator.png Graphic file (type png)
-<use images/prosumers_aggregator.png>
-Package pdftex.def Info: images/prosumers_aggregator.png  used on input line 208.
-(pdftex.def)             Requested size: 441.01773pt x 165.3446pt.
-[6
-
-]) (kapitola2.tex [7 <./images/prosumers_aggregator.png>]
-Kapitola 3.
-(C:\Users\OMI\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
-File: lstlang1.sty 2020/03/24 1.8d listings language file
-)
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 39.
- (C:\Users\OMI\AppData\Local\Programs\MiKTeX\tex/latex/base\t1cmtt.fd
-File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 40.
-
-Overfull \hbox (25.62663pt too wide) in paragraph at lines 45--46
-[][][][][][][][][][][][][][][][][] 
+] [4 <./images/future_knowledge_cars.png>]
+Overfull \hbox (10.85146pt too wide) in paragraph at lines 160--178
+ [] 
  []
 
-[8
-
-] [9]
-<images/round-robin-example.png, id=456, 562.1pt x 315.1775pt>
-File: images/round-robin-example.png Graphic file (type png)
-<use images/round-robin-example.png>
-Package pdftex.def Info: images/round-robin-example.png  used on input line 192.
-(pdftex.def)             Requested size: 441.01773pt x 247.28503pt.
- [10 <./images/round-robin-example.png>] [11] [12]
-<images/energy_flow_costs.png, id=490, 1180.41pt x 729.72626pt>
+[5] [6]
+Kapitola 2.
+<images/energy_flow_costs.png, id=382, 1180.41pt x 729.72626pt>
 File: images/energy_flow_costs.png Graphic file (type png)
 <use images/energy_flow_costs.png>
-Package pdftex.def Info: images/energy_flow_costs.png  used on input line 413.
+Package pdftex.def Info: images/energy_flow_costs.png  used on input line 757.
 (pdftex.def)             Requested size: 441.01773pt x 272.63342pt.
-) (kapitola3.tex) (kapitoladoplnena.tex [13 <./images/energy_flow_costs.png>]
-Kapitola 4.
-<images/golden_section_code.png, id=501, 584.68437pt x 356.83313pt>
-File: images/golden_section_code.png Graphic file (type png)
-<use images/golden_section_code.png>
-Package pdftex.def Info: images/golden_section_code.png  used on input line 18.
-(pdftex.def)             Requested size: 352.81552pt x 215.33205pt.
-[14
+[7
 
-]) (kapitola4.tex [15 <./images/golden_section_code.png>]
+]) (kapitola2.tex [8 <./images/energy_flow_costs.png>]
+Kapitola 3.
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 74.
+[9
+
+] [10]) (kapitola3.tex) (kapitoladoplnena.tex [11]
+Kapitola 4.
+) (kapitola4.tex [12
+
+]
 Kapitola 5.
-<images/acndata.png, id=514, 369.38pt x 245.91875pt>
+<images/acndata.png, id=473, 369.38pt x 245.91875pt>
 File: images/acndata.png Graphic file (type png)
 <use images/acndata.png>
-Package pdftex.def Info: images/acndata.png  used on input line 5.
+Package pdftex.def Info: images/acndata.png  used on input line 10.
 (pdftex.def)             Requested size: 352.81552pt x 234.88979pt.
-[16
+
+LaTeX Warning: Citation `websiteacndata2023' on page 13 undefined on input line 12.
+
+
+LaTeX Warning: Citation `websiteacndata2023' on page 13 undefined on input line 12.
+
+[13
 
  <./images/acndata.png>]
-<images/acn_research_portal_pic.png, id=530, 399.4925pt x 227.34938pt>
+<images/acn_research_portal_pic.png, id=485, 399.4925pt x 227.34938pt>
 File: images/acn_research_portal_pic.png Graphic file (type png)
 <use images/acn_research_portal_pic.png>
-Package pdftex.def Info: images/acn_research_portal_pic.png  used on input line 35.
+Package pdftex.def Info: images/acn_research_portal_pic.png  used on input line 47.
 (pdftex.def)             Requested size: 352.81552pt x 200.79657pt.
- [17 <./images/acn_research_portal_pic.png>]
-<images/acn_architecture.png, id=545, 375.4025pt x 188.705pt>
+ [14]
+<images/acn_architecture.png, id=499, 375.4025pt x 188.705pt>
 File: images/acn_architecture.png Graphic file (type png)
 <use images/acn_architecture.png>
-Package pdftex.def Info: images/acn_architecture.png  used on input line 50.
+Package pdftex.def Info: images/acn_architecture.png  used on input line 62.
 (pdftex.def)             Requested size: 352.81552pt x 177.36255pt.
 
-Overfull \hbox (8.6558pt too wide) in paragraph at lines 58--59
+Overfull \hbox (8.6558pt too wide) in paragraph at lines 71--72
 []\T1/ptm/m/n/12 Simulátor ACN-Sim ob-sa-huje uda-losti po-pi-su-júce prí-chod a od-chod elek-tro-mo-bi-lov. Kaºdá
  []
 
-[18 <./images/acn_architecture.png>]
-<images/EVCharger-Levels-jpg.png, id=559, 1927.2pt x 1084.05pt>
+[15 <./images/acn_research_portal_pic.png> <./images/acn_architecture.png>] [16]
+<images/EVCharger-Levels-jpg.png, id=522, 1927.2pt x 1084.05pt>
 File: images/EVCharger-Levels-jpg.png Graphic file (type png)
 <use images/EVCharger-Levels-jpg.png>
-Package pdftex.def Info: images/EVCharger-Levels-jpg.png  used on input line 181.
+Package pdftex.def Info: images/EVCharger-Levels-jpg.png  used on input line 212.
 (pdftex.def)             Requested size: 441.01773pt x 248.06912pt.
- [19]
-Underfull \hbox (badness 10000) in paragraph at lines 227--228
+ [17 <./images/EVCharger-Levels-jpg.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 267--268
 
  []
 
-[20 <./images/EVCharger-Levels-jpg.png>]) (zaver.tex [21]) [22
+<images/experiments/plot-sLLF-comparison.png, id=532, 642.4pt x 481.8pt>
+File: images/experiments/plot-sLLF-comparison.png Graphic file (type png)
+<use images/experiments/plot-sLLF-comparison.png>
+Package pdftex.def Info: images/experiments/plot-sLLF-comparison.png  used on input line 347.
+(pdftex.def)             Requested size: 352.81552pt x 264.61588pt.
+[18]
+Overfull \hbox (52.03914pt too wide) in paragraph at lines 396--397
+\T1/ptm/m/n/12 in-fra-²truk-túru siete zo-stali ne-zme-nené. Ta-rify, ktoré po-u-ºí-vame sa na-zý-vajú $\OML/ztmcm/m/it/12 sce[]tou[]ev[]\OT1/ztmcm/m/n/12 4[]\OML/ztmcm/m/it/12 march[]\OT1/ztmcm/m/n/12 2019$\T1/ptm/m/n/12 . 
+ []
+
+[19 <./images/experiments/plot-sLLF-comparison.png (PNG copy)>]) (zaver.tex [20]) [21
 
 ] (backmatter.tex (main.bbl
-Underfull \hbox (badness 2435) in paragraph at lines 15--21
-[]\T1/ptm/m/n/12 Collimator.  What is a con-trol al-go-rithm?  []$\T1/cmtt/m/n/12 https : / / www . collimator . ai /
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 15--21
-\T1/cmtt/m/n/12 reference-[]guides / what-[]is-[]a-[]control-[]algorithm# : ~ : text = Definition %
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 15--21
-\T1/cmtt/m/n/12 20of % 20a % 20control % 20algorithm & text = These % 20algorithms % 20are %
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 15--21
-\T1/cmtt/m/n/12 20designed % 20to ,[] is % 20either % 20undesirable % 20or % 20impossible.$[]\T1/ptm/m/n/12 , 2023.
- []
-
-
-Underfull \hbox (badness 2680) in paragraph at lines 44--48
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 19.
+ (C:\Users\OMI\AppData\Local\Programs\MiKTeX\tex/latex/base\t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+Underfull \hbox (badness 2680) in paragraph at lines 23--28
 []\T1/ptm/m/n/12 Z. J. Lee and S. Sharma.  acnportal-experiments.  []$\T1/cmtt/m/n/12 https : / / github . com /
  []
 
-[23
+[22
 
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 111--117
-[]\T1/ptm/m/n/12 Sofie Man-ners-tråle.  Fle-xi-bi-lity agg-re-ga-tors in the fu-ture energy sys-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 111--117
-\T1/ptm/m/n/12 tem.  []$\T1/cmtt/m/n/12 https : / / www . capgemini . com / se-[]en / insights / research-[]library /
- []
-
-
-Underfull \hbox (badness 1748) in paragraph at lines 119--123
-[]\T1/ptm/m/n/12 microcontrollerslab.  Le-ast la-xity first (llf) sche-du-ling al-go-rithm.  []$\T1/cmtt/m/n/12 https : / /
- []
-
-[24]
-Underfull \hbox (badness 2096) in paragraph at lines 164--170
+Underfull \hbox (badness 2096) in paragraph at lines 94--100
 []\T1/ptm/m/n/12 Steven H. Low Za-chary J. Lee, John Z.F. Pang.  Pri-cing ev char-ging ser-
  []
 
-) (appendixA.tex [25]) (appendixB.tex [26
+) (appendixA.tex [23]) (appendixB.tex [24
 
-])) [27
+])) [25
 
 ] (main.aux)
 
@@ -1024,20 +986,20 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: CC58BACDCF5F9C33AF5086D04EB8C8BF;8051.
+(rerunfilecheck)             Checksum: EE5C79613BEE3797C8C534D1D66B9F93;5411.
  ) 
 Here is how much of TeX's memory you used:
- 25762 strings out of 478659
- 470274 string characters out of 2846868
- 945351 words of memory out of 3000000
- 43163 multiletter control sequences out of 15000+600000
- 467846 words of font info for 99 fonts, out of 8000000 for 9000
+ 25532 strings out of 478659
+ 467407 string characters out of 2846868
+ 765120 words of memory out of 3000000
+ 42955 multiletter control sequences out of 15000+600000
+ 469050 words of font info for 101 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,14n,94p,1333b,1279s stack positions out of 5000i,500n,10000p,200000b,80000s
- <C:\Users\OMI\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1200.pk>{C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc} <C:\Users\OMI\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\OMI\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1440.pk><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (38 pages, 2177689 bytes).
+ 99i,15n,94p,1340b,1774s stack positions out of 5000i,500n,10000p,200000b,80000s
+ <C:\Users\OMI\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1200.pk>{C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc} <C:\Users\OMI\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\OMI\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1440.pk><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/OMI/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (36 pages, 2065633 bytes).
 PDF statistics:
- 782 PDF objects out of 1000 (max. 8388607)
- 164 named destinations out of 1000 (max. 500000)
- 436 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 705 PDF objects out of 1000 (max. 8388607)
+ 144 named destinations out of 1000 (max. 500000)
+ 343 words of extra memory for PDF output out of 10000 (max. 10000000)
 

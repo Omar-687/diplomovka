@@ -5,23 +5,25 @@
 
 %TODO vysvetlit co je agregátor a co je flexibilita
 
-S neustále pribúdajúcim množstvom elektromobilov na trhu sa zväčšuje množstvo elektrickej energie, ktorú treba dodať elektromobilom. Môže nastať situácia, že kapacity jednotlivých nabíjacích staníc nebudú stačiť pre nabitie každého elektromobilu požadovaným množstvom energie. Preto sa postupne aj odberatelia elektrickej energie stávajú výrobcami elektrickej energie pomocou obnoviteľných zdrojov. Tým sa jednosmerná sieť, v rámci ktorej veľkí výrobcovia dodávajú energiu spotrebiteľom, mení na obojsmernú sieť, kde odberatelia, ktorí sú výrobcami elektrickej energie môžu poskytovať za týmto účelom podporné služby.
+S neustále pribúdajúcim množstvom elektrických vozidiel na trhu sa zväčšuje množstvo elektrickej energie, ktorú treba dodať elektrickým vozidlám. Môže nastať situácia, že kapacity jednotlivých nabíjacích staníc nebudú stačiť pre nabitie každého elektrického vozidla požadovaným množstvom energie. Preto sa postupne aj odberatelia elektrickej energie stávajú výrobcami elektrickej energie pomocou obnoviteľných zdrojov. Tým sa jednosmerná sieť, v rámci ktorej veľkí výrobcovia dodávajú energiu spotrebiteľom, mení na obojsmernú sieť, kde odberatelia, ktorí sú výrobcami elektrickej energie môžu poskytovať za týmto účelom podporné služby.
 
 
 
 
-Riešením týchto problémov sú inteligentné takzvané smart siete. Tieto siete obsahujú agregátor flexibility, ktorému poskytujú flexibilitu používatelia nabíjacej siete. To znamená, že agregátor flexibility má právo riadiť odber elektrickej energie pre elektromobily a prispôsobovať ho podľa potrieb a podľa podmienok nabíjacej siete. Používatelia, ktorí sú tiež výrobcami elektrickej energie z obnoviteľných zdrojov, môžu poskytovať podporné služby prostredníctvom agregátora flexibility (takýchto používateľov nazývame prosumeri), a to tým, že napríklad agregátor flexibility od nich kúpi energiu.  Používatelia v takýchto sieťach môžu nastaviť svoje preferencie, ako napríklad preferovaný čas nabíjania a množstvo požadovanej energie. Agregátor flexibility vie následne pomocou inteligentných algoritmov  optimalizovať tok energie. Využíva pritom optimalizačné metódy alebo metódy strojového učenia (napr. neurónové siete). Agregátor flexibility tiež minimalizuje cenu elektrickej energie pre jej spotrebiteľov tým, že nakupuje elektrickú energiu v čase, keď je najlacnejšia a predáva elektrickú energiu v čase, keď je najdrahšia.
+Riešením týchto problémov sú inteligentné takzvané smart siete. Tieto siete obsahujú agregátor flexibility, ktorému poskytujú flexibilitu používatelia nabíjacej siete. To znamená, že agregátor flexibility má právo riadiť odber elektrickej energie pre elektrické vozidlá a prispôsobovať ho podľa potrieb a podľa podmienok nabíjacej siete. Používatelia, ktorí sú tiež výrobcami elektrickej energie z obnoviteľných zdrojov, môžu poskytovať podporné služby prostredníctvom agregátora flexibility (takýchto používateľov nazývame prosumeri), a to tým, že napríklad agregátor flexibility od nich kúpi energiu.  Používatelia v takýchto sieťach môžu nastaviť svoje preferencie, ako napríklad preferovaný čas nabíjania a množstvo požadovanej energie. Agregátor flexibility vie následne pomocou inteligentných algoritmov  optimalizovať tok energie. Využíva pritom optimalizačné metódy alebo metódy strojového učenia (napr. neurónové siete). Agregátor flexibility tiež minimalizuje cenu elektrickej energie pre jej spotrebiteľov tým, že nakupuje elektrickú energiu v čase, keď je najlacnejšia a predáva elektrickú energiu v čase, keď je najdrahšia.
 %  Problémy, ktoré musíme riešiť pri takejto situacií sú: optimálny scheduling elektrických vozidiel a množstvo dodanej energie v každom časovom kroku, aby sme minimalizovali náklady nabíjacej stanice na energiu (za predpokladu, že je cena energie premenlivá v čase).
 
+% electric energy vs energy???
+% energy mustnt be electric 
 
-Cieľom tejto práce je overiť model práce agregátora flexibility, ktorý vie pomocou inteligentných algoritmov a dátovej analýzy optimalizovať tok energie, zabezpečiť stabilné dodávky energie a zároveň minimalizovať náklady používateľov elektromobilov. Porovnáme naše riešenia tohoto problému s inými doterajšími riešeniami. \cite{lee2021acnsim}
-
-
-
-V prvej kapitole rozoberieme východiská pri tvorbe nášho modelu agregátora flexibility, opíšeme existujúce riešenia a aj obmedzenia infraštruktúry pri nabíjaní elektromobilov. V druhej kapitole predstavujeme model práce nášho agregátora flexibility a spomíname inteligentné algoritmy, ktoré sme v našom modeli použili. 
+Cieľom tejto práce je overiť model práce agregátora flexibility, ktorý vie pomocou inteligentných algoritmov a dátovej analýzy optimalizovať tok energie, zabezpečiť stabilné dodávky energie a zároveň minimalizovať náklady používateľov elektrických vozidiel. Porovnáme naše riešenia tohoto problému s inými doterajšími riešeniami. \cite{lee2021acnsim}
 
 
-V tretej kapitole overujeme model práce agregátora flexibility, kde porovnávame naše riešenie s existujúcimi riešeniami, a to vzhľadom na pomer dodanej energie, množstvo dodanej energie, cenu dodanej energie a počet výmen elektromobilov. Vstupné dáta o elektromobiloch získavame z nabíjacích staníc pre elektromobily: stanica ACN a stanica JPL. Výstupom našej implementácie je optimálny plán nabíjania elektrombilov vzhľadom k dodanej energii. V našej implementácii sa snažíme počet výmen elektromobilov minimalizovať, keďže to často vedie k nespokojnosti používateľov elektromobilov. 
+
+V prvej kapitole rozoberieme východiská pri tvorbe nášho modelu agregátora flexibility, opíšeme existujúce riešenia a aj obmedzenia infraštruktúry pri nabíjaní elektrických vozidiel. V druhej kapitole predstavujeme model práce nášho agregátora flexibility a spomíname inteligentné algoritmy, ktoré sme v našom modeli použili. 
+
+
+V tretej kapitole overujeme model práce agregátora flexibility, kde porovnávame naše riešenie s existujúcimi riešeniami, a to vzhľadom na pomer dodanej energie, množstvo dodanej energie, cenu dodanej energie a počet výmen elektrických vozidiel. Vstupné dáta o elektrických vozidlách získavame z nabíjacích staníc pre elektrické vozidlá: stanica ACN a stanica JPL. Výstupom našej implementácie je optimálny plán nabíjania elektrických vozidiel vzhľadom k dodanej energii. V našej implementácii sa snažíme počet výmen elektrických vozidiel minimalizovať, keďže to často vedie k nespokojnosti používateľov elektrických vozidiel. 
 
 
 

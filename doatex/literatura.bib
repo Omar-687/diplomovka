@@ -1,21 +1,9 @@
 
-@book{vanderplas2016python,
-  added-at = {2018-04-06T06:05:12.000+0200},
-  address = {Sebastopol, CA},
-  author = {VanderPlas, Jake},
-  biburl = {https://www.bibsonomy.org/bibtex/2d256f437fdead22cfa492cea80264bfc/achakraborty},
-  interhash = {4d992e46bf106621f002329a16006e80},
-  intrahash = {d256f437fdead22cfa492cea80264bfc},
-  isbn = {978-1491912058},
-  keywords = {2016 book machine-learning oreilly python software},
-  publisher = {O'Reilly Media, Inc},
-  timestamp = {2018-04-06T06:05:12.000+0200},
-  title = {Python data science handbook : essential tools for working with data},
-  year = 2016
-}
+% TODO: write for each bibtex source from where you got it so you can easily verify that you cited the sources properly 
+
 % aky je rok tej prednasky? neviem
 
-@online{lecture_optimisation,
+online{lecture_optimisation,
   author       = "Lothar Reichel",
   title        = "Lecture 8: Optimization",
   url          = "https://www.math.kent.edu/~reichel/courses/intr.num.comp.2/lecture16/lecture8.pdf",
@@ -25,7 +13,7 @@
 }
 
 
-%Arnhem, is that good insitution name? EU used that but i cant find
+%TODO: Arnhem, is that good insitution name? EU used that but i cant find
 @techreport{usef2018,
   author       = {USEF},
   title        = {USEF White Paper - Flexibility Value Chain 1.0},
@@ -34,6 +22,7 @@
 }
 
 
+% TOTO je OK citacia, exportovana z https://arxiv.org/abs/2012.02809
 @misc{lee2021acnsim,
       title={ACN-Sim: An Open-Source Simulator for Data-Driven Electric Vehicle Charging Research}, 
       author={Zachary J. Lee and Sunash Sharma and Daniel Johansson and Steven H. Low},
@@ -43,6 +32,8 @@
       primaryClass={eess.SY}
 }
 
+
+% TOTO je OK citacia, exportovana z https://arxiv.org/abs/2012.02636
 
 @misc{lee2020adaptive,
       title={Adaptive Charging Networks: A Framework for Smart Electric Vehicle Charging}, 
@@ -54,6 +45,7 @@
 }
 
 
+% TOTO je OK citacia exportovana z https://www.semanticscholar.org/paper/Large-Scale-Adaptive-Electric-Vehicle-Charging-Lee-Chang/0d545124be183650c9f25df06e522de1e727a5d1
 @article{Lee2018LargeScaleAE,
   title={Large-Scale Adaptive Electric Vehicle Charging},
   author={Zachary J. Lee and Daniel Chang and Cheng Jin and George S. Lee and Rand Lee and Ted Lee and Steven H. Low},
@@ -75,153 +67,196 @@ journal = {International Journal of Computer Applications},
 doi = {10.5120/ijca2017912832}
 }
 
-%pridat aj kedy bola acessed
-@online{iea2023,
+%TOTO je OK, len mozno sa trochu formou lisi   
+@misc{iea2023,
   author    = {International Energy Agency (IEA)},
+  date = {2023},
   title     = {Global EV Outlook 2023},
-  year      = {2023},
-  url       = {https://www.iea.org/reports/global-ev-outlook-2023},
+  howpublished={\url{https://www.iea.org/reports/global-ev-outlook-2023}},
   organization = {IEA},
   address   = {Paris},
-  note      = {License: CC BY 4.0},
+  note = {Accessed: April 2024}
 }
-article{agg_flex1b,
-title = {Business strategies for flexibility aggregators to steer clear of being “too small to bid”},
-journal = {Renewable and Sustainable Energy Reviews},
-volume = {143},
-pages = {110908},
-year = {2021},
-issn = {1364-0321},
-doi = {https://doi.org/10.1016/j.rser.2021.110908},
-url = {https://www.sciencedirect.com/science/article/pii/S136403212100201X},
-author = {Merla Kubli and Patrizio Canzi},
+% pozri na dostupnost stranky, naposledy bol nejaky DNS error a taktiez pozri ci umini presne je ta organizacia
 
-}
-
-@article{evpricingsystem,
-author = {Lee, Zachary and Pang, John and Low, Steven},
-year = {2020},
-month = {12},
-pages = {106694},
-title = {Pricing EV charging service with demand charge},
-volume = {189},
-journal = {Electric Power Systems Research},
-doi = {10.1016/j.epsr.2020.106694}
+@misc{charginglevelsumini,
+  author = {{umini}},
+  title = {Different Types of Ev Charging; Level 1, Level 2, and DC Fast Charging},
+  year = {2023},
+  month = {04},
+  day = {12},
+  url = {\url{https://unimi.se/blog/the-different-types-of-ev-charging-level-1-level-2-and-dc-fast-charging/}},
+  urldate = {Accessed: April 2024}
 }
 
-@ARTICLE{shcedulingdetailexplanbook,
-  author={Mukherjee, Joy Chandra and Gupta, Arobinda},
-  journal={IEEE Systems Journal}, 
-  title={A Review of Charge Scheduling of Electric Vehicles in Smart Grid}, 
+
+
+% TOTO je OK exportovana citacia z https://www.semanticscholar.org/paper/Pricing-EV-charging-service-with-demand-charge-Lee-Pang/a60ed5f77ff33f8fd982fc9157e607067a04d2af
+
+
+@article{Lee2020PricingEC,
+  title={Pricing EV charging service with demand charge},
+  author={Zachary J. Lee and John Z. F. Pang and Steven H. Low},
+  journal={Electric Power Systems Research},
+  year={2020},
+  volume={189},
+  pages={106694},
+  url={https://api.semanticscholar.org/CorpusID:224876204}
+}
+
+
+% toto je ok citacia, cez google scholar sa da citovat aj stranku atd
+@article{jakus2023optimal,
+  title={Optimal Electric Vehicle Parking Lot Energy Supply Based on Mixed-Integer Linear Programming},
+  author={Jakus, Damir and Vasilj, Josip and Jolevski, Danijel},
+  journal={Energies},
+  volume={16},
+  number={23},
+  pages={7793},
+  year={2023},
+  publisher={MDPI}
+}
+
+% robi load flatenning/ cost minimisation, toto je OK zdroj,zo semantic scholar vygenerovana notacia
+
+@article{Zhang2018RealTimeSC,
+  title={Real-Time Smart Charging of Electric Vehicles for Demand Charge Reduction at Non-Residential Sites},
+  author={Guanchen Zhang and Shaoqing Tim Tan and G. Wang},
+  journal={IEEE Transactions on Smart Grid},
+  year={2018},
+  volume={9},
+  pages={4027-4037},
+  url={https://api.semanticscholar.org/CorpusID:52118199}
+}
+
+
+% toto je ok citacia, z IEEE
+
+@INPROCEEDINGS{mpcpredictive,
+  author={Bin Wang and Rui Huang and Yubo Wang and Nazaripouya, Hamidreza and Qiu, Charlie and Chu, Chi-Cheng and Gadh, Rajit},
+  booktitle={2016 IEEE/PES Transmission and Distribution Conference and Exposition (T&D)}, 
+  title={Predictive scheduling for Electric Vehicles considering uncertainty of load and user behaviors}, 
+  year={2016},
+  volume={},
+  number={},
+  pages={1-5},
+  keywords={Estimation;Load modeling;Uncertainty;IEC Standards;Real-time systems;Energy consumption;Data models;EV Scheduling;Predictive Control;IEC 61850;Renewable Energy Integration},
+  doi={10.1109/TDC.2016.7520018}}
+
+
+
+% je to ok, mam to z reseachgate stiahnutu citaciu
+@article{rl_costmin_1,
+author = {Li, Sichen and Hu, Weihao and Cao, Di and Dragicevic, Tomislav and Huang, Qi and Chen, Z. and Blaabjerg, F.},
+year = {2022},
+month = {05},
+pages = {719-730},
+title = {Electric Vehicle Charging Management Based on Deep Reinforcement Learning},
+volume = {10},
+journal = {Journal of Modern Power Systems and Clean Energy},
+doi = {10.35833/MPCE.2020.000460}
+}
+
+
+
+% TOTO je OK citacia je exportovana v bibtex formate z 
+article{shcedulingdetailexplanbook,
+  title={A Review of Charge Scheduling of Electric Vehicles in Smart Grid},
+  author={Joy Chandra Mukherjee and Arobinda Gupta},
+  journal={IEEE Systems Journal},
   year={2015},
   volume={9},
-  number={4},
   pages={1541-1553},
-  doi={10.1109/JSYST.2014.2356559}}
-
-book{oliphant2006guide,
-  title={A guide to NumPy},
-  author={Oliphant, Travis E and others},
-  volume={1},
-  year={2006},
-  publisher={Trelgol Publishing USA}
+  url={https://api.semanticscholar.org/CorpusID:44863172}
 }
 
+% TOTO je OK citacia z https://www.researchgate.net/publication/286801210_A_Review_of_Charge_Scheduling_of_Electric_Vehicles_in_Smart_Grid
+@article{shcedulingdetailexplanbook,
+author = {Mukherjee, Joy and Gupta, Arobinda},
+year = {2014},
+month = {10},
+pages = {1-13},
+title = {A Review of Charge Scheduling of Electric Vehicles in Smart Grid},
+volume = {9},
+journal = {IEEE Systems Journal},
+doi = {10.1109/JSYST.2014.2356559}
+}
+
+% TOTO je OK z archiv je takato citacia exportovana
 @article{Li_2021,
-	doi = {10.1109/tsg.2021.3094719},
-  
-	url = {https://doi.org/10.1109%2Ftsg.2021.3094719},
-  
-	year = 2021,
-	month = {nov},
-  
-	publisher = {Institute of Electrical and Electronics Engineers ({IEEE})},
-  
-	volume = {12},
-  
-	number = {6},
-  
-	pages = {4897--4913},
-  
-	author = {Tongxin Li and Bo Sun and Yue Chen and Zixin Ye and Steven H. Low and Adam Wierman},
-  
-	title = {Learning-Based Predictive Control via Real-Time Aggregate Flexibility},
-  
-	journal = {{IEEE} Transactions on Smart Grid}
+   title={Learning-Based Predictive Control via Real-Time Aggregate Flexibility},
+   volume={12},
+   ISSN={1949-3061},
+   url={http://dx.doi.org/10.1109/TSG.2021.3094719},
+   DOI={10.1109/tsg.2021.3094719},
+   number={6},
+   journal={IEEE Transactions on Smart Grid},
+   publisher={Institute of Electrical and Electronics Engineers (IEEE)},
+   author={Li, Tongxin and Sun, Bo and Chen, Yue and Ye, Zixin and Low, Steven H. and Wierman, Adam},
+   year={2021},
+   month=nov, pages={4897–4913} }
+
+
+% TOTO je OK nasiel som to na stranke https://zenodo.org/records/10183090 , da sa dostat do zendo rovno z acnportal balika
+@software{acnportalrepository,
+  author       = {Sunash Sharma and
+                  Zachary Lee and
+                  Daniel Johansson and
+                  liv20},
+  title        = {zach401/acnportal: v0.3.3},
+  month        = nov,
+  year         = 2023,
+  publisher    = {Zenodo}, 
+  version      = {v0.3.3},
+  doi          = {10.5281/zenodo.10183090},
+  url          = {https://doi.org/10.5281/zenodo.10183090},
+  note = {Accessed: December 2023}
 }
 
-book{mishra2019pytorch,
-  title={PyTorch Recipes: A Problem-solution Approach},
-  author={Mishra, P.},
-  isbn={9781484242599},
-  url={https://books.google.sk/books?id=l-j5zgEACAAJ},
-  year={2019},
-  publisher={Distributed to the Book trade worldwide by Springer Science+Business Media New York}
-}
-% TODO: add "acnportal", problems with formatting mozno netreba lebo zalezi od stylu
-@misc{acnportalrepository,
-  key = {LeeSharmaJohansson2023},
-  author = {Z. J. Lee and S. Sharma and D. Johansson},
-  title = {acnportal},
-  year = {Dec. 2023},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/zach401/acnportal}}
-}
+% acnportal, adacharge a acnportal experiments vsetky maju v knihe ACN-Sim november 2020 ako publish date
 
-% TODO look at how to cite github repo more closely
-% year symbolises last accessed time
+% TOTO je OK, je to spomenute v acnsim knihe
 
 @misc{adachargerepository,
   key = {LeeSharma2023},
   author = {Z. J. Lee and S. Sharma},
   title = {adacharge},
-  year = {Dec. 2023},
+  month= nov,
+  year = 2020,
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{https://github.com/caltech-netlab/adacharge}}
+  howpublished = {\url{https://github.com/caltech-netlab/adacharge}},
+  note = {Accessed: December 2023}
 }
 
 
+% TOTO je ok podobne vyzera aj citacia v acn sim
 @misc{acnportalexperimentsrepository,
   key = {LeeSharma2023},
   author = {Z. J. Lee and S. Sharma},
   title = {acnportal-experiments},
-  year = {Dec. 2023},
+  month=nov,
+  year = 2020,
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{https://github.com/caltech-netlab/acnportal-experiments}}
+  howpublished = {\url{https://github.com/caltech-netlab/acnportal-experiments}},
+  note = {Accessed: December 2023}
 }
 
 
-
-@inproceedings{10.1145/3307772.3328313,
-author = {Lee, Zachary J. and Li, Tongxin and Low, Steven H.},
-title = {ACN-Data: Analysis and Applications of an Open EV Charging Dataset},
-year = {2019},
-isbn = {9781450366717},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/3307772.3328313},
-doi = {10.1145/3307772.3328313},
-abstract = {We are releasing ACN-Data, a dynamic dataset of workplace EV charging which currently includes over 30,000 sessions with more added daily. In this paper we describe the dataset, as well as some interesting user behavior it exhibits. To demonstrate the usefulness of the dataset, we present three examples, learning and predicting user behavior using Gaussian mixture models, optimally sizing on-site solar generation for adaptive electric vehicle charging, and using workplace charging to smooth the net demand Duck Curve.},
-booktitle = {Proceedings of the Tenth ACM International Conference on Future Energy Systems},
-pages = {139–149},
-numpages = {11},
-keywords = {open dataset, duck curve, workplace charging, Electric vehicle charging, on-site solar generation, user behavior prediction},
-location = {Phoenix, AZ, USA},
-series = {e-Energy '19}
-}
-
-@INPROCEEDINGS{8909765,
-  author={Lee, Zachary J. and Johansson, Daniel and Low, Steven H.},
-  booktitle={2019 IEEE International Conference on Communications, Control, and Computing Technologies for Smart Grids (SmartGridComm)}, 
-  title={ACN-Sim: An Open-Source Simulator for Data-Driven Electric Vehicle Charging Research}, 
+% TOTO je OK citacia, pochadza z https://www.semanticscholar.org/paper/ACN-Data%3A-Analysis-and-Applications-of-an-Open-EV-Lee-Li/05ce575f1161f6ea793bad4c3fa36cf701f5e6e0#citing-papers
+@article{10.1145/3307772.3328313,
+  title={ACN-Data: Analysis and Applications of an Open EV Charging Dataset},
+  author={Zachary J. Lee and Tongxin Li and Steven H. Low},
+  journal={Proceedings of the Tenth ACM International Conference on Future Energy Systems},
   year={2019},
-  volume={},
-  number={},
-  pages={1-6},
-  doi={10.1109/SmartGridComm.2019.8909765}}
+  url={https://api.semanticscholar.org/CorpusID:189926928}
+}
+
+
+
+
+% TOTO je OK citacia exportovana z https://arxiv.org/abs/2102.08610
 
 @misc{chen2021smoothed,
       title={Smoothed Least-Laxity-First Algorithm for EV Charging}, 
@@ -232,6 +267,7 @@ series = {e-Energy '19}
       primaryClass={eess.SY}
 }
 
+% toto je ok
 @phdthesis{lee2021adaptivephd,
   author      = {Lee, Zachary Jordan},
   title       = {The Adaptive Charging Network Research Portal: Systems, Tools, and Algorithms},
@@ -241,16 +277,21 @@ series = {e-Energy '19}
   doi         = {10.7907/8eqg-e110}
 }
 
+% TOTO je OK citacia pochadza z https://www.researchgate.net/publication/307986214_Online_Charging_Scheduling_Algorithms_of_Electric_Vehicles_in_Smart_Grid_An_Overview
 @article{Tang2016OnlineCS,
-  title={Online Charging Scheduling Algorithms of Electric Vehicles in Smart Grid: An Overview},
-  author={Wanrong Tang and Suzhi Bi and Ying Jun Angela Zhang},
-  journal={IEEE Communications Magazine},
-  year={2016},
-  volume={54},
-  pages={76-83},
-  url={https://api.semanticscholar.org/CorpusID:15459551}
+author = {Tang, Wanrong and Bi, Suzhi and Jun, Ying and Zhang, Minglong},
+year = {2016},
+month = {08},
+pages = {},
+title = {Online Charging Scheduling Algorithms of Electric Vehicles in Smart Grid: An Overview},
+volume = {54},
+journal = {IEEE Communications Magazine},
+doi = {10.1109/MCOM.2016.1600346CM}
 }
 
+% if author isnt shown on website, you can substitute organisation instead of author
+
+% stranka este funguje
 @misc{websitecharginglevels2023,
   title        = {EV Charger Levels},
   author       = {ZDWL},
@@ -259,6 +300,9 @@ series = {e-Energy '19}
   note         = {Accessed: 3rd December, 2023}
 }
 
+
+
+% slajd este funguje, zjavne je z caltech spolocnosti
 @misc{websitpricecharging2023,
   title        = {Pricing EV Charging Service with Demand Charge},
   author       = {Zachary J. Lee, John Z.F. Pang, Steven H. Low},
@@ -267,7 +311,7 @@ series = {e-Energy '19}
   note         = {Accessed: 3rd December, 2023}
 }
 
-
+% TODO: ak treba najst nieco o round robin, treba najst nieco odbornejsie ako nejaky slovnik
 
 @misc{websitecroundrobin2023,
   title        = {round robin},
@@ -277,7 +321,7 @@ series = {e-Energy '19}
   note         = {Accessed: 3rd December, 2023}
 }
 
-
+% stranka funguje len skontrolovat ci citujem dobre
 @misc{websiteaggregatorflex2024,
   title        = {FLEXIBILITY AGGREGATORS IN THE FUTURE ENERGY SYSTEM},
   author       = {Sofie Mannerstråle},
@@ -286,7 +330,7 @@ series = {e-Energy '19}
   note         = {Accessed: 4th January, 2024}
 }
 
-
+% TODO: Link prestal existovat, ak zmenit formulaciu tak pouzi iny zdroj idealne clanok
 @misc{websitecontrolalg2023,
   title        = {What is a control algorithm?},
   author       = {Collimator},
@@ -316,8 +360,30 @@ doi={10.1007/s40518-022-00205-y},
 url={https://doi.org/10.1007/s40518-022-00205-y}
 }
 
+@inproceedings{acndata,
+author = {Lee, Zachary J. and Li, Tongxin and Low, Steven H.},
+title = {ACN-Data: Analysis and Applications of an Open EV Charging Dataset},
+year = {2019},
+isbn = {9781450366717},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3307772.3328313},
+doi = {10.1145/3307772.3328313},
+abstract = {We are releasing ACN-Data, a dynamic dataset of workplace EV charging which currently includes over 30,000 sessions with more added daily. In this paper we describe the dataset, as well as some interesting user behavior it exhibits. To demonstrate the usefulness of the dataset, we present three examples, learning and predicting user behavior using Gaussian mixture models, optimally sizing on-site solar generation for adaptive electric vehicle charging, and using workplace charging to smooth the net demand Duck Curve.},
+booktitle = {Proceedings of the Tenth ACM International Conference on Future Energy Systems},
+pages = {139–149},
+numpages = {11},
+keywords = {Electric vehicle charging, duck curve, on-site solar generation, open dataset, user behavior prediction, workplace charging},
+location = {Phoenix, AZ, USA},
+series = {e-Energy '19}
+}
 
-@misc{websiteacndata2023,
+
+
+
+
+% TODO: maybe not necessary to cite website but rather articles
+misc{websiteacndata2023,
   title        = {ACN-Data},
   author       = {Caltech},
   howpublished = {\url{https://ev.caltech.edu/dataset}},
@@ -336,7 +402,7 @@ https://ev.caltech.edu/dataset
 }
 
 % este overit ci nenajdem skutocneho autora/org pri https://microcontrollerslab.com/least-laxity-first-llf/
-@misc{websiteenhancedllf,
+misc{websiteenhancedllf,
   title        = {Least Laxity First (LLF) Scheduling Algorithm},
   author       = {microcontrollerslab},
   howpublished = {\url{https://microcontrollerslab.com/least-laxity-first-llf/}},
@@ -346,75 +412,16 @@ https://ev.caltech.edu/dataset
 
 
 
-
-
-article{article,
-author = {Kingma, Diederik and Ba, Jimmy},
-year = {2014},
-month = {12},
-pages = {},
-title = {Adam: A Method for Stochastic Optimization},
-journal = {International Conference on Learning Representations}
-}
-
-InProceedings{pmlr-v80-haarnoja18b,
-  title = 	 {Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor},
-  author =       {Haarnoja, Tuomas and Zhou, Aurick and Abbeel, Pieter and Levine, Sergey},
-  booktitle = 	 {Proceedings of the 35th International Conference on Machine Learning},
-  pages = 	 {1861--1870},
-  year = 	 {2018},
-  editor = 	 {Dy, Jennifer and Krause, Andreas},
-  volume = 	 {80},
-  series = 	 {Proceedings of Machine Learning Research},
-  month = 	 {10--15 Jul},
-  publisher =    {PMLR},
-  pdf = 	 {http://proceedings.mlr.press/v80/haarnoja18b/haarnoja18b.pdf},
-  url = 	 {https://proceedings.mlr.press/v80/haarnoja18b.html},
-  abstract = 	 {Model-free deep reinforcement learning (RL) algorithms have been demonstrated on a range of challenging decision making and control tasks. However, these methods typically suffer from two major challenges: very high sample complexity and brittle convergence properties, which necessitate meticulous hyperparameter tuning. Both of these challenges severely limit the applicability of such methods to complex, real-world domains. In this paper, we propose soft actor-critic, an off-policy actor-critic deep RL algorithm based on the maximum entropy reinforcement learning framework. In this framework, the actor aims to maximize expected reward while also maximizing entropy. That is, to succeed at the task while acting as randomly as possible. Prior deep RL methods based on this framework have been formulated as Q-learning methods. By combining off-policy updates with a stable stochastic actor-critic formulation, our method achieves state-of-the-art performance on a range of continuous control benchmark tasks, outperforming prior on-policy and off-policy methods. Furthermore, we demonstrate that, in contrast to other off-policy algorithms, our approach is very stable, achieving very similar performance across different random seeds.}
+misc{secondorderconeOPTIM,
+  title        = {OPTIMIZATION PROBLEM TYPES - QUADRATIC CONSTRAINTS AND CONIC OPTIMIZATION},
+  author       = {microcontrollerslab},
+  howpublished = {\url{https://microcontrollerslab.com/least-laxity-first-llf/}},
+  year         = {2023},
+  note         = {Accessed: 3rd December, 2023}
 }
 
 
 
-
-
-
-article{LEZAMA2020102048,
-title = {Flexibility management model of home appliances to support DSO requests in smart grids},
-journal = {Sustainable Cities and Society},
-volume = {55},
-pages = {102048},
-year = {2020},
-issn = {2210-6707},
-doi = {https://doi.org/10.1016/j.scs.2020.102048},
-url = {https://www.sciencedirect.com/science/article/pii/S2210670720300354},
-author = {Fernando Lezama and Joao Soares and Bruno Canizes and Zita Vale},
-keywords = {Demand response, Flexibility, Home appliances, Local energy management, Smart grids},
-abstract = {Several initiates have been taken promoting clean energy and the use of local flexibility towards a more sustainable and green economy. From a residential point of view, flexibility can be provided to operators using home-appliances with the ability to modify their consumption profiles. These actions are part of demand response programs and can be utilized to avoid problems, such as balancing/congestion, in distribution networks. In this paper, we propose a model for aggregators flexibility provision in distribution networks. The model takes advantage of load flexibility resources allowing the re-schedule of shifting/real-time home-appliances to provision a request from a distribution system operator (DSO) or a balance responsible party (BRP). Due to the complex nature of the problem, evolutionary computation is evoked and different algorithms are implemented for solving the formulation efficiently. A case study considering 20 residential houses equipped each with seven types of home-appliances is used to test and compare the performance of evolutionary algorithms solving the proposed model. Results show that the aggregator can fulfill a flexibility request from the DSO/BRP by re-scheduling the home-appliances loads for the next 24-h horizon while minimizing the costs associated with the remuneration given to end-users.}
-}
-
-ARTICLE{9474464,
-  author={Li, Tongxin and Sun, Bo and Chen, Yue and Ye, Zixin and Low, Steven H. and Wierman, Adam},
-  journal={IEEE Transactions on Smart Grid}, 
-  title={Learning-Based Predictive Control via Real-Time Aggregate Flexibility}, 
-  year={2021},
-  volume={12},
-  number={6},
-  pages={4897-4913},
-  doi={10.1109/TSG.2021.3094719}}
-
-  article{ANTONOPOULOS2020109899,
-title = {Artificial intelligence and machine learning approaches to energy demand-side response: A systematic review},
-journal = {Renewable and Sustainable Energy Reviews},
-volume = {130},
-pages = {109899},
-year = {2020},
-issn = {1364-0321},
-doi = {https://doi.org/10.1016/j.rser.2020.109899},
-url = {https://www.sciencedirect.com/science/article/pii/S136403212030191X},
-author = {Ioannis Antonopoulos and Valentin Robu and Benoit Couraud and Desen Kirli and Sonam Norbu and Aristides Kiprakis and David Flynn and Sergio Elizondo-Gonzalez and Steve Wattam},
-keywords = {Artificial intelligence, Machine learning, Artificial neural networks, Nature-inspired intelligence, Multi-agent systems, Demand response, Power systems},
-abstract = {Recent years have seen an increasing interest in Demand Response (DR) as a means to provide flexibility, and hence improve the reliability of energy systems in a cost-effective way. Yet, the high complexity of the tasks associated with DR, combined with their use of large-scale data and the frequent need for near real-time decisions, means that Artificial Intelligence (AI) and Machine Learning (ML) — a branch of AI — have recently emerged as key technologies for enabling demand-side response. AI methods can be used to tackle various challenges, ranging from selecting the optimal set of consumers to respond, learning their attributes and preferences, dynamic pricing, scheduling and control of devices, learning how to incentivise participants in the DR schemes and how to reward them in a fair and economically efficient way. This work provides an overview of AI methods utilised for DR applications, based on a systematic review of over 160 papers, 40 companies and commercial initiatives, and 21 large-scale projects. The papers are classified with regards to both the AI/ML algorithm(s) used and the application area in energy DR. Next, commercial initiatives are presented (including both start-ups and established companies) and large-scale innovation projects, where AI methods have been used for energy DR. The paper concludes with a discussion of advantages and potential limitations of reviewed AI techniques for different DR tasks, and outlines directions for future research in this fast-growing area.}
-}
 
 
 
