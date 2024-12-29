@@ -5,10 +5,671 @@
 % 
 
 
-\chapter{Návrh riešenia}
-% V tejto kapitole vysvetľujeme ako prebieha komunikácia medzi agregátorom a systémovým operátorom v našom navrhovanom modeli. Taktiež rozoberáme, ako prebieha triedenie a iné operácie, ktoré sa vykonávajú v našom navrhovanom modeli.
-V tejto kapitole popisujeme navrhnuté riešenie optimalizačného problému dodania maximálneho množstva požadovanej energie elektromobilom pri zachovaní obmedzení infraštruktúry nabíjacej siete.
+% \chapter{Návrh riešenia}
+\chapter{Návrh nášho riešenia}
+\label{chapter:navrhries}
 
+V práci porovnávame niekoľko algoritmov, ktoré riešia optimalizačný problém \eqref{onlineoptimisation:problem:aim}-\eqref{transition:remaining_timechange}. Špecificky porovnávame algoritmy penalizovaného prediktívneho  riadenia a offline optimálny algoritmus. Offline optimálny algoritmus opisujeme v sekcii \ref{offline:optimal}.  Pri použití algoritmu penalizovaného prediktívneho riadenia dokáže agregátor nabíjať pomocou rôznych jednoduchých plánovacích algoritmov. V tejto kapitole opisujeme systém uzavretej slučky (v sekcii \ref{closed-loop-system:section}) ktorý rieši optimalizačný problém \eqref{onlineoptimisation:problem:aim}-\eqref{transition:remaining_timechange} pomocou penalizovaného prediktívneho riadenia (opis v sekcii \ref{PPC:online:section}), generovanej spätnej odozvy o flexibilite $p_{t}$ a jednoduchému plánovaciemu algoritmu. Jednoduché plánovacie algoritmy opisujeme v sekcii \ref{trivial-scheduling-algs}. Generovaná spätná odozva o flexibilite $p_{t}$ je aproximáciou maximálnej entropickej odozvy, ktorú definujeme a opisujeme \ref{mef:definition:section}. Maximálnu entropickú odozvu, ktorá je založená na maximalizácii entropie sa dá aproximovať algoritmami strojového učenia, my používame algoritmus učenia posilňovaním. Proces učenia, opis algoritmu učenia posilňovaním a opis vhodnej odmeňovacej funkcie je v sekcii \ref{learning:process}. Proces testovania (ktorý opisujeme v sekcii \ref{testing:process}) sa odlišuje od procesu učenia tým, že sa už generuje naučená maximálna entropická odozva \cite{Li_2021,Li_information_aggregation}. 
+
+% tento odsek by mal byt OK
+
+% spomíname algoritmy pomocou pseudokódov ale aj slovných opisov.
+% \subsection{Uzavretý system}
+% Predpokladáme, že $x_{1}, p_{1}$ sú nulové vektory a $u_{1} = 0$. Opis uzavretého systému je nasledovný.
+% V každom časovom kroku systémový operátor vygeneruje signál $u_{t}$ prostredníctvom online PPC algoritmu na základe nákladov $c_{t}$ v čase t a flexibility $p_{t}$ a pošle ju agregátorovi. Aktualizujú sa celkové náklady na nabíjanie $C_{t}$ pre čas t.
+% Agregátor na vygeneruje vektor $s_{t}$ na pomocou plánovacieho algoritmu $\pi$
+
+
+\section{Maximálna entropická odozva}
+\label{mef:definition:section}
+
+V tejto sekcii najprv opisujeme dizajn a vlastnosti spätnej odozvy o flexibilite, ktorú nazývame maximálná entropická odozva. Potom formálne definujeme maximálnu entropickú odozvu a nakoniec opisuje význam hodnôt maximálnej entropickej odozvy pre rôzne akcie $u_{t}$, ktoré sa vyberajú z diskrétnej množiny $U$. Definíciu, vlastnosti a opis maximálnej entropickej odozvy preberáme z článkov \cite{li2020realtimeflexibilityfeedbackclosedloop, Li_2021}. Ostatné vysvetlenia, definície a optimalizačné problémy v tejto sekcií preberáme z rovnakých článkov \cite{li2020realtimeflexibilityfeedbackclosedloop, Li_2021}. 
+
+
+% Dizajn signálu spätnej odozvy o flexibilite, ktorý poskytuje informácie o agregovanej flexibilite agregátora (th. flexibilita elektromobilov, ktoré obsluhuje) je komplexný problém. My používame dizajn signálu spätnej väzby o flexibilite, ktorý 
+
+
+Podmienená pravdepodobnosť $p_{t}(u_{t} | u_{<t})$ meria budúcu flexibilitu agregátora (t. j. následujúce uskutočniteľné trajektórie akcií, ktoré sa uvoľnia vykonaním akcie $u_{t}$) na základe predchádzajúcich akcií $u_{<t} = (u_{1}, \dots, u_{t - 1})$ za podmienky, že si systémový operátor vyberie akciu $u_{t}$ v čase $t$. Následujúce uskutočniteľné trajektórie akcií definujeme nižšie v tejto sekcii. Súčtom entropie podmienenej pravdepodobnosti $p_{t}$ vyjadrujeme informatívnosť jej spätnej odozvy. Informatívnosť spätnej odozvy je dôležitá pre systémového operátora, lebo pomocou nej systémový operátor vie riešiť optimalizačný problém \eqref{onlineoptimisation:problem:aim}-\eqref{transition:remaining_timechange}.
+
+
+
+
+\noindent
+Množina všetkých uskutočniteľných  trajektorií akcií (t. j. trajektorií akcií spĺňajúcich obmedzenia systému) je
+\begin{equation}
+    S = \{u_{\leq T} \in U^{T}: u_{\leq T} \text{ spĺňa } \eqref{offlineoptimisation:problem1} - \eqref{con:2} \},
+\end{equation}
+kde premenná $u_{\leq T}$ je $u_{\leq T} = (u_{1}, \dots, u_{T})$.
+\noindent
+Z dôvodov uvedených vyššie v tejto sekcií my vyberáme podmienenú distribúciu $p_{t}$ pre $t = 1, \dots, T$, ktorá maximalizuje svoju podmienenú entropiu. My uvažujeme stochasticky optimalizačný problém
+\begin{gather}
+    \label{mef:def1}
+    F := \underset{p_{1},\dots, p_{T}}{max} \sum_{t=1}^{T} H(\mathcal{U}_{t}|\mathcal{U}_{<t}) \\
+    \notag
+    \text{vzhľadom na:} \\
+    \mathcal{U} \in S,
+\end{gather}
+kde premenné
+\begin{gather}
+    \label{mef:def2}
+p_{t} := p_{t}(\cdot, \cdot) := P_{\mathcal{U}_{t}|\mathcal{U}_{<t}}, t = 1,\dots,T,
+\end{gather}
+sú hustotné funkcie. Premenná $\mathcal{U} \in U^{T}$ je náhodná premenná. Premennú $p_{t}$ označujeme ako podmienenú distribúciu v tomto optimalizačnom probléme z výpočtových dôvodov. Informácia poslaná systémovému operátorovi od agregátora je stále pravdepodobnostný vektor $p_{t}, t=1,\dots,T$ s dľžkou $|U|$.  
+
+Náhodná premenná $\mathcal{U}$ je distribuovaná na základe spoločnej distribúcie $\Pi_{t =1}^{T} p_{t}$. Entropia $H(\mathcal{U}_{t}|\mathcal{U}_{<t})$ je diskrétna entropia podmienenej distribúcie $p_{t}$ 
+\begin{gather}
+    \label{mef:def3}
+    H(\mathcal{U}_{t}|\mathcal{U}_{<t}) := \sum_{u_{<t} \in U^{t}} (- \Pi_{l=1}^{t}p_{l}(u_{l}|u_{<l})) \cdot log p_{t}(u_{t} | u_{<t}).
+\end{gather}
+Pomocou reťazového pravidla získame $\sum_{t=1}^{T} H(\mathcal{U}_{t}|\mathcal{U}_{<t})=H(\mathcal{U})$. To znamená, že \eqref{mef:def1}-\eqref{mef:def3} môžeme chápať ako maximalizovanie entropie $H(\mathcal{U})$. Maximalizujeme entropiu $H(\mathcal{U})$ tak, že maximalizujeme entropiu spoločnej distribúcie $\Pi_{t =1}^{T} p_{t}$ z ktorej je množina (náhodná trajektória) $\mathcal{U} \in S$ vzorkovaná.   
+
+Optimalizačný problém \eqref{mef:def1}-\eqref{mef:def3} zahŕňa odozvu flexibility pre časový horizont $1, \dots, T$. Jednotlivé premenné $p_{t}$ sú podmienené pravdepodobnosti. Tieto jednotlivé podmienené pravdepodobnosti $p_{t}$ sú zavísle len od informácií dostupných agregátorovi po čas t. 
+
+
+
+% \subsection{Definícia a opis maximálnej entropickej odozvy}
+
+\begin{definition}
+Ak sú hustotné funkcie $(p_{1}^{*},\dots, p_{T}^{*})$ unikátnym riešením \eqref{mef:def1}-\eqref{mef:def3}, tak každá hustotná funkcia $p_{t}^{*} = \Psi^{*}_{SAC}(u_{<t})$, $t \in \mathcal{T}$ sa nazýva maximálna entropická odozva.
+\end{definition}
+
+
+
+
+
+
+Ak je daná akákoľvek trajektória akcií $u_{\leq t}$, tak množina následujúcich uskutočniteľných trajektorií je 
+\begin{equation}
+    S(u_{\leq t}) = \{v_{>t} \in U^{T-t} | \, \text{$v$ spĺňa } \eqref{transition:1}-\eqref{con:2}, v_{\leq t} = u_{\leq t}   \}.
+\end{equation}
+
+
+
+% este dopisat dalsiu vlastnost 
+\begin{theorem}
+Maximálna entropická odozva $p_{t}^{*}$ v čase $t$ je 
+\begin{equation}
+    p_{t}^{*}(u_{t} | u_{<t}) = \frac{|S(u_{<t}, u)|}{|S(u_{<t})|}, \, \forall (u_{<t}, u_{t}) \in U^{t}, t \in \mathcal{T}.
+\end{equation}
+Optimálna hodnota premmenej $F$ v optimalizačnom probléme \eqref{mef:def1}-\eqref{mef:def3} je $F = log |S|$.  
+\end{theorem}
+
+Maximálna entropická odozva $p_{t}^{*}$ poskytuje správne informácie systémovému operátorovi, na to aby vedel vybrať vhodnú akciu $u_{t}$. Ak si systémový operátor vyberie akciu $u_{t}$ s podmienenou pravdepodobnosťou $p_{t}^{*}(u_{t}) > 0$ pre každý čas $t$, tak potom trajektória akcií $S$ bude uskutočniteľná $u \in S$ a systém zostáva uskutočniteľný po všetky časy $t \in \mathcal{T}$.
+
+
+Ak si systémový operátor vyberie akciu $u_{t}$ s väčšou maximálnou entropickou odozvou $p_{t}^{*}(u_{t})$, tak potom bude systém viac flexibilný pre výber budúcich akcií ako keby si vybral signál $u_{t}'$ s menšou maximálnou entropickou odozvou $p_{t}^{*}(u_{t}')$.
+
+Vo zvyšku sekcie uvádzame príklad maximálnej entropickej odozvy v čase. V tomto príklade simulujeme nabíjanie jedného elektromobilu $i$ s časom príchodu $a(i) = 1$, časom odchodu $d(i) = 3$, maximálnou rýchlosťou nabíjania $r(i) = 1$kW a požadovanou energiou $e(i) = 1$kWh. Množina realizovateľných akcií (v tomto príklade v kWh) je $U = \{0, 1\}$ a časový horizont je $\mathcal{T} = \{1, 2, 3\}$ a premenná $\Delta$ je jedna hodina. V každom čase $t \in \mathcal{T}$ elektromobil $i$ sa môže dobíjať buď o $1$kWh alebo o $0$kWh.
+% Jednoduchý plánovací algoritmus označujeme v tomto príklade písmenom $u$ a  $u(i)$ je v tomto príklade množstvo dodanej energie elektromobilu $i$ pomocou jednoduchého plánovacieho algoritmu. 
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/examples/toy_example.png}
+    \caption[Príklad maximálnej entropickej odozvy.]{Príklad maximálnej entropickej odozvy. Zdroj obrázka: \cite{Li_2021}. }
+    \end{center}
+    \label{mef:example:picture}
+\end{figure}
+Pre nastavenia tohoto príkladu množina uskutočniteľných trajektórií je \\ $S = \{(0,0,1), (0,1,0), (0,0,1)\}$, ktorú sme ukázali na obrázku \ref{mef:example:picture}. Optimálne podmienené distribúcie $p^{*}_{1},p^{*}_{2},p^{*}_{3}$ sú tiež ilustrované na obrázku \ref{mef:example:picture}. 
+
+
+Z definície $H(\mathcal{U}_{t} | \mathcal{U}_{<t}) = H(\mathcal{U}_{t}) = H(p_{t}) $ vyplýva, že kvantita podmienená na premennú $u_{\leq t}$ je nepodmienená kvantita, a preto $p^{*}_{t}(u_{t} | u_{<t}) := p^{*}_{t}(u_{t})$. Vynechávame premennú $u_{<t}$, kde to nie je nevyhnutné pre našu diskusiu.
+
+% mala by byt ok sekcia
+
+% off policy pozriet este raz ale zda sa ze sa to nepreklada 
+
+\section{Proces učenia}
+\label{learning:process}
+% vysvetlit aj dalsie mnoziny v tomto odseku ako X_t a U_t???
+V tejto sekcii opisujeme proces učenia. Učenie prebieha v epizódach $(U_{t}, X_{t}, f_{t})_{t=1}^{T}$, kde premenná $T$ je dľžka jednej epizódy. Pod jednou epizódou rozumieme jeden deň nabíjania. Trénovacie dáta každej epizódy sú historické vektory $(a(i), d(i), r(i), e(i))$. Tieto historické vektory sú špecifikované používateľmi elektromobilov, ktorý navštívili nabíjaciu stanicu v príslušný deň (epizódu) \cite{Li_2021}.
+% tento odsej je OK
+% Elektromobily, ktoré nabíjajú počas viac než jedného dňa (epizódy) sú odstránené z trénovacej aj testovacej množiny. 
+\subsection{Aproximovanie maximálnej entropickej odozvy}
+\label{subsection:mef:approximation}
+V tejto podsekcii opisujeme aký algoritmus učenia posilňovaním používame na aproximáciu maximálnej entropickej odozvy, aký optimalizačný problém algoritmus učenia posilňovaním rieši a opis generickej odmeňovacej funkcie pomocou ktorej dokáže algoritmus učenia posilňovaním aproximovať maximálnu entropickú odozvu. Popis algoritmu učenia posilňovaním, ktorý používame a priebeh učenia a opis generickej odmeňovacej funkcie sme prevzali z článkov \cite{Li_2021,haarnoja2018softactorcriticoffpolicymaximum}.
+% tento odsek je OK
+
+V praktických systémoch je presný výpočet maximálnej entropickej odozvy veľmi náročný. Preto my maximálnu entropickú odozvu aproximujeme pomocou algoritmu učenia posilňovaním založenom na aktér-kritik architektúre. Používame algoritmus hlbokého učenia posilňovaním SAC na aproximovanie maximálnej entropickej odozvy. Vykonávame off-policy učenie agregátorovej funkcie $\Psi_{SAC}$. Opis off-policy učenia je v článku \cite{haarnoja2018softactorcriticoffpolicymaximum}. Naučená agregátorova $\Psi_{SAC}$ vracia aproximovanú maximálnu entropickú odozvu $p_{t}$. Cieľom algoritmu SAC je optimalizovať politiku/agregátorovu funkciu $\Psi_{SAC}$, tým že sa maximalizuje $J(\Psi_{SAC})$
+\begin{equation}
+    J(\Psi_{SAC}) = \sum_{t=1}^{T} E_{(x_{t},u_{t},p_{t}) \sim p_{\Psi}}[r(x_{t}, u_{t}, p_{t}) + \alpha H(\Psi_{SAC}(\cdot | x_{t}))],
+\end{equation}
+kde $p_{\Psi}$ sú marginálne rozdelenia stavov a akcií z distribúcie trajektórií, ktorá je vyvolaná politikou $\Psi_{SAC}$. Parameter teploty $\alpha > 0$ vyvažuje dôležitosť odmeny $r(x_{t}, u_{t}, p_{t})$ a entropie $H(\Psi_{SAC}(\cdot | x_{t}))$. $E$ je očakávaná hodnota náhodných premenných.
+% dokoncit popisanie premennych tu
+Na úspešné aproximovanie maximálnej entropickej odozvy potrebujeme definovať vhodnú odmeňovaciu funckiu $r(x_{t}, u_{t}, p_{t})$. My používame odmeňovaciu funkciu 
+\begin{equation}
+    \label{reward:generic:function}
+    r(x_{t}, u_{t}, p_{t}) = H(p_{t}) + \sigma h(x_{t}, u_{t}, X_{t}, U_{t}),
+\end{equation}
+kde je dôležitý výraz $H(p_{t})$, lebo maximalizuje entropiu hustotnej funkcie $p_{t}$ na základe definície maximálnej entropickej odozvy. Premenná $\sigma$ je škála odmeny. Výraz 
+$\sigma h(x_{t}, u_{t}, X_{t}, U_{t})$ odmeňuje stav $x_{t} \in X_{t}$ a akciu $u_{t} \in U_{t}$ v prípade, keď sú splnené obmedzenia systému \eqref{chargingdecision:con3} a \eqref{chargingdecision:con4}. Zostávajúce obmedzenia  \eqref{chargingdecision:con1}, \eqref{chargingdecision:con2}, \eqref{chargingdecision:con5} sú vždy splnené zvolením vhodného jednoduchého plánovacieho algoritmu.
+
+% tj. $x_{t} \in X_{t}$  a $u_{t} \in U_{t}$. 
+Akcie a stavy, ktoré porušujú obmedzenia \eqref{chargingdecision:con3} a \eqref{chargingdecision:con4} sa trestajú. Odmeňovacia funkcia $r(x_{t}, u_{t}, p_{t})$ je nezávislá od cenových funkcií. Aproximovaná maximálnej entropická odozva môže byť odlišná od maximálnej entropickej odozvy v definovanej v sekcii \ref{mef:definition:section}. Napríklad ak si systémový operátor vyberie akciu $u_{t}$ s podmienenou pravdepodobnosťou $p_{t}^{*}(u_{t}) > 0$, pre každý čas $t$ tak nevieme zaručiť, že nebudú porušené obmedzenia systému, t. j. $u \in S$.                                                                                 
+Maximálna entropická odozva $p_{t}$ musí byť definovaná v pravdepodobnostnom simplexe P
+\begin{equation}
+    \label{simplex}
+    P := \{p \in R^{|U|}: p(u) \geq 0, u \in U,\sum_{u \in U}p(u) = 1 \}.
+\end{equation}                                                                                                                                              
+                                                
+% povedzme ze tato podsekcia 
+
+\subsection{Odmeňovacia funkcia}
+V tejto podsekcii opisujeme odmeňovaciu funkciu, ktorú sme použili v našom riešení.
+Pri návrhu a opise odmeňovacej funkcie sme sa inšpirovali článkami  \cite{Li_2021,Li_information_aggregation}.
+Prepokladáme, že odmeňovacia funkcia je nezávislá od cenových funkcií. Tvar odmeňovacej funkcie (ako špecifický príklad generickej odmeňovacej funkcie \eqref{reward:generic:function}), ktorú používame je
+\begin{gather*}
+    r(\text{Stav agregátora v čase $t$ = $x_{t}$}, \\
+    \text{Signál, ktorý systémový operátor poslal agregátorovi v čase $t$ = $u_{t}$},\\  
+    \text{Spätná odozva o flexibilite generovaná agregátorom v čase t = $p_{t}$}) = \\
+     = \text{entropia $p_{t}$} \\
+     + o_{1} \cdot \sum_{i \in N'}||s_{t}(i)||_{2}  \\
+     - o_{2} \cdot \sum_{i \in N'}(I(0 < d_{t}(i) \leq \Delta) \cdot (e_{t}(i) - s_{t}(i)) \\
+     - o_{3} \cdot |u_{t} - \sum_{i \in N'}s_{t}(i)|
+\end{gather*}
+% PPC vs PPC_t rozhodnut sa 
+kde plán nabíjania $s_{t}$ generujeme na základe signálu $u_{t}$ a $I(\cdot)$ je indikátorova funkcia a $N'$ je množina nabíjaných elektromobilov v čase $t$.
+Výrazom $||s_{t}(i)||_{2}$ rozumieme $l_{2}$-normu výrazu $s_{t}(i)$. Pre daný vektor $x$ je $l_{2}$-norma vektora $x$ (definovaná v dokumente \cite{normedspaces}) $||x||_{2} = (|x_{1}|^{p} + \dots + |x_{n}|^{p})^{\frac{1}{p}}$.
+
+Popis jednotlivých prvkov v odmene $r(x_{t}, u_{t}, p_{t})$:
+\begin{enumerate}
+    \item výraz je pažravá aproximácia definície maximálnej entropickej odozvy (maximálna entropická odozva je definovaná v sekcii \ref{mef:definition:section}). Pomocou tohoto výrazu dokážeme maximalizovať entropiu spätnej odozvy o flexibilite $p_{t}$.
+    \item výraz pomáha zväčšiť množstvo dodanej energie.
+    \item výraz zabezpečuje väčšie dodržiavanie obmedzenia \eqref{chargingdecision:con4}.Nedodanie požadovaného množstva energie do času odchodu je potrestané (t. j. stav a akcia sa trestajú).
+    \item výraz zabezpečuje väčšie dodržiavanie obmedzenia \eqref{chargingdecision:con3}. 
+\end{enumerate}
+Politika  konverguje pre širokú škálu parametrov $o_{1}, o_{2}, o_{3}$. Predpokladáme, že $o_{1}, o_{2}, o_{3} > 0$.
+% tato podsekcia je ok, ak nenajdem lepsie formulacie pre jednotlive prvky v odmene
+
+% it shouldnt be part of learning section like in book information aggregation
+
+% pridat ramping rates
+
+\section{Online penalizované prediktívné riadenie}
+\label{PPC:online:section}
+V tejto sekcii opisujeme algoritmus online penalizovaného prediktívneho riadenia, pomocou ktorého systémový operátor dokáže riešiť optimalizačný problém \eqref{offlineoptimisation:problem1}-\eqref{con:2}.
+Pri vývoji a opise algoritmu penalizovaného prediktívného riadenia sme sa inšpirovali publikáciami \cite{Li_2021,Li_information_aggregation}. 
+
+
+
+
+Algoritmus online penalizovaného predikívneho riadenia (PPC) dizajnuje systémový operátor. Algoritmus PPC je metóda založená na modelovom prediktívnom riadení (MPC) s penalizačným prvkom (aproximovanej) maximálnej entropickej odozvy $p^{*}_{t}$ v riešenom online optimalizačnom probléme
+\begin{gather}
+    \label{PPC:onlineopt}
+    u_{t}  = arg \underset{u_{t} \in U}{inf} (c_{t}(u_{t})  -  \beta log \, p^{*}_{t}  (u_{t} | u_{<t})),
+\end{gather}
+ktorý je ekvivalentný online verzii optimalizačnému problému \eqref{offlineoptimisation:problem1}-\eqref{con:2} pre $\beta > 0$. Ak $\beta = 0$, tak riešením optimalizačného problému je signál s najnižšou cenou, t. j. $u_{t} = 0$. 
+
+
+% Algoritmus online penalizovanej predikívnej kontroly pre čas $t$ označujeme $PPC_{t}$.
+\begin{figure}[H]
+\begin{lstlisting}[numbers=left,mathescape=true]
+$min_{u_{t}}$ = $\infty$
+for $u_{t}$ in $U$ do 
+    if $p^{*}_{t}(u_{t} | u_{<t}) > 0$ and $(c_{t}(u_{t}) - \beta log p^{*}_{t}(u_{t} | u_{<t})) < min_{u_{t}}$ do 
+        $min_{u_{t}}$ = $u_{t}$
+return $min_{u_{t}}$
+\end{lstlisting}
+\caption{Pseudokód online algoritmu PPC. }
+\end{figure}
+Ak je maximálna entropická odozva $p^{*}_{t}(u_{t} | u_{<t}) = 0$, tak potom je výraz $log_{e}p_{t}(u_{t} | u_{<t})$ nedefinovaný. Preto hodnoty $u_{t}$ pre ktoré platí $p_{t}(u_{t} | u_{<t}) = 0$, nie sú nikdy riešením optimalizačného problému \eqref{PPC:onlineopt}.
+% odseky po tialto v tejto sekcii su ok 
+
+% niekde popisat ze pt(u) a pt(u/u<t) je totozne mozno predtym 
+% spomenut parameter beta
+
+% Na základe priradenia \eqref{simplex} vieme, že ak pre nejaké $u_{t}$ platí $p^{*}_{t}(u_{t} | u_{<t}) = 1$, tak potom pre iné $u_{t}$ platí $p^{*}_{t}(u_{t} | u_{<t}) = 0$.
+% % kde v prípade, že ak vyberieme signál $u_{t}$ s flexibilitou $p_{t}(u_{t}) > 0$ pre každý čas $t$, tak je zabezpečené dodržiavanie obmedzení systému.
+% aj napisat kedy je system uskutocnitelny 
+
+Akcia $u_{t}$ v optimalizačnom probléme \eqref{PPC:onlineopt}, ktorá zabezpečuje najvyššiu spätnú odozvu o flexibilite $p^{*}_{t} (u_{t} | u_{<t})$ nemusí byť tá, ktorá vie minimalizovať cenu $c_{t}$ za nakúpenú energiu $u_{t}$. Platí to aj pre opačný prípad. Parameter $\beta$ používame na to, aby sme vybalancovali tieto dva ciele a našli signál $u_{t}$, ktorý minimalizuje kumulatívne náklady a zabezpečuje dodržanie obmedzení systému. Čím je vyvažovací parameter $\beta$ vyšší, tým vieme lepšie dodržať obmedzenia systému, ale za cenu vyšších nákladov za nakúpenú energiu. 
+
+
+\noindent
+Ak systémový operátor chce limitovať mieru sklonu tak zavedie operačné obmedzenie 
+\begin{equation}
+    |u_{t+1} - u_{t}| \leq \epsilon, t = 1, \dots, T,
+\end{equation}
+kde $\epsilon \in R^{+}$ je limit miery sklonu. Systémový operátor dokáže aj limitovať najvyššiu odkúpenú energiu v čase
+\begin{equation}
+    u_{t} \leq \gamma, t = 1, \dots, T,
+\end{equation}
+kde $\gamma \in R^{+}$ je limit na najvyššiu odkúpenú energiu v čase.
+
+% tato sekcia je OK
+% to secure feasibility
+\section{Systém uzavretej slučky}
+\label{closed-loop-system:section}
+% system uzavreteho cyklu 
+V tejto subsekcii opisujeme systém uzavretej slučky, ktorý používame na riešenie optimizačného problému \eqref{onlineoptimisation:problem:aim}-\eqref{transition:remaining_timechange}. Pri dizajnovaní a opise systému uzavretej slučky sme sa inšpirovali článkami \cite{Li_information_aggregation,Li_2021}. 
+
+Systém uzavretej slučky je každý systém, ktorý dokáže reagovat na zmeny a samostatne spraviť korekcie chýb na základe spätnej odozvy \cite{closed-and-open-loop}. Na začiatku systému uzavretej slučky v každom čase $t \in \{1, \dots, T\}$ generuje systémový operátor signál $u_{t} \in U$ pomocou algoritmu PPC (opísaný v sekcií \ref{PPC:online:section}). Signál $u_{t}$ vygeneruje systémový operátor základe pravdepodobnostného vektora $p_{t} \in P$ s dĺžkou $|U|$ a cenovej funkcie $c_{t}$.
+
+
+Cenu za kúpu energie $u_{t}$ si zahrnie systémový operátor v svojich kumulatívnych nákladoch $C_{t}$. Potom agregátor
+ zmení svoj stav $x_{t}$ v čase $t$ na stav $x_{t + 1}$. Zmena stavu pozostáva z viacerých krokov:
+\begin{enumerate}
+    \item Agregátor zaznamená vo svojom stave $x_{t}$ príchod nových elektromobilov v čase $t + 1$. Takýmto elektromobilom pridelí voľné nabíjačky. V nami definovanom modeli systému predpokladáme, že vždy dostatok voľných nabíjačok pre prichádzajúce elektromobily. 
+    \item Agregátor vygeneruje plán nabíjania $s_{t}$ pre čas $t$ pomocou plánovacieho algoritmu $\pi$ a na základe signálu $u_{t}$. Každému aktívnem (pripojenému) elektromobilu $i$ dodá $s_{t}(i) \in R^{+}$ energie. Agregátor zmení svoj stav z $x_{t}$ na $x_{t + 1}$ pomocou deterministickej prechodovej funkcie $f_{t}$, ktorá aktualizuje stav každého nabíjaného elektromobilu $i \in N'$
+    \begin{gather*}
+        e_{t}(i) = e_{t - 1}(i) - s_{t}(i), \\
+        d_{t}(i) = d_{t - 1}(i) - \Delta,
+    \end{gather*}
+    kde $e_{t}(i)$ je zostávajúce množstvo požadovanej energie elektromobilu $i$ v čase $t$, $d_{t}(i)$ je zostávajúci čas nabíjania (v hodinách) elektromobilu $i$ v čase $t$.
+    \item Agregátor zaznamená vo svojom stave $x_{t + 1}$ odchod elektromobilov v čase $t$. Každý elektromobily $i$ odíde z nabíjacej stanice v čase $t + 1$, ak $d_{t}(i) - \Delta = d_{t + 1}(i) = 0$. 
+\end{enumerate}
+Stav $x_{t}$ sa v implementácii odlišuje od stavu $x_{t}$ opísaného v sekcii \ref{sysmodel:solution} tým, že stav agregátora $x_{t}$ je vektor stavov všetkých nabíjačiek. Ak na nabíjačku nie je pripojený žiaden elektromobil, tak stav nabíjačky je $(0,0)$. Ak je na nabíjačku pripojený elektromobil $i$ v čase $t$, tak jej stav je $(d_{t}(i), e_{t}(i))$.
+
+
+
+V poslednom kroku systému v čase $t$ agregátor sa učí alebo generuje flexibilitu $p_{t + 1}$ na základe predchádzajúcich signálov $u_{<t}$. Potom agregátor posiela spätnú odozvu o flexibilite  $p_{t + 1}$ systémovému operátorovi a cyklus sa opakuje.
+\begin{figure}[H]
+\begin{lstlisting}[numbers=left,mathescape=true]
+$p_{1} = [0]^{|U|}$
+$p_{1}^{(1)} = 1$
+$x_{1}^{(k)} = (0,0), \, k \in K$
+$K_{v} = K$
+for $t$ in $1,\dots, T$ do
+    $u_{t}$ = PPC($p_{t}, c_{t}$)
+    $C_{t} = C_{t-1} + c_{t}u_{t}$
+    for $i$ in $N$ do
+        if $t < a(i) \leq t + 1$ and $\exists k \in K_{v}$ then 
+            $x_{t}^{(k)} = (d(i) - t, e(i))$
+            $K_{v} = K_{v} \setminus \{k\}$
+    $s_{t} = \pi(x_{t}, u_{t})$
+    $K_{o} = K \setminus K_{v}$
+    for $k$ in $K_{o}$ do 
+        if $0 < x_{t}^{(k)}(1) \leq \Delta$ do 
+            $x_{t + 1}^{(k)} = (0, 0)$
+            $K_{v} = K_{v} \cup \{i\}$
+        else 
+            $x_{t + 1}^{(i)}(1) = x_{t}^{(k)}(1) - \Delta$
+            $x_{t + 1}^{(i)}(2) = x_{t}^{(k)}(2) - s_{t}(i)$
+
+    $p_{t + 1} = \Psi_{SAC}(x_{t + 1})$
+return $C_{t}$
+\end{lstlisting}
+\caption[Pseudokód systému uzavretej slučky.]{Pseudokód systému uzavretej slučky. Premenná $K_{v}$ vyjadruje voľné nabíjačky a premenná $K_{o}$ vyjadruje obsadené nabíjačky. Tento systém sme dizajnovali na základe článkov \cite{Li_information_aggregation,Li_2021}.}
+\end{figure}
+% TODO: vysvetlit co je to closed loop system z niekadial 
+
+
+% \begin{lstlisting}[mathescape=true]
+%     for t in $1, \dots, T$:
+%         $u_t = \text{PPC}(p_t, c_t)$
+%         $C_t = C_{t - 1} + c_t(u_t)$
+%         \texttt{if} $a(i) = t$ \texttt{and} $\exists m \in M$ \texttt{then}
+%             $x_t^{(i)} = (d(i) - t, e(j))$
+%         $x_{t + 1} = f_t(x_t, u_t)$
+%         $p_{t + 1} = \Psi_{\text{SAC}}(x_{t + 1})$
+%     \end{lstlisting}
+% \begin{lstlisting}[mathescape]
+%     for t in $1, \dots, T$ do
+%         $u_{t} = \text{PPC}(u_{t}, c_{t})$
+%         $C_{t} = C_{t} + c_{t}(u_{t})$
+        
+%         for i in $1, \dots, N$ do
+%             if $t = a(i)$ and $\exists j \in M$ then
+%             end if
+            
+%         for m in $M$ do
+%             $d_{t}(i), e_{t}(i) = x_{t}^{(m)}$
+            
+%             if $d_{t}(i) == 0$ then
+%                 $x_{t}^{(j)} = (0, 0)$
+%             else
+%                 $x_{t}^{(j)} = x_{t}^{(j)} - (\delta, s_{t}(m))$
+%             end if
+%         end for
+%     end for
+%     \end{lstlisting}
+% \begin{lstlisting}[mathescape]
+% for t in $1, \dots, T$ do
+%     for i in $1,\dots, N$ do 
+%         if $t = a(i)$ and $\exists m \in M$ then
+%             $x_{t}^{(m)} = (d(i) - t, e(i))$
+%         end 
+%     end   
+% end
+% \end{lstlisting}
+% d
+
+Predpokladáme, že v systéme uzavretej slučky v každom čase $t$ agregátor vie len o stavoch $(x_{1},\dots,x_{t})$, prechodových funkciách $(f_{1},\dots, f_{T})$ a signáloch $(u_{1}, \dots, u_{t})$. Systémový operátor v každom čase $t$ vie len o cenových funkciách $(c_{1}, \dots, c_{t})$ a spätných odozvách flexibility $(p_{1},\dots, p_{t})$.
+
+
+
+% vyzera byt ok sekcia
+
+% Začiatočný stav agregátora $x_{1}$ je prázdny list a flexibilita $p_{1}$ sú nulové vektor. Platí, že akcia $u_{1} = 0$. 
+
+
+% pridat odkaz na reward function
+
+
+
+% Predpokladáme, že cenová funkcia $c(\cdot) : R^{+} \rightarrow R^{+}$ je pre každé $t = 1,\dots, T$:
+% \begin{equation*}
+%     |c_{t}(u) - c_{t}(v)| \leq L_{c} || u - v ||_{2} \forall u,v \in U,t \in \mathcal{T}  
+% \end{equation*}
+
+
+% Definícia maximálnej entropickej odozvy. Ak sú podmienené hustotné funkcie $(p_{1}^{*}, \dots, p_{T}^{*})$ unikátnym riešením optimalizačného problému odkaz, tak potom každa z podmienena hustotna funkcia $p_{t}^{*}, t \in \{1,\dots,T\}$ je maximálna entropická odozva. 
+
+
+
+
+
+
+
+
+% We assume that state $x_{1}, p_{1}$ are all-zero state vectors and $u_{1} = 0$.
+% The description of closed loop system is as follows. 
+
+% At each timestep system operator generates signal $u_{t}$ via online PPC algorithm given costs $c_{t}$ and flexibility $p_{t}$  and sends it to the aggregator. The overall charging costs $C_{t}$ for time $t$ are updated and aggregator state $x_{t}$ is also updated (based on previous aggregator state and signal $u_{t}$) to state $x_{t + 1}$. To update aggregator state we use transition function $f_{t}$ (formulated here: \ref{transitionfun:definition}). Aggregator makes charging decisions $s_{t} = \pi_{t}(u_{t}) = (s_{t}(1), \dots, s_{t}(N))$ determined by a scheduling policy $\pi_{t}$ given signal $u_{t}$. Aggregator then updates aggregator state given these charging decisions and time unit $\Delta$. Constraints on charging decisions are \eqref{chargingdecision:con1}-\eqref{chargingdecision:con5}. We train an agent via model-free deep RL algorithm $\Psi_{SAC}$ whose input at time $t \in \{1, \dots, T\}$ is a state $x_{t}$ and output is the flexibility for next timestep $p_{t + 1}$. A pseudo-code of the algorithm description is below:
+
+% \begin{lstlisting}[mathescape=true] 
+%     for t in $1, \dots, T$:
+%      Operator (Central Controller)
+%          Generate actions using PPC:
+%              $u_{t} = \phi_{t}(p_{t},c_{t})$
+%              $C_{t} = C_{t - 1} + c_{t}(u_{t})$
+%      Aggregator (Local Controller)
+%          Update system state:
+%              $x_{t + 1} = f_{t}(x_{t}, u_{t})$
+%          Compute estimated MEF:
+%              $p_{t + 1} = \Psi_{SAC}(x_{t + 1})$         
+%  \end{lstlisting}
+
+\section{Proces testovania}
+\label{testing:process}
+S naučenou agregátorovou funkciou $\Psi_{SAC}: X \rightarrow P$, ktorá na základe stavu agregátora generuje aproximáciu maximálnej entropickej odozvy (ktorá sa odlišuje od definovanej maximálnej entropickej odozvy definovanej v \ref{mef:definition:section}) vieme aplikovať systém uzavretej slučky v reálnom čase na riešenie optimalizačného problému \eqref{onlineoptimisation:problem:aim}-\eqref{transition:remaining_timechange}. Ide o totožný systém uzavretej slučky ako v sekcii \ref{closed-loop-system:section}. Agregátorova funkcia $\Psi_{SAC}$ je parametrizovaná hlbokou neurónovou sieťou.
+% \subsection{Cenová funkcia počas testovania}
+% Skutočné ceny elektriny na trhu v 25. Októbra 2024.
+% Skutočné lokálne marginálne ceny LMPs (local marginal prices) na CAISO (California Independent System Operator) day ahead trhu v 2016. 
+
+
+
+
+ \section{Jednoduché online plánovacie algoritmy}
+ \label{trivial-scheduling-algs}
+ % correct the constraints references
+ V tejto sekcii sa opisujeme vybrané jednoduché online plánovacie algoritmy. Jednoduché online plánovacie algoritmy least-laxity-first a earliest-deadline-first opisujeme v podsekcii \ref{trivial-scheduling-algs:llf-edf}. Jednoduchý online plánovací algoritmus smoothed least-laxity-first opisujeme v podsekcii \ref{trivial-scheduling-algs:sllf}.
+ Každý online plánovací algoritmus  musí zabezpečiť platnosť obmedzení: \eqref{chargingdecision:con1},\eqref{chargingdecision:con2},\eqref{chargingdecision:con5}. Jednoduché plánovacie algoritmy označujeme grécky písmenom $\pi$. Vstupom do každého plánovacieho algoritmu $\pi$ je stav agregátora $x_{t}$ a energia $u_{t}$ v čase $t$. Výstupom plánovacieho algoritmu je plán nabíjania $s_{t}$  elektromobilov pre čas $t$ \cite{Li_2021}. 
+ 
+%  ok odsek vyssie 
+ \subsection{Least-Laxity-First}
+ \label{trivial-scheduling-algs:llf-edf}
+
+ V tejto podsekcii opisujeme jednoduché online algoritmy least-laxity-first a earliest-deadline-first.
+ Opis algoritmov least-laxity-first a earliest-deadline-first čerpáme z publikácii \cite{lee2021adaptivephd, chen2021smoothed, chen2017smoothed}. 
+ 
+%  ok odsek vyssie
+ % input: active (connected) EVs
+ % (as list of tuples (arrival, departure, requested energy, maximum charging rate)
+%  popisat blizsie algoritmus LLF este tu
+
+%  Algoritmusleast-laxity-first(LLF)jeonlineplánovacíalgoritmus.Kroky algoritmu LLF sú nasledovné:
+%  1. zoradenieaktívnychEVpodľadanejmetriky(zoradímepodľalaxnostivovzostupnomporadí)
+%  2. ichspracovanievtakomto poradí
+
+
+%  3. každému elektrickému vozidlu je pridelená maximálna možná rýchlosť nabíjania(vypočítanápomocoubisectionalg,keďžepriradeniavšetkým predchádzajúcim elektrickým vozidlám sú fixné)
+% V tomto kontexte je uskutočniteľná rýchlosť nabíjania taká, ktoránespôsobuje porušenie infraštuktúrneho obmedzenia a je nižšia ako maximálna rýchlosť nabíjania. Primárnym cieľom týchto najmenších rýchlostí je maximalizovať priepustnosť. [2]
+% NižšieuvedenýkódjemojaimplementáciaalgoritmuLLF.
+Algoritmus least-laxity-first (LLF) je online plánovací algoritmus. Hlavným cieľom algoritmov least-laxity-first a earliest-deadline-first je maximalizovať množstvo nabitej energie. Kroky algoritmu LLF sú nasledovné:
+
+ \begin{enumerate}
+     \item zoradenie pripojených (aktívnych) elektromobilov podľa laxity vo vzostupnom poradí \label{llf:step1}
+     \item spracovávať nabíjanie elektromobilov v takomto poradí \label{llf:step2}
+     \item každému pripojenému elektromobilu $i \in N'$ je pridelená maximálna uskutočniteľná rýchlosť nabíjania $s_{t}(i)$ v čase $t$. Maximálnu uskutočniteľnú rýchlosť nabíjania $s_{t}(i)$ vypočítame pomocou bisekcie. Postupne v danom poradí agregátor dodáva dostupnú energiu $u_{t}$ elektromobilom. \label{llf:step3}
+    %  Elektromobilom s nižšou laxitou sme už dodali energiu, a preto je zostávajúca kapacita $P_{t}$ v čase $t$ nižšia po aplikovaní každej daľšej bisekcie. 
+ \end{enumerate}
+ 
+Výpočet laxity sa nachádza v kapitole \ref{chapter:experimenty}.
+ V tomto kontexte je maximálna uskutočniteľná rýchlosť nabíjania $s_{t}(i)$ taká, ktorá neporušuje obmedzenie
+ \begin{gather}
+    \sum_{i \in N} s_{t}(i) \leq u_{t}, t = 1, \dots, T,
+\end{gather}
+ a je nižšia ako maximálna rýchlosť nabíjania $r(i)$ v algoritme LLF (pozri obmedzenie \eqref{chargingdecision:con5}).  
+%  maximise throughput
+% po tialto je tato kapitola ok 
+
+
+%  language=C, numbers=left, numberstyle=\tiny, frame=single, basicstyle=\ttfamily
+\begin{figure}[H]
+\begin{lstlisting}[mathescape,numbers=left] 
+$P_{t} = u_{t}$
+sorted_active_evs = sort($N'$,key=laxity)
+for i in sorted_active_evs do
+    $s_{t}(i)$ = bisection($r(i)$,$P_{t}$,$e_{t}(i)$)      
+    $P_{t} = P_{t} - s_{t}(i)$ 
+return $s_{t}$
+\end{lstlisting}
+\caption[Pseudokód algoritmu LLF pre jeden časový krok.]{Pseudokód algoritmu LLF pre jeden časový krok $t \in \mathcal{T}$. }
+\label{llf:pseudoalgorithm}
+\end{figure}
+% check the algorithm too if u didnt have a bit different 
+Premenná sorted\_active\_evs na obrázku \ref{llf:pseudoalgorithm} je množina pripojených elektromobilov v čase $t$ usporiadaná od elektromobilov s najnižšou laxitou po elektromobily s najvyššou laxitou v čase $t$.
+
+Tolerovateľná chyba bisekčnej metódy je $\epsilon =1 \cdot 10^{-4}$. Bisekčnú metódu vykonáva agregátor pre každý elektromobil zvlášť. Dolná hranica optimalizovanej premennej $s_{t}(i)$ je $0$. Horná hranica optimalizovanej premennej $s_{t}(i)$ je $min(r(i),e_{t}(i))$ pre elektromobil $i \in N'$. Na obrázku \ref{llf:bisection} je $lb$ dolná hranica optimalizovanej premennej a $ub$ horná hranica optimalizovanej premennej. 
+% Horná hranica je min(maximálna rýchlosť nabíjania,zostávajúca
+% požadovaná energia v čase t). 
+Bisekčná metóda vracia je maximálna realizovateľná rýchlosť nabíjania $s_{t}(i)$, ktorá je striktne nižšia ako maximálna rýchlosť nabíjania $r(i)$ a neporušuje obmedzenia infraštruktúry.
+ 
+\begin{figure}[H]
+ \begin{lstlisting}[mathescape,numbers=left]
+$\epsilon = 1 \cdot 10^{-4}$ 
+$lb = 0$
+$ub = min(r(i), e_{t}(i))$ 
+while $|ub - lb| > \epsilon$ do
+    $s_{t}(i) = (ub + lb) / 2$
+    if $s_{t}(i) > P_{t}$ then
+        $ub = s_{t}(i)$
+    else
+        $lb = s_{t}(i)$
+$s_{t}(i) = lb$
+return $s_{t}(i)$
+ \end{lstlisting}
+ \caption[Pseudokód bisekčnej metódy používanej v algoritme LLF]{Pseudokód bisekčnej metódy používanej v algoritme LLF. Bisekčnú metódu sme navrhli na základe inšpirácie z článku \cite{Chen2014ElectricVCbisection}.}
+ \label{llf:bisection}
+\end{figure}
+ 
+Algoritmus earliest-deadline-first funguje na rovnakom princípe ako least-laxity-first, s tým rozdielom, že algoritmus earliest-deadline-first triedi elektromobily v kroku \ref{llf:step1} od elektromobilov s najskoršími odchodmi po elektromobily s najneskoršími odchodmi.
+
+ 
+%  ja alebo my
+ \subsection{Smoothed Least-Laxity-First}
+ \label{trivial-scheduling-algs:sllf}
+ V tejto podsekcii opisujeme jednoduchý plánovací algoritmus smoothed least-laxity-first.
+ Opis algoritmu smoothed least-laxity-first (sLLF) sme prevzali z publikácií \cite{chen2021smoothed,chen2017smoothed}.
+%  PRECO JE VYLEPSENIM
+ 
+
+ Algoritmus smoothed least-laxity-first je online algoritmus, ktorý je vylepšením algoritmu least-laxity-first. Vylepšenie smoothed least-laxity-first oproti klasickému least-laxity-first spočíva v tom, že smoothed least-laxity-first nemá nepotrebné oscilácie/výkyvy v rýchlosti nabíjania elektromobilov. Oscilácie v rýchlosti nabíjania elektromobilov možu skrátiť životnosť niektorých batérii elektromobilov (napríklad batéria Li-on).  
+ 
+ 
+ Prístup použitý v algoritme sLLF sa zameriava na maximalizáciu minimálnej laxity spomedzi všetkých elektromobilov t. j. $ max_{s_{1:T}} min_{i \in N}l_{T}(i)$. Premenných $s_{1:T} = \{s_{t}(i) | \, i \in N, \, t = 1,\dots, T\}$, ktoré sú riešením optimalizačného problému $ max_{s_{1:T}}min_{i \in N}l_{T}(i)$ môže byť viacero. Vyriešením následujúceho offline optimalizačného problému dokážeme nájsť unikátne riešenie $s_{1:T}$ také, ktoré je aj riešením optimalizačného problému $max_{s_{1:T}} min_{i \in N}l_{T}(i)$
+ \begin{gather}
+    %  \tag{sllf1}
+     \label{sllf:eq1}
+ s_{1:T} = \underset{s_{1:T}}{arg max} \sum_{i \in N} r(i) \cdot q(l_{T}(i)) \\
+ \notag
+ \text{vzhľadom na:} \\
+ \notag
+ \eqref{chargingdecision:con1}, \eqref{chargingdecision:con2}, \eqref{chargingdecision:con5}, \\
+ \label{sllf:eq2}
+ \sum_{i \in N} s_{t}(i) \leq u_{t}, t = 1, \dots, T, \\
+ \label{sllf:eq3}
+ \sum_{t=1}^{T} s_{t}(i) \leq e(i), i  \in N. 
+ \end{gather}
+ Kde $q$ je dvojito diferencovateľná, striktne konkávna a monotónne rastúca funkcia. Premenná $l_{T}(i)$ je laxita elektromobilu $i$ v čase $T$ a premenná $r(i)$ je maximálna rýchlosť nabíjania elektromobilu $i$.
+ 
+ 
+ 
+ Jednoduchý plánovací algoritmus sLLF je online algoritmus, a preto nedisponuje informáciami o príchodoch budúcich elektromobilov. Z toho dôvodu je potrebné aproximovať riešenie offline optimalizačného problému \eqref{sllf:eq1}-\eqref{sllf:eq3} pomocou online optimalizačného problému. Tvar online optimalizačného problému, ktorý rieši online algoritmus sLLF v každom čase $t \in \mathcal{T}$ je
+%  subscript is time always
+ \begin{gather}
+    %  \tag{sllf3}
+    \label{sllf_online_optimisation_problem} 
+    \underset{s_{t}}{max} \sum_{i \in N'} r(i) \cdot q(l_{t + 1}(i)) \\
+     \notag
+     \text{vzhľadom na:} \\
+     \notag
+     \eqref{chargingdecision:con1}, \eqref{chargingdecision:con2}, \eqref{chargingdecision:con5}, \\
+     \label{sllf_online_optimisation_problem2} 
+     \sum_{i \in N} s_{t}(i) \leq u_{t}, t = 1, \dots, T, \\
+     \label{sllf_online_optimisation_problem3} 
+     s_{t}(i) \leq e_{t}(i), i \in N'.
+ \end{gather}
+ Kde $e_{t}(i)$ je zostávajúce množstvo požadovanej energie pre elektromobil $i$ v čase $t$. 
+ Optimalizačný problém \eqref{sllf_online_optimisation_problem}-\eqref{sllf_online_optimisation_problem3} maximalizuje minimálnu laxitu pre budúci časový krok $t + 1$, t. j. $max_{s_{t}} min_{i \in N'}l_{t + 1}(i)$. Riešením optimalizačného problému \eqref{sllf_online_optimisation_problem}-\eqref{sllf_online_optimisation_problem2} je 
+
+ \begin{equation}
+     \label{sllf:eq5}
+     s_{t}^{*}(i) = [r(i) \cdot (L_{t} - l_{t}(i) + 1)]_{0}^{min(e_{t}(i), r(i))}, i \in N'.
+ \end{equation}
+ Výraz $[x]_{a}^{b}$ je projekcia skalára na interval $[a,b]$. To znamená, že ak $x > b$ tak hodnota projekcie $x$ na interval $[a, b]$ bude $x = b$ a ak $x < a$ tak analogicky $x = a$.
+Premenná $s_{t}^{*}$ je výsledný plán nabíjania $s_{t}$ 
+ \begin{gather}
+     \sum_{i \in N'} s_{t}^{*}(i) = min(u_{t}, \sum_{i \in N'} min(r(i), e_{t}(i))).
+ \end{gather}
+ 
+ Na nájdenie optimálnej hodnoty $L_{t}$ agregátor využíva binárne vyhľadávanie (bisekciu). Po zistení hodnoty $L_{t}$ agregátor vypočíta plán nabíjania $s_{t}$ všetkých aktívnych elektromobilov. 
+%  kod sa este bude menit lebo som pisal verziu pre observation
+ \begin{figure}[H]
+ \begin{lstlisting}[mathescape=true]
+
+$L_{t} = bisection(N', u_{t})$
+for $i$ in $N'$ do
+    $s_{t}(i) = [r(i) \cdot (L_{t} - l_{t}(i) + 1)]_{0}^{min(e_{t}(i), r(i))}$
+return $s_{t}$
+ \end{lstlisting}
+ \caption[Pseudokód algoritmu sLLF pre jeden časový krok.]{Pseudokód algoritmu sLLF pre jeden časový krok $t \in \mathcal{T}$.}
+\end{figure}
+
+ % explain bisection in sLLF and sLLF
+ 
+
+ Počiatočnú hodnotu dolnej hranice v bisekcii (premenná $lb$ na obrázku \ref{sllf:bisection}) je hodnota premennej $L_{t}$, ktoré zabezpečí, že sa nebude nabíjať žiadny elektromobil. Počiatočnú hodnotu hornej hranice v bisekcii (premenná $ub$ na obrázku \ref{sllf:bisection}) je hodnota premmenej $L_{t}$, ktorá zabezpečí, že sa všetky aktívne elektromobili budú nabíjať čo najviac energie. Následne bisekčná metóda hľadá optimálnu $L_{t}$ pre ktorú $s_{t}^{*}$ neporušuje obmedzenia infraštruktúry. Bisekčná metóda na konci vráti aktualizovanú dolnú hranicu $L_{t}$ ako optimálnu $L_{t}$, lebo je overené pomocou bisekcie, že spĺňa obmedzenia infraštruktúry. Premenná $\epsilon$ je tolerovateľná chyba a nastavujeme ju na hodnotu $1 \cdot 10^{-4}$. 
+
+ \begin{figure}[H]
+ \begin{lstlisting}[mathescape=true]
+$\epsilon = 1 \cdot 10^{-4}$
+$ub = max(\{l_{t}(i)| i \in N' \})$
+$lb = min(\{l_{t}(i) | i \in N'\}) -1$
+while $|ub - lb| > \epsilon$ do
+    $L_{t} = (ub - lb)/2$
+    if $\sum_{i \in N'}[r(i) \cdot (L_{t} - l_{t}(i) + 1)]_{0}^{min(e_{t}(i), r(i))}> u_{t}$ do 
+         $ub = L_{t}$
+    else
+         $lb = L_{t}$
+$L_{t} = lb$
+return $L_{t}$
+ \end{lstlisting}
+ \caption[Kód bisekčnej metódy používanej v algoritme sLLF.]{Kód bisekčnej metódy používanej v algoritme sLLF. Bisekčnú metódu sme navrhli na základe inšpirácie z článku \cite{Chen2014ElectricVCbisection}.}
+ \label{sllf:bisection}
+\end{figure}
+% text po tialto v tejto sekcii by mal byt ok, raz za cas checknut, mozno tam je chyba
+
+
+\section{Offline optimálny algoritmus}
+\label{offline:optimal}
+V tejto sekcii predstavujeme offline optimálny algoritmus, aký optimalizačný problém rieši a za akých predpokladov (inšpirovali sme sa opismi offline optimálneho algoritmu v článkoch \cite{Li_2021,chen2021smoothed,offlineoptimal}). Offline optimálny algoritmus disponuje informáciami o príchodoch budúcich elektromobiloch, vrátane ich požadovanej energie, času odchodu a maximálnej rýchlosti nabíjania. Budúce ceny za nabíjanie musia byť offline optimálnemu algoritmu známe, aby vyriešil offline optimalizačný problém. Offline optimálny algoritmus rieši optimalizačný problém
+
+\begin{gather}
+    \label{offline-optimal:optimisation1}
+    s_{1:T} = \sum_{t=1}^{T} c_{t}(\sum_{i \in N}s_{t}(i)) \\
+    \notag
+    \text{vzhľadom na:} \\
+    s_{t}(i) = 0,t < a(i), \, i \in N, \, t = 1,\dots,T,  \\
+    s_{t}(i) = 0,t > d(i), \, i \in N, \, t = 1,\dots,T, \\
+    \sum_{i \in N} s_{t}(i) = u_{t}, \, t = 1, \dots, T,  \\
+    \sum_{t=1}^{T} s_{t}(i) =  e(i), \, i \in N, \\
+    \label{offline-optimal:optimisation-last}
+    0 \leq s_{t}(i) \leq r(i), \, t = 1, \dots, T,
+    \end{gather}
+kde optimalizovaná premenná $s_{1:T} = (s_{1}, \dots, s_{T})$ je plán nabíjania všetkých elektromobilov pre (optimalizačný) časový horizont $t = 1,\dots, T$. Optimalizačný problém \eqref{offline-optimal:optimisation1}-\eqref{offline-optimal:optimisation-last} je rovnaký ako optimalizačný problém \eqref{onlineoptimisation:problem:aim}-\eqref{transition:remaining_timechange}.
+
+
+
+%  a parameter $0 \leq \gamma \leq 1$. Parameter $\gamma$ určuje pomer dodanej energie k nedodanej energii. Keď je $\gamma=0$, tak sme nedodali žiadnu energiu elektromobilom. Ak je $\gamma=1$, tak sme dodali celú požadovanú energiu elektromobilom.
+
+
+Agregátor rieši optimalizačný problém \eqref{offline-optimal:optimisation1}-\eqref{offline-optimal:optimisation-last} pomocou offline optimálného algoritmu. Predpokladáme, že riešenie  optimalizačného problému  \eqref{offline-optimal:optimisation1}-\eqref{offline-optimal:optimisation-last} nezahŕňa koordináciu agregátora a systémového operátora. 
+
+% tato sekcia je ok
+%  Vyžadujeme, aby $u_{t} \leq 150$. Predpokladáme, že riešenie  optimalizačného problému nezahŕňa koordináciu agregátora a systémového operátora. Na zjednodušenie výpočtov offline optimálneho algoritmu vyžadujeme aby premenná $u_{t}$ bola akékoľvek reálne číslo od 0 po 150. 
+
+
+%  Metóda ktorá generuje plán nabíjania na základe aktívnych elektromobilov a hodnoty L(t) je:
+%  \begin{verbatim}
+%  get_schedule
+%  input:active_EVs, L_t, ev_laxities
+%  schedule = []
+%  for ev in active_EVs:
+%      ev_charging_rate = maximum_charging_rate * (L_t - ev_laxities[i] + 1)
+%      schedule.append(ev_charging_rate)
+%  return schedule
+%  \end{verbatim}
+
+
+% \section{Hyperparametre}
+% Hyperparametre, ktoré nastavujeme pred začatím procesov učenia a testovania agentov preberáme z článkov \cite{Li_2021} a \cite{haarnoja2018softactorcriticoffpolicymaximum}.
+% % daj zdroj aj na clanok s rhc
+% List hyperparametrov, ktoré nastavujeme v algoritme SAC je nižšie. Tieto hyperparemetre nemeníme v experimentoch:
+% \begin{enumerate}
+%     \item Optimizátor = Adam
+%     \item Rýchlosť učenia = $3 \cdot 10^{-4}$ 
+%     \item Veľkosť replay buffra = $10^{6}$  
+%     \item Počet skrytých vrstiev (pre všetky neurónové siete) = $2$
+%     \item Množstvo neurónov pre každú skrytú vrstvu = $256$
+%     \item Množstvo vzoriek pre každú  minidávku = $256$
+%     \item Aktivačná funkcia na zabezpečenie nelinearity = ReLU
+%     \item Zľavový faktor $(\alpha)$= 0.5 
+%     \item  Cieľový vyhladzovací koeficient ($\tau$) =   $5\cdot 10^{-3}$
+%     \item  Kroky gradientu = $1$
+%     \item Cieľový interval aktualizácie = $1$ \\ \\
+% \end{enumerate} 
+
+
+% List zvyšných hyperparametrov, ktoré nastavujeme v nami implementovaných metódach a v nami implementovanom prostredí sú:
+% \begin{enumerate}
+%     \item Vyhladzovací parameter $\beta$ = $6 \cdot 10^{3}$ (platí, že $\beta \in [1 \cdot 10^{3}, 1 \cdot 10^{6}]$) 
+%     \item Horné ohraničenie množiny $U$ = 150 kW 
+%     \item Parameter teploty $(\alpha)$ = 0.5
+%     \item Plánovacie algoritmy = LLF/sLLF
+%     \item Počet trénovacích episód = 500 % 6000 is also used but with other parameters
+%     \item Laxita = $d_{t}(j) - \frac{e_{t}(j)}{r(j)}$
+%     \item Algoritmus učenia posilňovaním = SAC
+%     \item Maximálna rýchlosť nabíjania pre každý elektromobil = 6.6kW 
+%     \item Časový interval $\Delta$ = 12 minút 
+%     \item Akčný priestor prostredia (pozostáva z pt’s) = $[0, 1]^{10}$ (or $[0, 1]^{|U|})$ (the range of each of 10 elements of action space is from 0 to 1). The outputs of NN are clipped into the probability simplex P(=MEF space) afterwards.
+%     \item RL observation space (consisting of $x_{t}’s$ and time) vector = . 
+%     \begin{gather*}
+%         [e_{t}(i=1), [d_{i=1} - t]^{+}, \dots, e_{t}(i=N'), [d_{i=N'} - t]^{+}, t ] \\
+%         e_{t} \in [0, 100] \\
+%         [d_{i=1} - t]^{+} \in [0, 24] \\
+%         t \in [0, 24]
+%     \end{gather*}
+% \end{enumerate}
+
+% we dont directly learn disaggregation of u_t -> too big action space
+
+% The replay buffer only gets used during training. Once you have completed the training process you simply use on-policy to select the optimal action.
+% TODO get a general idea what SAC algorithm does
+% the aggregator state xt at time t [T] is
+% a collection of length-2 vectors $(d_{t}(j)e_{t}(j) : a(j) \leq t \leq d(j))$ of connected EVs. Here $d_{t}(j)$ denotes remaining charging time $0 \leq d_{t}(j) \leq T$ and $0 \leq e_{t}(j)$ the remaining energy to be charged.
+
+
+
+
+
+
+
+
+% V tejto kapitole vysvetľujeme ako prebieha komunikácia medzi agregátorom a systémovým operátorom v našom navrhovanom modeli. Taktiež rozoberáme, ako prebieha triedenie a iné operácie, ktoré sa vykonávajú v našom navrhovanom modeli.
+% V tejto kapitole predstavujeme návrh modelu práce agregátora, ktorý rieši cieľ práce \ref{ciel-prace}. V tejto kapitole spomíname dva algoritmy, ktoré vieme kombinovať v našom riešení na to, aby sme získali požadované výsledky v experimentoch.
+% V tejto kapitole popisujeme navrhnuté riešenie optimalizačného problému dodania maximálneho množstva požadovanej energie elektromobilom pri zachovaní obmedzení infraštruktúry nabíjacej siete.
+% mam specifikovat co presne som pridal???
 
 
 
@@ -19,42 +680,292 @@ V tejto kapitole popisujeme navrhnuté riešenie optimalizačného problému dod
 % Vstupom všetkých scheduling algoritmov je množina elektromobilov a parametre na strane agregátora flexibility. Výstupom všetkých scheduling algoritmov je plán nabíjania (scheduling). \cite{shcedulingdetailexplanbook} 
 
 
+% zda sa ze preklad offline a online dobry neexistuje a dost ludi ho pouziva
 
-\section{Model Predictive Control.}
+% TODO: vysvetlit co je online algoritmus tu alebo vyssie?
 
-Algoritmus Model Predictive Control vie riešiť optimalizačný problém dodania najväčšieho množstva požadovanej energie elektromobilom pri zachovaní infraštruktúry. Pseudokód algoritmu MPC je následujúci:
-% \begin{lstlisting}[language=Python,basicstyle=\ttfamily,mathescape=true]
-%     for $q \in Q$ do
-%         $V_{q} := \{i \in V \text{ | } e_{i}(q) > 0\text{ and }d_{i}(q) > 0\}$
-%         if event fired or time since last computation $>$ $P$:
-%             then 
-%                 $(r_{i}^{*}(1), \dots, r_{i}^{*}(\Tau),i \in V_{q} ) := solver(V_{q},U_{q},R_{q})$
-%                 $r_{i}(q + \tau) := r_{i}^{*}(1 + \tau), \tau = 0, \dots, \Tau - 1 $
-%             end 
-%             set pilot signal $r_{i}(q)$, $i \in V_{q}$
+% odkaz na vetu ze je vylepsenim
+% \section{Smoothed Least Laxity First.}
+% \label{navrh-prace: sLLF}
+% Algoritmus Smoothed Least Laxity First (skrátene sLLF) vznikol v reakcii na oscilácie v nabíjaní elektrických vozidiel pomocou algoritmu LLF. Algoritmus LLF je online plánovací algoritmus, ktorý priraďuje elektrickým vozidlám maximálne $min(\overline{r}, e_{i}(t))$ energie z dostupnej energie R, a to v poradí od elektrického vozidla s najnižšou laxitou po elektrické vozidlo s najvyššou laxitu. Oscilácie v nabíjaní pomocou  algoritme LLF ilustruje tento príklad:
 
-%             tu pridaj asi ten update na zaklade toxing liho knihy
+
+
+
+
+
+
+
+
+
+% Oscilácie v nabíjaní elektrických vozidiel skracujú životnosť niektorých baterií elektrických vozidiel (napr. batéria L-ion). Nabíjanie elektrických vozidiel pomocou algoritmu sLLF už neobsahuje oscilácie.
+
+% % asi to mali byt prudke oscilacie a nie len oscilacie, pozriet na to este 
+
+% % Algoritmus sLLF je algoritmus určený pre nabíjanie elektromobilov v nabíjacej stanici. 
+
+% Algoritmus sLLF rozhoduje o aktuálnom pláne nabíjania elektrických vozidiel na základe infomácii po aktuálny čas (sLLF je online algoritmus). Algoritmus sLLF pre každý časový krok $k \in K$ maximalizuje minimálnu laxitu, a tým zväčšuje rozpätie možných rýchlostí nabíjania aktuálne nabíjaných elektrických vozidiel pre budúci časový krok v diskrétnom modeli. \cite{lee2021adaptivephd}
+
+
+
+% Laxitou popisujeme v algoritme sLLF flexibilitu (urgenciu) nabíjania. Laxitu $l_{i}(k)$ elektrického vozidla $i$ v čase $k$ definujeme takto:
+% % pouzivajme ucelene jedno pismenko na urcenie casu, napr k
+% \begin{align}
+%     l_{i}(k) = \begin{cases} 
+%     \left[d_{i} - k\right]^{+} - \frac{e_{i}(k)}{\overline{r}_{i}} & k \geq a_{i},\\
+%     +\infty & k < a_{i},
+%  \end{cases}
+% \end{align}
+% kde $\overline{r}_{i}$ je maximálna rýchlosť nabíjania elektrického vozidla $i$. $\left[x\right]^{+}$ je projekcia $x$ do množiny nemínusových reálnych čísel $R_{+}$.
+
+
+% % TODO: preloz listing nazov do slovenciny
+
+% % Get active EVs
+% % Calculate laxity for each EV and store them:
+
+% % jedno z rieseni, je nepisat komentare do kodu ale mimo kod
+% % \begin{lstlisting}[caption={My Caption},captionpos=b,mathescape=true]
+
+
+% % \begin{end}
+% Online algoritmus sLLF v každom časovom kroku $k \in K $ rieši optimalizačný problém:
+% \begin{align}
+%     \underset{r(k)}{max} \sum_{i \in V_{k}}^{} \overline{r}_{i} f(l_{i}(k + 1)), \nonumber \\
+%     \text{za podmienok:} \eqref{basic-constraints:subeq1}, \eqref{basic-constraints:subeq2},\eqref{basic-constraints:subeq3}.
+%     \label{optim-problem:sLLF}
+% \end{align}
+
+% Riešením optimalizačného problému \eqref{optim-problem:sLLF} je:
+
+% \begin{align}
+%     \sum_{i \in V_{k}}^{}r^{*}_{i}(k) = [\overline{r}_{i}(L(k) - l_{i}(k) + 1)]_{0}^{min(\overline{r}_{i}, e_{i}(k))} = min\biggl(R, \, min\Bigl(\sum_{i \in V_{k}}^{} \overline{r}_{i}, e_{i}(k)\Bigl)\biggl).
+%     \label{optim-problem:sLLF:solution}
+% \end{align}
+% % $[x]_{a}^{b}$ je projekcia na interval 
+% Pre každé elektrické vozidlo $i \in V_{k}$, ktoré má maximálnu rýchlosť nabíjania $\overline{r}_{i}$ v čase $k$ menšiu alebo rovnú ako zvyšnú požadovanú energia $e_{i}(k)$, platí:
+% \begin{equation}
+%     l_{i}(k) = [L(k)]_{l_{i}(k) - 1}^{l_{i}(k) }.
+% \end{equation}
+% Funkcia $r^{*}_{i}(k)$ je rastúca s pribúdajucou hodnotou $L(k)$. To znamená, že pomocou bisekcie vieme nájsť najvyššiu hodnotu $L(k)$. Keď zistíme najvyššiu hodnotu $L(k)$, tak vypočitame výsledné rýchlosti nabíjania $r^{*}_{i}(k), i \in V_{k} $. Celý algoritmus sLLF je podrobnejšie popísaný v článku \cite{chen2021smoothed}.Pseudokód algoritmu sLLF znázorňujúci spomínaný postup uvádzame nižšie.
+% % uvadzame
+
+
+% \begin{lstlisting}[caption={Pseudokód online algoritmu sLLF. Dolná hranica $L(k)$ je $l_{L}= min(l_{i \in V_{k}}(k)) - 1$, lebo vtedy je $\sum_{i \in V_{k}}^{}r_{i}^{*}(k) = 0$. Horná hranica $L(k)$ je $u_{L} = max(l_{i \in V_{k}}(k))$ lebo vtedy $\sum_{i \in V_{k}}^{}r_{i}^{*}(k) = min(\sum_{i \in V_{k}}^{} \overline{r}_{i}, e_{i}(k))$. Veľkosť chyby $\epsilon$ sme nastavili na hodnotu $10^{-4}$ a obmedzenie R nastavujeme v experimentoch. },captionpos=b,mathescape=true]
+% for $k \in K$ do
+%     $V_{k} := \{i |  \; a_{i} \leq t < d_{i} \land e_{i}(k) > 0\}$
+%     $l_{L} := min(l_{i \in V_{k}}(k)) - 1$
+%     $u_{L} := max(l_{i \in V_{k}}(k))$
+%     while $|u_{L} - l_{L}| \geq \epsilon$ do
+%         $L(k) := \frac{u_{L} + l_{L}}{2}$
+%         if $\sum_{i \in Vt} [\overline{r}_{i}(L(k) - l_{i}(k) + 1)]_{0}^{min(\overline{r}_{i}, e_{i}(k))} \leq R$ then
+%             $l_{L} := L(k)$
+%         else
+%             $u_{L} := L(k)$
+%     $r^{*}(k) := \{[\overline{r}_{i}(L(k) - l_{i}(k) + 1)]_{0}^{min(\overline{r}_{i}, e_{i}(k))}, i \in V_{k} \}$
+
+
+
 
 % \end{lstlisting}
-\begin{lstlisting}[language=Python,basicstyle=\ttfamily,mathescape=true]
-    for $q \in Q$ do
-        Get active EVs:
-        $V_{q} := \{i \in V \text{ | } e_{i}(q) > 0\text{ and }d_{i}(q) > 0\}$
-        if event fired or time since last computation $>$ $P$:
-            then 
-                Get optimal schedule for optimisation horizon $\Tau$
-                by solving the optimisation problem:
-                $(r_{1}^{*}(i), \dots, r_{\Tau}^{*}(i),i \in V_{q} ) := solver(V_{q},U_{q},R_{q})$
 
-                Update schedule:
-                $r_{q + \tau}(i) := r_{i}^{*}(1 + \tau), \tau = 0, \dots, \Tau - 1 $
-        end 
-        set pilot signal from recent schedule $r_{q}(i)$, $i \in V_{q}$
-        Update energy remaining and remaining duration:
-        $e_{q + 1}(i) = e_{q}(i) - r_{q + 1}(i)$
-        $d_{q + 1}(i) = d_{q}(i) - 1$
-    end
-\end{lstlisting}
+
+% \section{Penalizované prediktívne riadenie.}
+% % \section{Penalised Predictive Control.}
+% % \section{Penalised Predictive Control.}
+% \label{navrh-prace: PPC}
+% % Agregátori  
+
+
+% % Plánovací algoritmus Penalised Predictive Control (skrátene PPC) je založený na plánovacom algoritme MPC a maximálnej odozvy entropie ako penalizačnej premennej v algoritme PPC. Maximálna odozva entropie je súhrn obmedzení \eqref{basic-constraints:subeq1},\eqref{basic-constraints:subeq2},\eqref{basic-constraints:subeq3},\eqref{basic-constraints:subeq4},\eqref{basic-constraints:subeq5} a zároveň je dosť informatívny na to, aby . Dizajn maximálnej odozvy entropie je komplexný problém, a bol objektom intenzívneho výskumu posledné desaťročie. 
+
+
+
+
+
+
+
+
+
+
+% % % popisat cely ten problem
+% % % co je closed loop algorithm
+
+% % % lepsie je tam dat aj cisla riadkov kodu do obidvoch prikladov
+% % % popisat co systemovy operator optimalizuje
+
+
+% % closed loop system 
+
+% % % odstranit listing nazov
+% \begin{lstlisting}[caption={Pseudokód koordinácie agregátora a systémového operátora.},captionpos=b,mathescape=true]
+%     for $k \in K$:
+%         $u_{t} = \phi_{t}(p_{t}) = arg \; inf (c_{t}(u_{t}) - \beta_{t}log p_{t}(u_{t} |u_{<t})) $
+%         $C_{t} = C_{t - 1} + c_{t}(u_{t})$
+
+%         $e_{t}(i) = e_{t - 1}(i) - s_{t}(i), \forall i \in V_{k}$
+%         $d_{t}(i) = d_{t - 1} - \delta,\forall i \in V_{k} $
+
+%         $p_{t + 1} = \psi^{SAC}(x_{t})$
+% \end{lstlisting}
+
+% % $x_{t + 1} = f_{t}(x_{t}, u_{t})$
+
+% % maybe change ut so st for clarity
+
+% \begin{table}[H]
+%     \begin{tabular}{cl}
+%     \multicolumn{2}{c}{Systémový operátor} \\
+%     Hyperparameter        & Hodnota        \\
+%      $\left|U\right|$ &      $10$  \\
+%      Cenové funkcie $c_{1}, \dots, c_{t}$  & \UNFIN \\
+%       Operátorova funkcia $\phi$ &    Penalised Predictive Control  \\
+%       Ladiaci parameter $\beta$ & [$10^{3}$, $10^{6}$] 
+
+%     \end{tabular}
+%     \end{table}
+% Systémový operátor používajúci príliš malé $\beta$ v PPC algoritme vráti príliš malé signály.
+
+% \begin{table}[H]
+%     \begin{tabular}{cl}
+%     \multicolumn{2}{c}{Agregátor} \\
+%     Hyperparameter        & Hodnota        \\
+%      Algoritmus učenia posilňovaním  & SAC \\
+%       Akčný priestor & $[-1, 1]$ \\
+%       Plánovací algoritmus & sLLF [odkaz] \\
+%     Vstupné dáta & ACN-Data [odkaz] \\
+%     Rýchlosť učenia & $3 \cdot 10^{-4}$ \\
+%     Počet skrytých vrstiev &  \UNFIN \\
+%     Zachovanie nelinearity &  ReLU \\
+%     Počet skrytých neurónov pre každú vrstvu  &  256 \\
+%     Odmenová funkcia & $\sigma_{1} = 0.1, \sigma_{2} = 0.2, \sigma_{3} = 2$
+    
+
+%     \end{tabular}
+%     \end{table}
+
+
+
+
+% \subsection{Učenie a testovanie}
+
+% Agenti sa učia na základe dát z ACN [odkaz...] od 1.11.2018 do 1.12.2019. Testy vykonávame na dátach od 2.11.2019 do 1.1.2020.
+
+% % mozem porovnat zatial algoritmy bez pouzitia gym acnportal - treba ale vediet ako konvertovat jednotky
+% \begin{enumerate}
+%     \item Akčný priestor: Akčný priestor Markovskeho rozhodovacieho procesu používaný PPC algoritmom je $\left[-1,1\right]$ (-1 je dolný limit a 1 je horný limit). Akcie vrátené neuronovými sieťami v SAC algoritme sú následne naškálované na $\left[0,1\right]$ a vydelené ich celkovým súčtom (platí $\sum p_{t} = 1$).
+%     \item odmeny: 
+%     \begin{gather}
+%         \nonumber
+%         odmena\left(\overline{x}_{t}, p_{t}\right) = H\left(p_{t}\right) +  \\
+%         \sigma_{1} \sum_{i = 1}^{N'} ||u_{t}||_{2} - \\
+%         \nonumber
+%         \sigma_{2}\sum_{i = 1}^{N'}\left(I(t = d_{i}) \left[e_{i} - \sum_{t = 1}^{T}u_{t}(i)\right]^{+}\right) - \\
+%         \nonumber
+%         \sigma_{3}  \left|\phi_{t}(p_{t}) - \sum_{i=1}^{N'} u_{t}(j) \right| ,
+%     \end{gather}
+%     kde $||u_{t}||_{2} $ je euklidovská norma $u_{t}$.
+    
+% \end{enumerate}
+
+
+
+
+
+% Predpokladáme, že sLLF nemá informácie o budúcich príchodoch elektromobilov. Problém hľadania takého plánu nabíjania elektromobilov v nabíjacej sieti, ktorý zabezpečí stabilné dodávky energie a minimalizuje náklady spotrebiteľov vieme vyriešiť,  pomocou riešenia tohoto optimalizačného problému:
+% \begin{gather}
+%     r(T) = \underset{r(T)}{\text{arg max}} \sum_{i \in V}^{}\overline{r}_{i} f(l_{i}(T)), \\
+%     \text{subject to:} \\
+%     0  \leq r_{i}(t) \leq \overline{r}_{i}, \enspace t \in [a_{i}, d_{i})  \\
+%     r_{i}(t) = 0, \qquad t \in [a_{i}, d_{i})  \\
+%     \overline{r}_{min} \leq \overline{r}_{i} \leq \overline{r}_{max}, \;i  \in V \\
+%     \sum_{i \in V}^{} r_{i}(t) \leq P(t), t \in T  \\
+%     0 \leq P_{min} \leq P(t) \leq P_{max} \\
+%     \sum_{t \in T}^{}r_{i}(t) = e_{i}, i \in V,
+% \end{gather}
+% kde funkcia $f$ má 3 vlastnosti:
+% \begin{enumerate}
+%     \item je dvojite spojito diferencovateľná.
+%     \item je striktne konkávna.
+%     \item je monotónne rastúca.
+% \end{enumerate}
+
+
+
+% co je l_i, r_i definovat 
+
+
+% je dvojite spojito diferencovateľná, striktne konkávna a aj monotónne rastúca. 
+
+
+
+% MPC mozno pridat ak ho budem mat aj prediktivny
+
+% \section{Model Predictive Control.}
+
+% \begin{alignat}{2}
+%     \label{eq:max_problem-general}
+%     \overset{SCH}{\underset{r}{\max}} \; U_{k}(r) \\
+%     \label{eq:utility-function-general}
+%     U_{k}(r) = \sum_{i \in V,
+%                     t \in \mathcal{T}}r_{i}(t) \\
+%     \text{subject to:} \notag \\
+%     \label{eq:first-linear-constraint}
+%     0 ≤ r_{i}(t) ≤ \overline{r}_{i}(t)  && \qquad  \qquad  t < d_{i}, i ∈ V \\
+%     \label{eq:second-linear-constraint}
+%     r_{i}(t) = 0 && t ≥ d_{i}, i ∈ V \\
+%     \label{eq:third-linear-constraint}
+%     \sum_{t = a_{i}}^{d_{i} - 1} r_{i}(t) \delta ≤ e_{i} && i ∈ V \\
+%     \label{eq:network-constraints}
+%     f_{j}(r_{1}(t), \dots, r_{N}(t) ) ≤ R_{j}(t) && t ∈ T, j ∈ \hat{R}
+%     % r \in R_{k}
+% \end{alignat}
+
+% Množina aktívnych elektromobilov $V_{k}$ definuje optimalizačnú premennú $r := (r_{i}(1), \dots, r_{i}(T))$ pre optimalizačný horizont $\mathcal{T} = \{1,\dots,T\}$.
+% Nerovnica \ref{eq:first-linear-constraint} popisuje, že rýchlosť nabíjania $ r_{i}(t)$ musí byť v rozmedzí od 0 po maximálnu rýchlosť nabíjania.
+% Rovnica \ref{eq:second-linear-constraint} popisuje, že rýchlosť nabíjania po odchode elektromobilu z nabíjacej stanice musí byť $0$. 
+
+% Nerovnosť \ref{eq:third-linear-constraint} zabezpečuje, že elektromobilu dodáme nanajvýš toľko energie, koľko je jeho požadovaná energia.
+% % Nerovnosť \ref{eq:network-constraints} popisuje obmedzenia siete.
+
+
+% Pseudokód algoritmu MPC je následujúci:
+
+
+
+% % Algoritmus Model Predictive Control vie riešiť optimalizačný problém dodania najväčšieho množstva požadovanej energie elektromobilom pri zachovaní infraštruktúry. Pseudokód algoritmu MPC je následujúci:
+% % \begin{lstlisting}[language=Python,basicstyle=\ttfamily,mathescape=true]
+% %     for $q \in Q$ do
+% %         $V_{q} := \{i \in V \text{ | } e_{i}(q) > 0\text{ and }d_{i}(q) > 0\}$
+% %         if event fired or time since last computation $>$ $P$:
+% %             then 
+% %                 $(r_{i}^{*}(1), \dots, r_{i}^{*}(\Tau),i \in V_{q} ) := solver(V_{q},U_{q},R_{q})$
+% %                 $r_{i}(q + \tau) := r_{i}^{*}(1 + \tau), \tau = 0, \dots, \Tau - 1 $
+% %             end 
+% %             set pilot signal $r_{i}(q)$, $i \in V_{q}$
+
+% %             tu pridaj asi ten update na zaklade toxing liho knihy
+
+% % \end{lstlisting}
+% \begin{lstlisting}[language=Python,basicstyle=\ttfamily,mathescape=true]
+%     for $k \in K$ do
+%         Get active EVs:
+%         $V_{k} := \{i \in V \text{ | } e_{i}(k) > 0\text{ and }d_{i}(k) > 0\}$
+%         if event fired or time since last computation $>$ $P$:
+%             then 
+%                 Get optimal schedule for optimisation horizon $\Tau$
+%                 by solving the optimisation problem:
+%                 $(r_{i}^{*}(1), \dots, r_{i}^{*}(\Tau), i \in V_{k} ) := solver(V_{k},U_{k},R_{k})$
+
+%                 Update schedule:
+%                 $r_{i}(k + \tau) := r_{i}^{*}(1 + \tau), \tau = 0, \dots, \Tau - 1 $
+%         end 
+%         set pilot signal from recent schedule $r_i{k}$, $i \in V_{k}$
+%         Update energy remaining and remaining duration:
+%         $e_{i}(k + 1) = e_{i}(k) - r_{i}(k + 1)$
+%         $d_{i}(k + 1) = d_{i}(k) - 1$
+%     end
+% \end{lstlisting}
 
 
 
@@ -128,41 +1039,41 @@ Algoritmus Model Predictive Control vie riešiť optimalizačný problém dodani
 % Problém prideľovania maximálnej energie pri zachovaní obmedzení nabíjacej siete riešime viacerými spôsobmi, pomocou linéarneho vyhľadávania, metódy bisekcie a pomocou metódy zlatého rezu. 
 % \cite{chen2021smoothed}
 
-Nižšie uvádzame optimalizačné metódy, ktoré využívame v experimentoch na riešenie optimalizačného problému s využitím online algoritmov.
+% Nižšie uvádzame optimalizačné metódy, ktoré využívame v experimentoch na riešenie optimalizačného problému s využitím online algoritmov.
 
-% \subsection{Signály}
-% \subsection{Cena nabíjania v čase.}
-% Pomocou podmodulu Signals v ACN portal implementácii vieme zahrnúť dôležité vonkajšie vplyvy nabíjaní, menovite: tarify, krivky solárnych generátorov a 
-\section{Metóda zlatého rezu.}
-% \section{Metóda zlatého rezu}
-%TODO upravit este
-Metóda zlatého rezu sa používa pri riešení problému nájdenia maxima alebo minima unimodálnej funkcie. Unimodálna funkcia je taká, ktorá obsahuje len jedno maximum alebo minimum na intervale $[a, b]$. (zdroj prvy) \cite{} Táto metóda je analogická k optimalizačnej metóde bisekcie. Analogickosť metódy zlátého rezu a metódy bisekcie spočíva v tom, že počiatočný interval $[a, b]$ je nahradený viacerými intervalmi $[a_{i}, b_{i}], i = 2, 3,  \dots$.   \cite{lecture_optimisation} 
-
-
-%zdroj 
-% zdroj2 https://www.math.kent.edu/~reichel/courses/intr.num.comp.2/lecture16/lecture8.pdf
+% % \subsection{Signály}
+% % \subsection{Cena nabíjania v čase.}
+% % Pomocou podmodulu Signals v ACN portal implementácii vieme zahrnúť dôležité vonkajšie vplyvy nabíjaní, menovite: tarify, krivky solárnych generátorov a 
+% \section{Metóda zlatého rezu.}
+% % \section{Metóda zlatého rezu}
+% %TODO upravit este
+% Metóda zlatého rezu sa používa pri riešení problému nájdenia maxima alebo minima unimodálnej funkcie. Unimodálna funkcia je taká, ktorá obsahuje len jedno maximum alebo minimum na intervale $[a, b]$. (zdroj prvy) \cite{} Táto metóda je analogická k optimalizačnej metóde bisekcie. Analogickosť metódy zlátého rezu a metódy bisekcie spočíva v tom, že počiatočný interval $[a, b]$ je nahradený viacerými intervalmi $[a_{i}, b_{i}], i = 2, 3,  \dots$.   \cite{lecture_optimisation} 
 
 
-\section{Metóda dichotómie.}
-% \section{Metóda dichotómie}
-%TODO
-Metóda dichotómie rieši jednorozmerné optimalizačné problémy a vieme ju aplikovať len na unimodálne funkcie (unimodálna funkcia, ktorú definujeme na intervale $[a,b]$ má na tomto intervale presne jeden bod, ktorý je maximom alebo minimom funkcie).
+% %zdroj 
+% % zdroj2 https://www.math.kent.edu/~reichel/courses/intr.num.comp.2/lecture16/lecture8.pdf
 
-Postup, ktorý metóda dichotómie využíva spočíva z viacerých krokov:
-\begin{enumerate}
-    \item Uvažujme unimodálnu funkciu $f$, ktorá ma na intervale $[a,b]$ minimum alebo maximum.
-    \item  Vygenerujeme dva nové body $c = \frac{a + b}{2} - \epsilon$ a $d = \frac{a + b}{2} - \epsilon$. Platí, že $\epsilon > 0$ a $2 \cdot \epsilon < (a - b)$.  
-    \item Skontrolujeme, či $f(c) > f(d)$ alebo $f(c) < f(d)$. Ak platí $f(c) > f(d)$, tak dostaneme nový interval $[a, b] = [a, d]$. Inak $[a, b] = [c, b]$. % skontrolovat este 
-\end{enumerate}
-Kroky $2$ a $3$ metóda dichotómie opakuje dokým  nenájde riešenie. 
-Metóda dichotómie nájde riešenie vtedy, keď nový interval bude dostatočne malý (menší než epsilon).
+
+% \section{Metóda dichotómie.}
+% % \section{Metóda dichotómie}
+% %TODO
+% Metóda dichotómie rieši jednorozmerné optimalizačné problémy a vieme ju aplikovať len na unimodálne funkcie (unimodálna funkcia, ktorú definujeme na intervale $[a,b]$ má na tomto intervale presne jeden bod, ktorý je maximom alebo minimom funkcie).
+
+% Postup, ktorý metóda dichotómie využíva spočíva z viacerých krokov:
+% \begin{enumerate}
+%     \item Uvažujme unimodálnu funkciu $f$, ktorá ma na intervale $[a,b]$ minimum alebo maximum.
+%     \item  Vygenerujeme dva nové body $c = \frac{a + b}{2} - \epsilon$ a $d = \frac{a + b}{2} - \epsilon$. Platí, že $\epsilon > 0$ a $2 \cdot \epsilon < (a - b)$.  
+%     \item Skontrolujeme, či $f(c) > f(d)$ alebo $f(c) < f(d)$. Ak platí $f(c) > f(d)$, tak dostaneme nový interval $[a, b] = [a, d]$. Inak $[a, b] = [c, b]$. % skontrolovat este 
+% \end{enumerate}
+% Kroky $2$ a $3$ metóda dichotómie opakuje dokým  nenájde riešenie. 
+% Metóda dichotómie nájde riešenie vtedy, keď nový interval bude dostatočne malý (menší než epsilon).
 
 % Vyriešime optimalizačný problém pomocou viacnásobného zmenšenia intervalu $[a, b]$ o polovicu.
 
 
 
 
-\section{Metóda rovnomerného delenia intervalu.}
+% \section{Metóda rovnomerného delenia intervalu.}
 % \section{Metóda rovnomerného delenia intervalu}
 %TODO
 
@@ -170,30 +1081,31 @@ Metóda dichotómie nájde riešenie vtedy, keď nový interval bude dostatočne
 
 
 
+% TODO: premiestnit algoritmy, ktore neimplemetujem do sucasneho stavu riesenia problematiky v prvej kapitole 
 
 
-\section{Neriadené nabíjanie.}
-Tento plánovací algoritmus prideľuje každému elektromobilu maximálne množstvo energie a pritom neberie do úvahy obmedzenia infraštruktúry nabíjacej stanice. Toto je najjednoduší typ nabíjania, ktorý je stále používaný vo väčšine nabíjacích systémov na svete. \cite{lee2021acnsim}
+% \section{Neriadené nabíjanie.}
+% Tento plánovací algoritmus prideľuje každému elektromobilu maximálne množstvo energie a pritom neberie do úvahy obmedzenia infraštruktúry nabíjacej stanice. Toto je najjednoduší typ nabíjania, ktorý je stále používaný vo väčšine nabíjacích systémov na svete. \cite{lee2021acnsim}
 
-%rad <-> front 
-%TOTO implementovat aby som tomu pochopil a mozno prepisat 
-\section{Round Robin.}
-% \subsection{Round Robin (RR).}
-Plánovací algoritmus Round Robin, ktorý nazývame skrátene RR je algoritmus, ktorý je založený na myšlienke zdieľania nabíjacej kapacity medzi všetkými aktívnymi elektromobilmi. Pre každý aktívny elektromobil kontroluje algoritmus dve podmienky:
-% mozno otazky do uvodzoviek
-\begin{enumerate}
-    \item Je možné zvýšiť nabíjanie o 1kWh tak, aby sme zachovali obmedzenia nabíjacej siete? Ak áno, tak nabijeme elektromobil so zvýšenou rýchlosťou nabíjania a následne elektromobil pridáme na koniec radu.
-    \item Nie je možné zvýšiť nabíjanie o 1kWh tak, aby sme zachovali obmedzenia nabíjacej siete? Ak áno, tak nabijeme elektromobil s fixným nabíjaním. Elektromobil necháme vo radu na rovnakom mieste.
-    % To znamená, že vozidlo nabíja dovtedy, keď bude možné rýchlosť nabíjania elektrického vozidla zvýšiť.
-\end{enumerate}
-Elektromobily, ktoré dostali požadovanú energiu sú z radu odstránené. Algoritmus RR skončí vtedy, keď v rade nebude žiaden elektromobil. \cite{lee2021acnsim}
+% %rad <-> front 
+% %TOTO implementovat aby som tomu pochopil a mozno prepisat 
+% \section{Round Robin.}
+% % \subsection{Round Robin (RR).}
+% Plánovací algoritmus Round Robin, ktorý nazývame skrátene RR je algoritmus, ktorý je založený na myšlienke zdieľania nabíjacej kapacity medzi všetkými aktívnymi elektromobilmi. Pre každý aktívny elektromobil kontroluje algoritmus dve podmienky:
+% % mozno otazky do uvodzoviek
+% \begin{enumerate}
+%     \item Je možné zvýšiť nabíjanie o 1kWh tak, aby sme zachovali obmedzenia nabíjacej siete? Ak áno, tak nabijeme elektromobil so zvýšenou rýchlosťou nabíjania a následne elektromobil pridáme na koniec radu.
+%     \item Nie je možné zvýšiť nabíjanie o 1kWh tak, aby sme zachovali obmedzenia nabíjacej siete? Ak áno, tak nabijeme elektromobil s fixným nabíjaním. Elektromobil necháme vo radu na rovnakom mieste.
+%     % To znamená, že vozidlo nabíja dovtedy, keď bude možné rýchlosť nabíjania elektrického vozidla zvýšiť.
+% \end{enumerate}
+% Elektromobily, ktoré dostali požadovanú energiu sú z radu odstránené. Algoritmus RR skončí vtedy, keď v rade nebude žiaden elektromobil. \cite{lee2021acnsim}
 
-\begin{figure}[H]
-    \includegraphics[width=\textwidth]{images/round-robin-example.png}
-    \centering
-    \caption[Príklad plánovacie algoritmu Round Robin v praxi.]{Prideľovanie času procesom na základe plánovacieho algoritmu Round Robin. Každý spotrebiteľ má prístup k rovnakým zdrojom pomocou algoritmu Round Robin. Zdroj obrázka: \cite{websitecroundrobin2023}.}
-    \label{architectureacnsim:obr2}
-    \end{figure}
+% \begin{figure}[H]
+%     \includegraphics[width=\textwidth]{images/round-robin-example.png}
+%     \centering
+%     \caption[Príklad plánovacie algoritmu Round Robin v praxi.]{Prideľovanie času procesom na základe plánovacieho algoritmu Round Robin. Každý spotrebiteľ má prístup k rovnakým zdrojom pomocou algoritmu Round Robin. Zdroj obrázka: \cite{websitecroundrobin2023}.}
+%     \label{architectureacnsim:obr2}
+%     \end{figure}
 
 % Príklad:
 % \UNFIN
@@ -201,26 +1113,26 @@ Elektromobily, ktoré dostali požadovanú energiu sú z radu odstránené. Algo
 
 %pozriet ci je taky nazov v anglictine
 
-\section{Triediace plánovacie algoritmy}
-Triediace plánovacie algoritmy, ktoré spomíname v tejto sekcii prideľujú energiu elektromobilom v takom poradí, v akom tie elektromobily utriedili. Trediace plánovacie algoritmy triedia elektromobily na základe jedného parametra alebo viacerých parametrov. 
+% \section{Triediace plánovacie algoritmy}
+% Triediace plánovacie algoritmy, ktoré spomíname v tejto sekcii prideľujú energiu elektromobilom v takom poradí, v akom tie elektromobily utriedili. Trediace plánovacie algoritmy triedia elektromobily na základe jedného parametra alebo viacerých parametrov. 
 
-%stanice vs siete zjednotit
-Následne na riešenie problému maximálneho pridelenia energie elektromobilu pri zachovaní obmedzení nabíjacej siete využívajú triediace plánovacie algoritmy metódu bisekcie alebo iných metód (napr. metóda lineárneho vyhľadávania). Pre každý elektromobil sa vyrieši tento problém jednotlivo a algoritmus postupne pridelí energiu elektromobilom.
-
-
-Tieto algoritmy môžu byť implementované ako online, a aj ako offline algoritmy. V prípade offline verzie triediacich plánovacích algoritmov vieme lepšie minimalizovať cenu ako v online plánovacích algoritmoch. \cite{chen2021smoothed}
-
-\subsection{Least Laxity First.}
-% \subsubsection{Least Laxity First (LLF)}
-Algoritmus Least Laxity First (skrátene nazývame LLF), je triediaci plánovací algoritmus, ktorý prideľuje elektromobilom energiu v poradí od elektromobilu s najnižšiou laxitou po elektromobil s najvyššou laxitou. Nevýhodou triediaceho plánovacieho algoritmu LLF je, že spôsobuje veľké výkyvy v rýchlosti nabíjania pri nabíjaní elektromobilov. Napríklad, keď príde veľa elektromobilov, ktoré majú ešte nižšiu laxitu ako pôvodný elektromobil s najnižšiou laxitou, tak sa môže stať, že pôvodnému elektromobilu sa nepridelí žiadna energia alebo málo energie. Dlhodobo, taký spôsob nabíjania s výkyvmi v rýchlosti nabíjania môže skrátiť životnosť batérii elektromobilov.\cite{chen2021smoothed}
+% %stanice vs siete zjednotit
+% Následne na riešenie problému maximálneho pridelenia energie elektromobilu pri zachovaní obmedzení nabíjacej siete využívajú triediace plánovacie algoritmy metódu bisekcie alebo iných metód (napr. metóda lineárneho vyhľadávania). Pre každý elektromobil sa vyrieši tento problém jednotlivo a algoritmus postupne pridelí energiu elektromobilom.
 
 
-% zdroje 30,31,32 niekde by mala by byt implementacia asi 32
-Laxitu počítame na základe vzorca:
-\begin{equation}
-    \text{Laxita} = \text{zostávajúci čas do odchodu} - \frac{\text{zostávajúca požadovaná energia}}{\text{rýchlosť nabíjania}},
-\end{equation}
-kde predpokladáme, že rýchlosť nabíjania je vždy konštantná.
+% Tieto algoritmy môžu byť implementované ako online, a aj ako offline algoritmy. V prípade offline verzie triediacich plánovacích algoritmov vieme lepšie minimalizovať cenu ako v online plánovacích algoritmoch. \cite{chen2021smoothed}
+
+% \subsection{Least Laxity First.}
+% % \subsubsection{Least Laxity First (LLF)}
+% Algoritmus Least Laxity First (skrátene nazývame LLF), je triediaci plánovací algoritmus, ktorý prideľuje elektromobilom energiu v poradí od elektromobilu s najnižšiou laxitou po elektromobil s najvyššou laxitou. Nevýhodou triediaceho plánovacieho algoritmu LLF je, že spôsobuje veľké výkyvy v rýchlosti nabíjania pri nabíjaní elektromobilov. Napríklad, keď príde veľa elektromobilov, ktoré majú ešte nižšiu laxitu ako pôvodný elektromobil s najnižšiou laxitou, tak sa môže stať, že pôvodnému elektromobilu sa nepridelí žiadna energia alebo málo energie. Dlhodobo, taký spôsob nabíjania s výkyvmi v rýchlosti nabíjania môže skrátiť životnosť batérii elektromobilov.\cite{chen2021smoothed}
+
+
+% % zdroje 30,31,32 niekde by mala by byt implementacia asi 32
+% Laxitu počítame na základe vzorca:
+% \begin{equation}
+%     \text{Laxita} = \text{zostávajúci čas do odchodu} - \frac{\text{zostávajúca požadovaná energia}}{\text{rýchlosť nabíjania}},
+% \end{equation}
+% kde predpokladáme, že rýchlosť nabíjania je vždy konštantná.
 
 % \subsubsection*{Príklad}
 % Každý elektromobil $i$ má definovanú trojicu $(a_{i},d_{i},e_{i})$, kde $a_{i}$ je čas pripojenia elektromobilu na nabíjačky, $d_{i}$ je čas odpojenia vozidla z nabíjačky a $e_{i}$ je požadovaná energia.  
@@ -254,15 +1166,15 @@ kde predpokladáme, že rýchlosť nabíjania je vždy konštantná.
 % Na druhej strane existuje aj neoptimálny scheduling tohoto príkladu, vypojením vozidla 3 o 12:00. Vozidlo 3 v tom prípade by sa vypojilo z nabíjacej siete buď o 9:00, 10:00 alebo 11:00 a napojilo o 12:00.
 
 
-\subsection{Smoothed Least Laxity First.}
-% \subsection{Smoothed least laxity first.}
-Smoothed Least Laxity First (skrátene sLLF) je triediaci plánovací algoritmus založený na algoritme LLF. Tento algoritmus lepšie rieši optimalizačný problém prideľovania maximálnej energie elektromobilom pri zachovaní obmedzení infraštruktúry nabíjacej siete lepšie ako algoritmus LLF. Algoritmus sLLF zároveň neobsahuje veľké výkyvy v rýchlosti nabíjania pri prideľovaní energie elektromobilom na rozdiel od algoritmu LLF.
+% \subsection{Smoothed Least Laxity First.}
+% % \subsection{Smoothed least laxity first.}
+% Smoothed Least Laxity First (skrátene sLLF) je triediaci plánovací algoritmus založený na algoritme LLF. Tento algoritmus lepšie rieši optimalizačný problém prideľovania maximálnej energie elektromobilom pri zachovaní obmedzení infraštruktúry nabíjacej siete lepšie ako algoritmus LLF. Algoritmus sLLF zároveň neobsahuje veľké výkyvy v rýchlosti nabíjania pri prideľovaní energie elektromobilom na rozdiel od algoritmu LLF.
 
-% skontrolovat notaciu
-Popis algoritmu sLLF sa nachádza v článku \cite{chen2021smoothed}.
-% Laxitu v tomto algoritme budeme počítať odlišne, než v bežnom LLF, takto:
-% \begin{equation}
-%     l_{i}(t) = [d_{i} - t]^{+} - \frac{e_{i}(t)}{\overline{r_{i}}}.
+% % skontrolovat notaciu
+% Popis algoritmu sLLF sa nachádza v článku \cite{chen2021smoothed}.
+% % Laxitu v tomto algoritme budeme počítať odlišne, než v bežnom LLF, takto:
+% % \begin{equation}
+% %     l_{i}(t) = [d_{i} - t]^{+} - \frac{e_{i}(t)}{\overline{r_{i}}}.
 % \end{equation}
 % Keďže pri našej implementácii máme k dispozícii len aktívne elektrické vozidlá, tak pre tie vozidlá, ktoré ešte neprišli laxitu nepočítame.
 
@@ -287,19 +1199,19 @@ Popis algoritmu sLLF sa nachádza v článku \cite{chen2021smoothed}.
 
 % Výpočtová zložitosť tohoto algoritmu je $O(V + log(\frac{1}{\delta}))$, kde V je počet aktívnych elektromobilov a $\delta$ je level tolerovateľnej chyby. \cite{chen2021smoothed}
 
-\subsection{Enhanced Least Laxity First.}
-Ako reakciu na problém oscilácie pri nabíjani elektromobilov v algoritme LLF vzniklo mnoho variánt vylepšeného algoritmu LLF. Jedným z nich je Enhanced Least Laxity First (ELLF). Algoritmus ELLF zaradí elektromobily s rovnakou najnižšiou laxitou do jednej skupiny. Potom algoritmus ELLF pridelí energiu elektromobilom v skupine použitím  scheduling algoritmu EDF. Na pridelenie energie zvyšku elektromobilov algoritmus ELLF aplikuje LLF. \cite{websiteenhancedllf}
+% \subsection{Enhanced Least Laxity First.}
+% Ako reakciu na problém oscilácie pri nabíjani elektromobilov v algoritme LLF vzniklo mnoho variánt vylepšeného algoritmu LLF. Jedným z nich je Enhanced Least Laxity First (ELLF). Algoritmus ELLF zaradí elektromobily s rovnakou najnižšiou laxitou do jednej skupiny. Potom algoritmus ELLF pridelí energiu elektromobilom v skupine použitím  scheduling algoritmu EDF. Na pridelenie energie zvyšku elektromobilov algoritmus ELLF aplikuje LLF. \cite{websiteenhancedllf}
 
-\subsection{Earliest Deadline First.}
-% \subsubsection{Early deadline first (EDF).}
-% \subsubsection{Early deadline first (EDF)}
-Algoritmus Early deadline first skrátene nazývame EDF, je triediaci plánovací algoritmus. Algoritmus EDF prideľuje energiu elektromobilom v poradí od elektromobilov s najskorším časom odchodu po elektromobily s najneskorším časom odchodu. \cite{lee2021acnsim}
+% \subsection{Earliest Deadline First.}
+% % \subsubsection{Early deadline first (EDF).}
+% % \subsubsection{Early deadline first (EDF)}
+% Algoritmus Early deadline first skrátene nazývame EDF, je triediaci plánovací algoritmus. Algoritmus EDF prideľuje energiu elektromobilom v poradí od elektromobilov s najskorším časom odchodu po elektromobily s najneskorším časom odchodu. \cite{lee2021acnsim}
 
 
 
-\subsection{Group Earliest Deadline First.}
-% \subsection{Group earliest deadline first (EDF).}
-Algoritmus Group Earliest Deadline First je plánovací algoritmus, ktorý vytvorili zo zámerom zlepšenia výkonnosť algoritmu EDF počas preťaženia reálnej multimediálnej aplikácie. Tento schedling algoritmus sa zakladá na myšlienke skupinového schedulingu. To znamená, že elektromobily, ktoré majú podobné časy príchodu patria do skupiny. Potom sa priraďuje energia týmto elektromobilom na základe scheduling algoritmu Shortest Job First. \cite{comparisonofalg}
+% \subsection{Group Earliest Deadline First.}
+% % \subsection{Group earliest deadline first (EDF).}
+% Algoritmus Group Earliest Deadline First je plánovací algoritmus, ktorý vytvorili zo zámerom zlepšenia výkonnosť algoritmu EDF počas preťaženia reálnej multimediálnej aplikácie. Tento schedling algoritmus sa zakladá na myšlienke skupinového schedulingu. To znamená, že elektromobily, ktoré majú podobné časy príchodu patria do skupiny. Potom sa priraďuje energia týmto elektromobilom na základe scheduling algoritmu Shortest Job First. \cite{comparisonofalg}
 
 %pozri ci rovnake casy elektromobilov - pozri definiciu este raz!!!
 
@@ -315,42 +1227,42 @@ Algoritmus Group Earliest Deadline First je plánovací algoritmus, ktorý vytvo
 
 
 
-\subsection{First-Come First-Served.}
-% \subsection{First Come First Served}
-Triediaci plánovací algoritmus First-Come First-Served (skrátene FCFS) má veľmi podobnú funkcionalitu ako algoritmus neriadeného nabíjania. Hlavný rozdiel spočíva v tom, že algoritmus FCFS je časovo oneskorený, lebo obsahuje elektromobily v rade, takže každý elektromobil si musí počkať pre svoje nabíjanie. \cite{lee2021acnsim}
+% \subsection{First-Come First-Served.}
+% % \subsection{First Come First Served}
+% Triediaci plánovací algoritmus First-Come First-Served (skrátene FCFS) má veľmi podobnú funkcionalitu ako algoritmus neriadeného nabíjania. Hlavný rozdiel spočíva v tom, že algoritmus FCFS je časovo oneskorený, lebo obsahuje elektromobily v rade, takže každý elektromobil si musí počkať pre svoje nabíjanie. \cite{lee2021acnsim}
 
 
-%TOTO pozriet ci nemyslia skor arrival time nez connection time
-\subsection{Last-Come First-Served.}
-% \subsection{Last Come First Served}
-Triediaci plánovací algoritmus Last-Come First-Served (skrátene LCFS) priraďuje energiu elektromobilom, prioritne od vozidla s najneskorším časom pripojenia na nabíjačku po vozidlo s najskorším časom pripojenia na nabíjačku. \cite{lee2021acnsim}
+% %TOTO pozriet ci nemyslia skor arrival time nez connection time
+% \subsection{Last-Come First-Served.}
+% % \subsection{Last Come First Served}
+% Triediaci plánovací algoritmus Last-Come First-Served (skrátene LCFS) priraďuje energiu elektromobilom, prioritne od vozidla s najneskorším časom pripojenia na nabíjačku po vozidlo s najskorším časom pripojenia na nabíjačku. \cite{lee2021acnsim}
 
-\subsection{Longest Remaining Processing Time.}
-% \subsection{Longest remaining processing time}
-Triediaci plánovací algoritmus Longest Remaining Processing Time je algoritmus, ktorý prideľuje energiu elektromobilom takto:
-\begin{enumerate}
-    \item Utriedi vstupné pole aktívnych elektromobilov, a to od elektromobilu s najdlhším zostávajúcim časom nabíjania po elektromobil s  najkratším zostávajúcim časom nabíjania.
-    \item Pre každý elektromobil v tom poradí algoritmus vyrieši optimalizačný problém prideľovania maximálnej energie pri zachovaní obmedzení infraštruktúry. 
-\end{enumerate}
-
-
-\subsection{Shortest Job Next.}
-% \subsection{Shortest job next}
-Algoritmus Shortest Job Next, skrátene SJN je trediaci plánovací algoritmus. SJN funguje ako Longest Remaining Processing Time až na jeden rozdiel, ktorý spočíva v tom, že pole aktívnych elektromobilov triedi od  elektromobilu s najkratším zostávajúcim časom nabíjania, po vozidlo s najdlhším zostávajúcim časom nabíjania.
-
-% \section{Kontrolné algoritmy}
-% % \section{Kontrolné plánovacie algoritmy}
-
-% V tejto sekcii hovoríme o kontrolných algoritmoch, ktoré riešia optimalizačný problém pridelenia maximálneho množstva energie elektromobilom pri zachovaní obmedzení infraštruktúry. Kontrolné algoritmy sú algoritmy, ktoré poskytujú kontrolné akcie na základe vstupných dát, za účelom zistenia konkrétneho cieľa (...). 
-% %TODO lepsie popisat
-% Bez kontrolných algoritmov by nemohli fungovať automatické systémy, ktoré v súčastnosti využívame. 
-% %ake automaticke systemy??
-% Tieto algoritmy musia vedieť fungovať v obmedzenom prostredí, ako napríklad pri obmedzeniach uvedených v sekcii \ref{vych:konfaobmedzenia}. \cite{websitecontrolalg2023}
-
-% \subsection{Typy kontrolných algoritmov}
+% \subsection{Longest Remaining Processing Time.}
+% % \subsection{Longest remaining processing time}
+% Triediaci plánovací algoritmus Longest Remaining Processing Time je algoritmus, ktorý prideľuje energiu elektromobilom takto:
+% \begin{enumerate}
+%     \item Utriedi vstupné pole aktívnych elektromobilov, a to od elektromobilu s najdlhším zostávajúcim časom nabíjania po elektromobil s  najkratším zostávajúcim časom nabíjania.
+%     \item Pre každý elektromobil v tom poradí algoritmus vyrieši optimalizačný problém prideľovania maximálnej energie pri zachovaní obmedzení infraštruktúry. 
+% \end{enumerate}
 
 
-% \subsubsection*{open-loop algoritmy} Sú najjednoduším typom kontrolných algoritmov, ktoré vracajú pre rovnaký vstup rovnaký výstup. Používaju sa v systémoch, kde netreba meniť výstupné dáta na základe zmeny vstupných dátach.
+% \subsection{Shortest Job Next.}
+% % \subsection{Shortest job next}
+% Algoritmus Shortest Job Next, skrátene SJN je trediaci plánovací algoritmus. SJN funguje ako Longest Remaining Processing Time až na jeden rozdiel, ktorý spočíva v tom, že pole aktívnych elektromobilov triedi od  elektromobilu s najkratším zostávajúcim časom nabíjania, po vozidlo s najdlhším zostávajúcim časom nabíjania.
+
+% % \section{Kontrolné algoritmy}
+% % % \section{Kontrolné plánovacie algoritmy}
+
+% % V tejto sekcii hovoríme o kontrolných algoritmoch, ktoré riešia optimalizačný problém pridelenia maximálneho množstva energie elektromobilom pri zachovaní obmedzení infraštruktúry. Kontrolné algoritmy sú algoritmy, ktoré poskytujú kontrolné akcie na základe vstupných dát, za účelom zistenia konkrétneho cieľa (...). 
+% % %TODO lepsie popisat
+% % Bez kontrolných algoritmov by nemohli fungovať automatické systémy, ktoré v súčastnosti využívame. 
+% % %ake automaticke systemy??
+% % Tieto algoritmy musia vedieť fungovať v obmedzenom prostredí, ako napríklad pri obmedzeniach uvedených v sekcii \ref{vych:konfaobmedzenia}. \cite{websitecontrolalg2023}
+
+% % \subsection{Typy kontrolných algoritmov}
+
+
+% % \subsubsection*{open-loop algoritmy} Sú najjednoduším typom kontrolných algoritmov, ktoré vracajú pre rovnaký vstup rovnaký výstup. Používaju sa v systémoch, kde netreba meniť výstupné dáta na základe zmeny vstupných dátach.
 
 
 % \subsubsection*{closed-loop algoritmy} Sú zložitejšie než open-loop algoritmy, ktoré používajú odozvu s cieľom úpravy výstupných dát na základe zmien vstupných dát. Používajú sa v systémoch, kde sa výstup musí upravovať na základe zmien vo vstupe.
@@ -400,25 +1312,25 @@ Algoritmus Shortest Job Next, skrátene SJN je trediaci plánovací algoritmus. 
 %     \end{figure}
 
 % ~\eqref{eq:current}
-\section{Cena nabíjania.}
-Náš spôsob definovania ceny nabíjania je: na konci každého mesiaca nastavíme ceny nabíjania ako $\alpha_{t}^{*}$, pre každé nabíjanie $i$ v tom mesiaci. Hovoríme, že $e_{i}$ je dodaná energia pre spotrebiteľa $j$ počas nabíjania $i$, kde $S_{j}$ je množina všetkých nabíjaní používateľa $j$. Potom náklady za nabíjanie spotrebiteľa $j$ sa na konci mesiaca vypočítajú takto:
-\begin{equation}
-    \sum_{i \in S_{j}}  \alpha_{i}^{*}e_{i}. 
-\end{equation}
-Narozdiel od konštantných cien a cien závislých na čase (napríklad v \cite{Li_2021}) my používame ceny (tarify), ktoré zachytávajú skutočné ceny energie. Skutočné ceny energie závisia od jej dopytu a od preťaženie infraštruktúry.  \cite{evpricingsystem}
-%TODO poslednu vetu mozno treba upravit taktiez este raz skontrolovat prve vety a vzorec
+% \section{Cena nabíjania.}
+% Náš spôsob definovania ceny nabíjania je: na konci každého mesiaca nastavíme ceny nabíjania ako $\alpha_{t}^{*}$, pre každé nabíjanie $i$ v tom mesiaci. Hovoríme, že $e_{i}$ je dodaná energia pre spotrebiteľa $j$ počas nabíjania $i$, kde $S_{j}$ je množina všetkých nabíjaní používateľa $j$. Potom náklady za nabíjanie spotrebiteľa $j$ sa na konci mesiaca vypočítajú takto:
+% \begin{equation}
+%     \sum_{i \in S_{j}}  \alpha_{i}^{*}e_{i}. 
+% \end{equation}
+% Narozdiel od konštantných cien a cien závislých na čase (napríklad v \cite{Li_2021}) my používame ceny (tarify), ktoré zachytávajú skutočné ceny energie. Skutočné ceny energie závisia od jej dopytu a od preťaženie infraštruktúry.  \cite{evpricingsystem}
+% %TODO poslednu vetu mozno treba upravit taktiez este raz skontrolovat prve vety a vzorec
 
 
-\begin{figure}[H]
-    \includegraphics[width=\textwidth]{images/energy_flow_costs.png}
-    \centering
-    \caption[Systém toku energie a ziskov.]{Systéme toku energie a aj zisky za energiu. Zdroj obrázka je: \cite{websitpricecharging2023}.}
-    \label{architectureacnsim:obr2}
-    \end{figure}
+% \begin{figure}[H]
+%     \includegraphics[width=\textwidth]{images/energy_flow_costs.png}
+%     \centering
+%     \caption[Systém toku energie a ziskov.]{Systéme toku energie a aj zisky za energiu. Zdroj obrázka je: \cite{websitpricecharging2023}.}
+%     \label{architectureacnsim:obr2}
+%     \end{figure}
 %TODO lepsie popisat asi co to utilita a charging operator je mozno to trbea najst
 
 % na základe ktorého vie potom agregátor flexibility vie prideliť energiu elektrickým vozidlám tak, aby sme optimalizovali tok energie a minimalizovali naše náklady na kapacitu a minimalizovali náklady spotrebiteľov.
-\section{Least Laxity First} 
+% \section{Least Laxity First} 
 
 
 % \section{Smoothed Least Laxity First.}

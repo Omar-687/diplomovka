@@ -1,5 +1,119 @@
 % !Tex root = main.tex
-% \chapter{Návrh softvérového diela}
+\chapter{Dáta}
+\label{chapter:data}
+% 
+% formulacia problemu a moznosti riesenia naprogramovat vecsinu kodu sam z mpc ok
+% ake ohranicenia
+Používame skutočné dáta nabíjaní elektrických vozidlách z dátovej množiny ACN-Data. Dátová množina ACN-Data pozostáva z viac než 66 000 záznamov o nabíjaní elektrických vozidiel, ktoré boli získané z troch nabíjacích sietí v Californii. Tieto tri nabíjacie siete sa nazývajú ACN (má 54 nabíjačiek), JPL (má 52 nabíjačiek) a Office 1 (má 8 nabíjačiek) \cite{acndata, lee2021acnsim}. Záznamy o nabíjaní elektromobilov sú denne pridávané do dátovej množiny ACN-Data. Dátová množina ACN-Data je verejne dostupná na stránke uvedenej v zdroji \cite{websiteacndata2023}. (viac informácii o dátovej množine ACN-Data sa nachádza v článku \cite{acndata}). My pristupujeme k dátovej množine ACN-Data programátorsky cez jednoduché klientské rozhranie pre používanie API v programovacom jazyku Python. Klientovské rozhranie, ktoré používame, je súčasťou balíka acnportal \cite{acnportalrepository}.
+
+
+
+
+
+
+
+% format dat 
+% novy mikrofon
+
+% v tomto priklade nie je zadana pozadovana energia, takze sa berie defaultna hodnota
+% overit ci to sedi s tvarom novych dat
+% \section{Tvar dát.}
+
+% TODO vymenovat clanky ktore pouzivaju ACN DATA
+% 1.Forecasting flexibility of charging of electric vehicles: tree and cluster-based methods
+% 2. Smart Charging of Electric Vehicles in Charging Stations
+% 3. Scheduling Online EV Charging Demand Responsevia V2V Auctions and Local Generation
+%  4. Learning-Based Predictive Control viaReal-Time Aggregate Flexibility
+%  5. PREEMPTIVE SCHEDULING OF EV CHARGING FOR PROVIDINGDEMAND RESPONSE SERVICES∗
+% 6. Reinforcement Learning Based EV Charging SchedulingA Novel Action Space Representation
+% 7. online linear programming
+\section{Forma dát}
+\label{chapter:data:tvar}
+% dovody preco pouzivame kwhdelivered a stanovenu maximum charging rate su OK, zatial som skoncil s touto kapitolou
+
+
+% TODO: nie tvar dat ale forma dat
+% TODO: opravit zapis caption, ze to je cez acndata api
+% TODO: pridat opis dat napr v tabulke, a preco nie su uvedenie niektore parametre
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics{images/acndata/acndata_ex1.png}
+    \caption[Príklad vstupných dát.]{Príklad záznamu nabíjania elektrického vozidla pripojeného na nabíjaciu stanicu 25.apríla 2018 získaný z webového rozhrania stránky \cite{websiteacndata2023}. Časy (Vstupné dáta) connectionTime a disconnectTime konvertujeme do časovej zóny v Los Angeles.}
+    \end{center}
+    \label{chapter:data:tvar:example}
+\end{figure}
+
+
+\begin{table}[H]
+\begin{center}
+    \begin{tabular}{||c c||} 
+     \hline
+     Parameter & Vysvetlenie \\ [0.5ex] 
+     \hline\hline
+     connectionTime & Čas, keď sa elektromobil pripojí na nabíjačku.  \\ 
+     \hline
+     disconnectTime & Čas, keď sa elektromobil odpojí od nabíjačky.  \\
+     \hline
+     doneChargingTime & Čas posledného dobitia elektromobilu.  \\
+     \hline
+     siteID & Identifikátor nabíjacej siete, kde prebehlo nabíjanie.  \\
+     \hline
+     stationID & Unikátny identifikátor nabíjačky, na ktorú je elektromobil napojený.  \\
+     \hline
+     kWhDelivered & Zaznamenaná dodaná energia.  \\
+     \hline
+     timezone & Časová zóna nabíjacej siete.  \\
+     \hline
+     userID & Unikátny identifikátor vodiča elektromobilu.  \\ [1ex] 
+     \hline
+    \end{tabular}
+    \caption[Opis parametrov z dátovej množiny ACN-Data.]{Opis parametrov z dátovej množiny ACN-Data. Tabuľku sme prevzali z \cite{acndata}.}
+    \end{center}
+    \label{chapter:data:tvar:example:table}
+\end{table}
+Tabuľka \ref{chapter:data:tvar:example:table} opisuje parametre, ktoré sú uvedené v zázname nabíjania zobrazenom na obrázku \ref{chapter:data:tvar:example}. Záznam nabíjania môže obsahovať aj ďaľšie nepovinné parametre, ktoré nie sú uvedené zázname nabíjania \ref{chapter:data:tvar:example}. Parameter kWhRequested (množstvo požadovanej energie) je nepovinný parameter, a preto v experimentoch nastavujeme kWhDelivered v zázname nabíjania elektromobilu $i$ ako množstvo požadovanej energie pre elektromobil $i$. Parameter, ktorý špecifikuje maximálnu rýchlosť nabíjania nie je uvedený vo viacerých záznamoch nabíjania elektromobilov. Z toho dôvodu (aj z inšpirácie z článku \cite{li2020realtimeflexibilityfeedbackclosedloop}) my nastavujeme maximálnu rýchlosť nabíjania elektromobilov na rovnakú hodnotu uvedenú v experimentoch \cite{acndata}.
+
+
+% tato kapitola sa je ok 
+
+
+% vysvetlit jednotlive parametre v datach 
+
+
+
+% The agent is trained on data collected at Caltech from  Nov. 1, 2018 to Dec. 1, 2019. Weekends and days with less than 30 charging sessions are removed from training data. (Weekends vs Weekdays and number of sessions can cause distribution shift - source of claim: \cite{lee_covid_slides}) Training data of each episode (day) consists of historical private vectors $(a(i), d(i), e(i), r(i)) \in R^{4}$. (Sources: \cite{ppctoxing})
+
+
+
+
+
+% na aku nabijaciu stanicu
+% Potrebné dáta o požadovanej energii a čase odchodu sa získavajú cez mobilnú aplikáciu. Ak spotrebiteľ mobilnú aplikáciu nepoužíje, tak nabíjacie siete pracujú so štandardnými hodnotami parametrov userID, requestedDeparture a kWhRequested. Význam všetkých polí, ktoré sa môžu nachádzať v záznamoch nabíjaní z dátovej množiny je opísaný v tabuľke . 
+% \begin{table}[H]
+%     \hspace*{-3cm}
+%     \begin{tabular}{ll}
+%      Pole & Popis  \\ 
+%      connectionTime & Čas pripojenia elektrického vozidla spotrebiteľa 
+%      na nabíjačku nabíjacej stanice. \\
+%      disconnectTime & Čas odpojenia elektrického vozidla spotrebiteľa z nabíjačky nabíjacej stanice. \\
+%      doneChargingTime & Čas posledného nabíjania elektrického vozidla. \\
+%      kWhDelivered & Merané množstvo dodanej energie elektrickému vozidlu spotrebiteľa. \\
+%      siteID & Identifikátor nabíjacej stanice, v ktorej prebehlo \\
+%      & nabíjanie elektrického vozidla spotrebiteľa. \\
+%      stationID & Unikátny identifikátor nabíjačky v nabíjacej stanici, \\ 
+%      & ktorá nabíja elektrické vozidlo spotrebiteľa. \\
+%      timezone & Časová zóna nabíjacej stanice, v ktorej prebehlo nabíjanie elektrického vozidla. \\
+%      pilotSignal &  Časový rad signálov z nabíjačky, na ktorú je elektrické vozidlo napojené.\\
+%      chargingCurrent & Časový rad rýchlostí nabíjania elektrického vozidla. \\
+%      userID* & Unikátny identifikátor spotrebiteľa elektrického vozidla. \\
+%      requestedDeparture* & Odhadovaný čas odchodu elektrického vozidla. \\
+%      kWhRequested* & Odhadované množstvo požadovanej energie.
+%     \end{tabular}
+%     \caption[Dátové polia záznamov nabíjaní z dátovej množiny ACN-Data.]{Význam dátových polí v záznamoch nabíjaní elektrických vozidiel z dátovej množine ACN-Data. Polia označené znakom * nie sú zahrnuté v každom zázname nabíjania elektrických vozidiel. Zdroj: \cite{acndata}.}
+%     \label{chapter:data:format:polia}
+%     \end{table}
+
+
 % V tejto kapitole vysvetľujeme a popisujeme vstupné a vystúpné dáta a aj kód implementovaného programu. Vlastnosti vstupných dát, ich pôvod a iné veci, ktore spomíname sa nachádzajú v článku~\cite{10.1145/3307772.3328313}. Odkaz, pomocou ktorého je možné vstupné dáta získať sa tiež nachádza v článku~\cite{10.1145/3307772.3328313}.
 % \section{Vstupné dáta}
 % % \section{Vstupné dáta.}

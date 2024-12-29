@@ -7,6 +7,13 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{xcolor}
+
+
+% \usepackage{listings}
 
 %%
 %% babel – Multilingual support for Plain TeX or LaTeX https://ctan.org/pkg/babel
@@ -49,6 +56,7 @@
 \usepackage{float}
 
 
+% \usepackage{comment}
 
 % environment suitable for creating tables
 \usepackage{tabularx}
@@ -85,6 +93,12 @@
 
 \usepackage{amsmath}
 
+
+
+
+\newtheorem{definition}{Definícia}[section]
+\newtheorem{theorem}{Teoréma}[section]  % Define a new theorem
+
 %%
 %% bussproofs – Proof trees in the style of the sequent calculus https://ctan.org/pkg/bussproofs
 %%
@@ -116,6 +130,13 @@
 \usepackage{listings}
 
 
+% \usepackage{cite}
+% \usepackage[noadjust]{cite}
+% list of algorithms
+\renewcommand{\lstlistingname}{Algoritmus}% Listing -> Algorithm
+% \renewcommand{\lstlistlistingname}{List of \lstlistingname s}% List of Listings -> List of Algorithms
+
+
 \hypersetup{
  pdftitle={Podpora inteligentného riadenia energetických sietí},
  pdfauthor={Bc. Omar Al-Shafe´i},
@@ -141,7 +162,7 @@
 
 \newcommand{\Tau}{\mathrm{T}}
 
-
+% TODO: zmenit stranu s podpismi, nahradit ju oskenovanym dokumentom s podpismi
 \begin{document}     
 
 \frontmatter

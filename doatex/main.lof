@@ -1,14 +1,19 @@
 \babel@toc {slovak}{}\relax 
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Model systému.}}{9}{figure.1.1}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Funkcie agregátora flexibility}}{7}{figure.2.1}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Príklad maximálnej entropickej odozvy.}}{12}{figure.2.1}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Pseudokód online algoritmu PPC. }}{15}{figure.2.2}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Pseudokód systému uzavretej slučky.}}{17}{figure.2.3}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Pseudokód algoritmu LLF pre jeden časový krok.}}{19}{figure.2.4}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Pseudokód bisekčnej metódy používanej v algoritme LLF}}{19}{figure.2.5}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Pseudokód algoritmu sLLF pre jeden časový krok.}}{21}{figure.2.6}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Kód bisekčnej metódy používanej v algoritme sLLF.}}{22}{figure.2.7}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Príklad plánovacie algoritmu Round Robin v praxi.}}{10}{figure.3.1}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Systém toku energie a ziskov.}}{13}{figure.3.2}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Príklad vstupných dát.}}{24}{figure.3.1}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Kód optimalizačnej metódy zlatého rezu}}{15}{figure.4.1}%
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Ukážka vstupných dát ACN-Data}}{16}{figure.5.1}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Schéma acnportal.}}{17}{figure.5.2}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Architektúra simulátora ACN-Sim.}}{18}{figure.5.3}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Typy nabíjania elektromobilov}}{20}{figure.5.4}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Ukážka nabíjania v nabíjacej stanici Caltech}}{29}{figure.4.1}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Ukážka nabíjania v nabíjacej stanici jpl}}{30}{figure.4.2}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Ukážka nabíjania z dát caltechovskej nabíjacej stanice}}{30}{figure.4.3}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Ukážka nabíjania z dát caltechovskej nabíjacej stanice}}{31}{figure.4.4}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Ukážka nabíjania z dát caltechovskej nabíjacej stanice}}{31}{figure.4.5}%

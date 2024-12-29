@@ -38,3 +38,416 @@ Uvedené chyby su zväčša chyby spôsobu podania svojich výsledkov a niekedy 
 
 
 
+Premyslite si vopred odpovede na otázky a kritiku v posudku
+Drobné chyby ako preklepy a pod. nemusíte rozoberať
+Pri väčších chybách sa vyjadrite, či má podľa vás oponent pravdu, alebo vysvetlite, prečo si myslíte, že správna je vaša verzia
+Môžete prípadne dorobiť nejaké experimenty, alebo časť kódu, ktoré predvediete počas diskusie ako odpoveď na kritiku v posudku
+
+
+Niektoré otázky sa môžu zdať nezmyselné alebo príliš ľahké - dotyčný sa možno vôbec nevyzná v oblasti, alebo naopak testuje, či viete vašu prácu zaradiť medzi základné poznatky odboru. Zodpovedzte všetky otázky najlepšie ako viete.
+
+Naopak ak je otázka nad rámec vašej práce a nepoznáte odpoveď, pokojne odpovedzte, že neviete, ale pokúste sa aspoň navrhnúť spôsob, ako by sa dalo pristúpiť k odpovedaniu otázky alebo vysvetlite čím sa otázka líši od tých, ktorými ste sa zaoberali vy
+
+
+
+
+Krátke matematické výrazy môžete mať priamo vo vete, ale zložitejšie výrazy dajte vystredené na zvláštny riadok.
+Nezačínajte vetu matematickým označením. Napr. namiesto “f(x) je rastúca.” napíšte “Funkcia f(x) je rastúca.
+Dôkaz môžete ukončiť prázdnym štvorčekom znamenajúcim QED.
+Násobenie v matematických výrazoch neoznačujte hviezdičkou (x*y). Často možno operátor násobenia vynechať (xy), v prípade potreby použite použite bodku v strede riadku.
+
+
+Krátke matematické výrazy môžete mať priamo vo vete, ale zložitejšie výrazy dajte vystredené na zvláštny riadok.
+Nezačínajte vetu matematickým označením. Napr. namiesto “f(x) je rastúca.” napíšte “Funkcia f(x) je rastúca.
+Dôkaz môžete ukončiť prázdnym štvorčekom znamenajúcim QED.
+Násobenie v matematických výrazoch neoznačujte hviezdičkou (x*y). Často možno operátor násobenia vynechať (xy), v prípade potreby použite použite bodku v strede riadku.
+
+Zátvorky a komentáre pod čiarou môžu pomôcť oddeliť poznámky od hlavného toku textu, sú však pre čitateľa unavujúce a preto ich tiež používajte s mierou.
+
+
+
+V práci používajte iba malý počet fontov a veľkostí písma.
+Špeciálne formátovanie, ako napríklad hrubé a šikmé písmo, používajte s mierou a konzistentným spôsobom v celej práci.
+
+
+Terminológiu a označenie používajte konzistentne. Všetky pojmy okrem úplne základných (ktoré pozná každý bakalár vášho programu) definujte. Ak potrebujete skutočne presnú definíciu, definujte aj základné pojmy. Používajte definície zaužívané v literatúre (ak existujú).
+
+Píšte v prvej osobe množného čísla, napríklad “Na základe týchto výhod sme sa rozhodli použiť knižnicu XYZ”, “V tretej kapitole popíšeme detaily našej implementácie”, “Dokázali sme teda, že f(x) je kladné.”
+
+Všetky tabuľky a obrázky by mali byť číslované. Každý obrázok a tabuľka má mať popis, ktorý sumarizuje jej obsah a vysvetľuje použité označenie, skratky a pod. Každý obrázok a tabuľku by ste mali spomenúť v hlavnom texte jeho číslom, napr. “Výsledky experimentu sú uvedené v tabuľke 6.” Obrázky a tabuľky nemusia byť umiestnené presne na tom mieste, kde sa používajú, môžu byť aj na vrchu aktuálnej či nasledujúcej strany.
+
+
+Priebežne pomáhajte čitateľovi zorientovať sa v texte. V úvode každej kapitoly a podkapitoly stručne popíšte, o čom v tejto časti budete písať. Formálne zadefinované pojmy vysvetlite aj neformálne, prípadne ilustrujte na príklade. Vysvetlite, z akých dôvodov definujte príslušné pojmy alebo dokazujete príslušné lemy.
+
+Práca by nemala opakovať základné definície a fakty, ktoré sú štandardnou súčasťou bakalárskeho štúdia.
+
+
+
+BibTeX mení písmená v názve článku na malé, čo je problém pri skratkách a vlastných menách v názvoch. Vložte tieto slová do {}, napríklad title="Theano: a {CPU} and {GPU} math expression compiler".
+Mená autorov treba písať v poradí krstné meno priezvisko alebo priezvisko, krstné meno (t.j. Jozef Mrkvička alebo Mrkvička, Jozef).
+Autorov oddeľujte slovom and, čiarka sa považuje za oddelenie priezviska a mena.
+Ak je autorom organizácia s viacslovným názvom, dajte ju do {}, napr author="{ENCODE Project Consortium}"
+Ak je autorov veľa, uveďte prvého a et al., čo dostanete v BibTeXu pomocou and others.
+
+
+Tu postupne pribúda zoznam balíčkov v LaTeXu, ktoré považujeme za užitočné, alebo ich odporučíte spolužiakom vy.
+
+Balíček subcaption urobí do jedného obrázku viac podobrázkov
+Balíček listings highlightovanie a formátovanie zdrojového kódu vkladaného do LaTeXu
+Návod na formátovanie pseudokódu
+Table Generator stránka na generovanie LaTeXových tabuliek prekopírovaním tabuľky z kancelárskeho softvéru
+TikZ je balíček na kreslenie obrázkov a diagramov v LaTeXu, hodí sa napríklad na grafy (vrcholy, hrany) a konečné automaty
+
+
+
+Keďže sa práca kontroluje automaticky v centrálnom registri, je potrebné, aby bola vo formáte PDF, ktorý nesmie byť zaheslovaný a musí sa dať previesť na čistý text.
+
+prevod na text si môžete otestovať na stránke CRZP.
+
+
+Snažte si naplánovať čas, rozvrhnúť etapy riešenia na dobu do termínu odovzdania
+Nechajte si aj rezervu pre prípad problémov
+Pred termínom odovzdania by ste mali mať dosť času, aby školiteľ stihol prečítať prácu, dať vám komentáre a vy ich ste stihli zapracovať
+
+
+Na stretnutia so školiteľom choďte pripravení, majte prichystané relevantné materiály, otázky, ktoré sa chcete spýtať a podobne. Robte si poznámky z diskusie so školiteľom.
+Ak nemôžete prísť na dohodnuté stretnutie, ospravedlňte sa, pokiaľ možno vopred.
+
+
+Výber témy do polovice októbra
+Finalizácia zadania, zháňanie literatúry do konca októbra
+Štúdium literatúry a stavu problematiky do konca novembra
+Špecifikácia a návrh softvéru do konca decembra
+Základná implementácia do konca februára
+Testovanie, rozširovanie do konca marca
+Písanie práce do konca apríla (aj priebežne v skorších fázach)
+Rezerva, kontrola do termínu odovzdania
+
+assume that - not assume 
+use different notation for different things 
+same notation for same thing in several places
+
+Capitalize names like Theorem 1, Lemma 2, Algorithm 3, Method 4
+
+
+Bad: An important method for internal sorting is quicksort.
+ Good: Quicksort is an important method for internal sorting, because ...
+ Bad: A commonly used data structure is the priority queue.
+ Good: Priority queues are significant components of the data structures needed
+ for many different applications.
+
+
+ Remember to minimize subscripts. For example, ‘pi is an element of P’ could more
+ easily be ‘p is an element of P’.
+
+  You can give relations in two ways, either saying ‘pi < pj’ or ‘pj > pi’. The latter is
+ for “people who are into dominance,” Don says, but the former is much easier for a
+ reader to visualize after you’ve just said ‘p = (p1,p2,...,pn) and i < j’. Similarly,
+ don’t say ‘i < j and pj < pi’; keep i and j in the same relative position
+
+
+ The word ‘very’ is also on diction’s list of suspects. Don recalled that someone had once
+ advised him thus: “Try changing all your ‘very’s to ‘damn’s and see what results. Don’t
+ use ‘very’ unless you would happily use ‘damn’ in its place.” Damn good advice!
+
+
+  Another questioner asked about first person singular? Paul likes it, but he admits that it
+ can be disturbing: “Who does that jerk think he is?” He reluctantly agrees that the first
+ person singular should be avoided in formal technical writing
+
+
+  Then Don briefly showed us an example of a problem that often occurs when mathemati
+cians are allowed to typeset their own text. A novice typesetter tends to make fractions
+ like n(n+1)(2n+1)
+ 3
+ instead of using the more readable slashed form n(n + 1)(2n + 1)/3
+
+ uvod zaver a abstrakt az na konci pisania prace 
+
+
+ V snahe dodať textu záverečnej práce dôveryhodnosť a zvýšiť jej odbornosť, mnohí používajú 
+vysoký počet cudzích slov aj v prípadoch, kedy to nie je potrebné. Cudzie slová by sme 
+v odbornom texte nemali používať prehnane a samoúčelne, nakoľko tým môžeme znížiť 
+zrozumiteľnosť textu. Pokiaľ existuje ekvivalent v slovenskom jazyku, mali by sme ho použiť, 
+resp. využívať len tie cudzie slová, ktoré patria do bežnej slovnej zásoby. 
+
+
+Medzi základné prehrešky voči výstavbe odborného textu patria: 
+• používanie emocionálnych a expresívnych výrazov (Jupí!), 
+• používanie obrazných pomenovaní (Katalogizácia je ťažká ako hrom.) 
+• disimilácia – násilná obmena synonymami s nerešpektovaním zaužívanej terminológie, 
+• jednočlenné oznamovacie vety (Prší.)   
+• rozkazovacie, zvolacie a opytovacie vety, 
+• hovorový štýl,  
+• nespisovné slová, 
+• nadbytočné slová (nejaký, teda, vlastne)
+
+
+kapitolou o celej práci a v 
+istom zmysle môže nahradiť čítanie výsledkov roztrúsených v jadre. Preto mu treba venovať 
+patričnú pozornosť a pri jeho zostavovaní si uvedomiť, že je prezentáciou všetkých podstatných 
+zistení a potvrdením prínosu záverečnej práce pre konkrétny odbor
+
+
+
+
+Rozsah záveru sú minimálne dve strany. Píše sa zväčša neosobnou formou, spravidla v 
+minulom čase.  
+
+
+
+
+Obsah záveru by sa mal koncentrovať na nasledovné aspekty: 
+ zhodnotenie dosiahnutia vytýčeného hlavného cieľa a čiastkových cieľov,  
+ zhrnutie relevantnosti témy,  
+ najdôležitejšie závery, limity (prieskumu) a prínosy práce, 
+ ďalšie otázky, otvorené problémy, ktoré si žiadajú pozornosť, ale neboli súčasťou cieľov 
+práce, popr. ich riešenie prekračuje limit rozsahu práce,  
+ potenciálne výskumné možnosti do budúcnosti.
+
+% \begin{figure}[H]
+%     \includegraphics[width=0.8\textwidth]{images/simulator_run.png}
+%     \centering
+%     \caption[Vývojový diagram funkcie run() simulátora ACN-Sim.]{Vývojový diagram funkcie run() simulátora ACN-Sim. Obrázok pochádza z článku \cite{lee2021acnsim}.}
+%     \label{architectureacnsim+:obr2}
+%     \end{figure}
+
+% \UNFIN
+
+% nám pomáha pochopiť štruktúru a interakcie jednotlivých častí systému, aby sme vedeli implementovať vlastné algoritmy.
+
+
+% \subsection{Interakcia medzi spotrebitelmi a smart grid}
+
+
+%vsetky baliky sa zacinaju malym pismenom a su oddelene pomlckami
+
+% TODO: blizsie popisat z coho pozostava ten balik!!!!
+% namiesto repozitar balik napriklad!!
+\subsection{Balík adacharge.}
+% \subsection{Balík Adacharge}
+
+
+% TODO:prepisat prva veta je zla MPC samotny to neriesi ale metody v mpc
+Balík adacharge obsahuje kontrolný algoritmus MPC, ktorý je schopný riešiť viacero optimalizačných problémov v rámci plánovania nabíjania elektromobilov. Tento MPC algoritmus rieši aj problém, ktorý my riešime, a to problém pridelenia maximálnej energie elektromobilom pri zachovaní obmedzení infraštruktúry pomocou konvexnej optimalizácie. Podrobnejší popis a zdrojový kód balíka Adacharge sa nachádza v \cite{adachargerepository}.
+% aj zaroven obmienat
+\subsection{Balík acnportal-experiments.}
+Účelom balíka acnportal-experiments je zdieľanie experimentov, ktoré pomocou balíka acnportal riešia rôzne vedecké otázky.
+% Balík acnportal-experiment obsahuje experimenty, ktoré využívajú balík acnportal. 
+% Tieto experimenty následne vedia zodpovedať výskumné otázky. 
+
+Pre tvorbu nových experimentov, ktoré riešia náš problém sú podstatné experimenty 1.2 a 2.1. Tieto experimenty využívajú viacero plánovacích algoritmov a konfigurácii siete. Krátky popis experimentov:
+\begin{enumerate}
+    \item Experiment 1.2: Cieľom experimentu je porovnať viacero konfigurácii infraštruktúry siete a zároveň plánovacie algoritmy. Tento experiment poukazuje na výhody smart sietí. Jednou z výhod smart sietí je, že vedia riešiť problém dodania maximálneho množstva energie pri zachovaní obmedzení infraštruktúry siete.
+    \item Experiment 2.1: Cieľom experimentu je porovnať výkonnosť týchto plánovacích algoritmov:  round robin,  earliest deadline first, least laxity first. Jedným z výsledkov experimentu je koľko percent požadovanej energie dodá elektromobilom každý algoritmus.
+\end{enumerate}
+%experiment 2.2 mozno pridat ale netyka sa toho co my riesime, riesi vykonnost planovacich algoritmov pri zmene modelu baterie atd
+
+
+\subsection{Balík stable-baselines3.}
+\label{technologie:sb3}
+
+Balík stable-baselines3 vytvorili za účelom implementovania viacerých spoľahlivých algoritmov učenia posilňovaním (vývojári otestovali výkonnosť všetkých algoritmov). My používame algoritmus SAC z balíka stable-baselines3 na učenie a testovanie algoritmu \ref{navrh-prace: PPC}.  Balík stable-baselines3 obsahuje podrobnú dokumentáciu a aj obsiahlu funkcionalitu.
+
+
+
+
+% Podrobnejší popis a výsledky experimentov vieme nájsť v \cite{acnportalexperimentsrepository}.
+
+%TODO: pojmy ako transformer vysvetlit alebo odstranit
+%TODO: mozno pridat aj ten 3. experiment?
+%TODO: pisat tie mena algoritmov jednotne
+% \UNFIN
+
+% \section{Aplikovateľnosť smart charging algoritmov.}
+
+% Mnoho zaujímavých algoritmov z literatúry sa nedá využiť priamo v praxi. Hlavným dôvodom prečo sa nedajú aplikovať v praxi je poďla \cite{lee2021adaptivephd} to, že majú predpoklady, ktoré v praxi nefungujú alebo im chýba schopnosť splniť praktické obmedzenia a aj ciele.
+
+% Uvádzame list vlastností smart changing algoritmu spomen , ktorý môže byť aplikovateľný v praxi:
+
+% \begin{enumerate}
+%     \item Algoritmy musia brať do úvahy používateľské vstupy ako napríklad čas odchodu a množstvo požadovanej energie.
+%     \item Algoritmy musia vyriešiť jednoducho problém s viacerými cieľmi.
+%     \item Algoritmy musia vedieť pracovať s obmedzeniami v niekoľkoúrovňovej nevyváženej infraštruktúry.
+%     \item Výstup algoritmov (plán nabíjania) musí spĺňať aspoň jednu z týchto vlastností: plynulé nabíjanie alebo spravodlivé zdielanie kapacity medzi elektromobilmy.
+%     \item Algoritmy musia byť odolné voči neistote v budúcich príchodoch elektromobilov. 
+%     \item Algoritmy musia vedieť narábať s diskrétnymi bodmi pre pilotové signály.
+%     \item Algoritmy musia mať schopnosť si nárokovať nevyužitú kapacitu v prípade, keď elektromobili nevyužívajú alokovaný pilotový signál. 
+% \end{enumerate}
+
+% Algoritmus, ktorý všetky tieto podmienky spĺňa sa nazýva Adaptive Scheduling  Algorithm (ASA). Podrobnejší popis, prečo tieto podmienky tento algoritmus spĺňa a aj list podmienok z ktorého sme čerpali sa nachádza v
+% \cite{lee2021adaptivephd}.
+
+% acnportalexperimentsrepository
+
+% \subsection{Balík Acnportal-experiments}
+
+
+% V tejto sekcii spomíname knižnice, frameworky a ďalšie technológie, ktoré sme pri implementácii použili.
+
+% \subsection{Knižnica numpy}
+% \label{ss:vych:techvych:numpy}
+% Knižnica numpy rozširuje možnosti v oblasti práce s poľami. 
+% V knižnici numpy sú 2 hlavné objekty: ndarray a ufunc. Pomocou objektu ndarray vieme definovať N-dimenzionálne pole a pomocou ufunc vieme definovať matematické funkcie. Každé pole objektu ndarray obsahuje homogénnu kolekciu prvkov.
+% % Tie sa v štruktúre s bežnými poľami neodlišujú, to znamená že prvý prvok poľa má index 0 a posledný $n-1$, kde $n$ je dlžka poľa. 
+% Naviac vieme pomocou knižnice numpy zjednodušiť zložité cykly pomocou operacií numpy.dot alebo numpy.outer, čo značne zlepšuje časovú zložitosť programu. \cite{oliphant2006guide}
+
+
+% \subsection{Knižnica scipy}
+% \label{ss:vych:techvych:scipy}
+
+% % \subsection{Knižnica matplotib}
+% % \label{ss:chapter:section:subsection}
+
+% \subsection{Knižnica pytorch}
+% \label{ss:vych
+% :techvych:torch}
+% Knižnica pytorch bola založená facebookovou skupinou študujúcu umelú inteligenciu. Hlavným cieľom vývoja tejto knižnice bolo zjednodušiť tvorbu a vývoj modelov. Knižnica pytorch je založená na knižnici torch a používa sa v programovacom jazyku Python.
+% Pytorch je knižnica určená na písanie dynamických modelov. Z toho dôvodu sa často používa na veľké konštrukcie hlbokého učenia. \cite{mishra2019pytorch}
+% Tu je nejaký text.
+
+% \subsubsection{Subsubsection}
+
+% Tu je nejaký text.
+
+% \paragraph{Paragraph}
+
+% Tu je nejaký text.
+
+% \subparagraph{Subparagraph}
+
+% Tu je nejaký text.
+
+% \section{Konfigurácia  a obmedzenia nabíjacích sietí}
+% \label{vych:konfaobmedzenia}
+
+% V tejto sekcii uvádzame jednotlivé konfigurácie a obmedzenia nabíjacích sietí, na ktorých navrhujeme a overujeme model agregátora flexibility. Popisujeme rôzne typy nabíjania, obmedzenia nabíjacej siete.
+
+% % \section{Teoretické východiská.}
+
+% % Definície a vety a notácia, ktoré uvádzame ak nie je bližšie špecifikovaný zdroj, tak pochádzajú z článkov~\cite{Li_2021} a~\cite{10.1145/3307772.3328313}.
+% % zo statnej stranky commonwealth of messetsusec
+% % \subsection{Typy nabíjania.}
+% % % \subsection{Typy nabíjania}
+
+% % % TODO:ako vieme kedy nabijame ac level1 a kedy ac level2 v acnportal?
+% % Všetky experimenty, ktoré vykonávame používajú nabíjanie typu AC level 1 alebo nabíjanie typu AC level 2. Nabíjanie AC level 1 je predovšetkým určené pre vlastníkov elektrických vozidiel, ktorí ich chcú nabíjať dlhodobo (napríklad cez noc). 
+% % Rýchlosť nabíjania typu AC level 1 je 1.4 kWh až do 1.9 kWh energie. Nabíjanie typu AC level 1 dokáže úplne nabiť batériu elektrického vozidla v rozmedzí od 8 do 20 hodín (v závislosti od kapacity batérie a typu batérie elektrického vozidla).
+% % % Kapacita nabíjacieho kábla je od 110 až do 120 voltov.
+
+
+% % Typ nabíjania AC level 2 je rýchlejší typ nabíjania ako AC level 1. Rýchlosť nabíjania pri AC level 2 je od 2.5 kWh do 19.2 kWh. Počas dňa môže viacero spotrebiteľov nabíjať vďaka takejto rýchlosti nabíjania. 
+
+% % Pri takejto rýchlosti nabíjania elektrických vozidiel sa môže vystriedať pri nabíjaní počas dňa viacero spotrebiteľov. Nevýhodou typu nabíjania AC level 2 je, že vyžaduje väčšie náklady na inštaláciu.
+% % % Kapacita nabíjacieho kábla pri AC level 2 je buď 208 alebo 240 voltov.
+% % \cite{charginglevelsumini, websitecharginglevels2023}
+
+% % \begin{figure}[H]
+% %     \includegraphics[width=1\textwidth]{images/EVCharger-Levels-jpg.png}
+% %     \centering
+% %     \caption[Typy nabíjania elektrických vozidiel]{Všetky dnešné typy nabíjania elektrických vozidiel s príslušnými údajmi o rýchlosti nabíjania a kapacite kábla. Zdroj obrázka: \cite{websitecharginglevels2023}.}
+% %     \label{typynabijania:obr}
+% %     \end{figure}
+% % TODO: ak bude mozne najst obrazok ohladom levelov nabijania z literatury (zatial som nenasiel)
+
+% % ale malo by to byt ok 
+% % 1. dalsi zdroj co ma rovnako https://craigheadelectric.coop/electric-vehicle-charging-101/
+% % 2. dalsi zdroj co to ma rovnako https://www.linncountyrec.com/energy-solutions/rebates/residential-rebates/electric-vehicle-level-ii-charger
+
+
+
+
+
+%     %TODO: lepsie vysvetlit pojmy
+% % \UNFIN
+
+% %TODO specifikovat pre implementaciu, je to v nejakom clanku
+
+% % \subsection{Rýchlosť nabíjania batérie.}
+% % % \subsection{Rýchlosť nabíjania batérie.}
+% % Pomocou triedy Battery, ktorá definuje ideálny model batérie vieme sami definovať vlastné modely batérie.
+% % Rýchlosť nabíjania ideálnej batérie je:
+
+% % \begin{equation}
+% %     \hat{r}(t) = min\{\overline{r}, \, r(t), \, \hat{e}(t)\},
+% % \end{equation}
+% % kde $\overline{r}$ je maximálna rýchlosť nabíjania, $r(t)$ je pilotový signál poslaný do batérie a $\hat{e}(t)$ je nezaplnená energia batérie v čase $t$ v ampéroch. 
+
+% % Existuje aj rozšírenie triedy Battery, ktoré sa nazýva Linear2StageBattery. Linear2StageBattery aproximuje po častiach lineárne nabíjanie elektromobilov s lítiovou batériou. Prvý stav, ktorý nazývame hromadné nabíjanie trvá zvyčajne od 0 do 70 až 80 percent stavu nabíjania. Rýchlosť nabíjania batérie Linear2StageBattery je:
+% % \begin{equation}
+% %     \hat{r}(t) = 
+% %     \begin{cases*}
+% %         min\{\overline{r}, \, r(t), \, \hat{e}(t)\} & Ak $SoC \leq th$ \\
+% %         min  \{ (1 - SoC) \frac{\overline{r}}{1 - th}, \, r(t) \}      & inak
+% %     \end{cases*}
+% %   \end{equation}
+% % kde $th$ je hodnota energie po prechode z hromadného nabíjania do absorpčného nabíjania. Premenná $SoC$ znamená stav nabíjania batérie.
+
+% % Tento čiastočný lineárny model je dobrá aproximácia správania batérie počas nabíjania. Žiaľ, ani tento model nezachytáva všetky prípady, ktoré môžu správanie batérie zmeniť. \cite{lee2021acnsim}
+
+% \subsection{Infraštruktúra nabíjacej stanice.}
+% % \subsection{Typy nabíjacích staníc}
+
+% Simulátor ACN-Sim využíva inštancie triedy ChargingNetwork na modelovanie infraštruktúry nabíjacej siete. To znamená, že trieda ChargingNetwork modeluje nabíjačky (napríklad ich počet, typ nabíjačiek atď), transformátor (určený na prenos energie v nabíjacej sieti), prepínacie panely a káble. 
+
+% Na zmenu alebo rozšírenie funkcionality triedy ChargingNetwork je nutné vytvoriť novú triedu, ktorá dedí od triedy ChargingNetwork. Takto bola vytvorená trieda StochasticNetwork, ktorá sa odlišuje od triedy ChargingNetwork v prideľovaní nabíjačiek prichádzajúcim elektromobilom. Popis, ako sa prideľujú nabíjačky elektromobilom:
+% % upravit poslednu vetu 
+
+% %pouzivat nabijacia siet 
+% % Typy nabíjacích staníc (implementované v balíku acnportal), ktoré pri experimentoch využívame sú:
+
+% \subsubsection*{ChargingNetwork} V tomto type nabíjacej siete je každý prichádzajúci elektromobil priradený vopred priradený určenej nabíjačke v nabíjacej sieti. 
+
+% \subsubsection*{StochasticNetwork} Tento typ nabíjacej siete prideľuje každému prichádzajúcemu elektromobilu voľnú nabíjačku náhodne. V prípade, keď príde elektromobil do nabíjacej stanice a žiadna nabíjačka v nabíjacej stanici nie je voľná, tak elektromobil pridá do na koniec čakacieho radu. Potom v okamihu, keď sa nabíjačka uvoľní, tak sa priradí prvému elektromobilu v čakaciom rade (ktoré sa z čakacieho radu odstráni).   \\
+
+
+
+% % druha vec netreba, lebo tu nechceme 
+% %
+
+% % Táto nabíjacia stanica prideľuje nabíjačky elektromobilom náhodne. Implementuje čakací front v prípade ak nie sú voľné nabíjačky. 
+% % Ak nastavíme parameter early departure na pravdivý, tak dovolíme výmenu vozidla nabíjajúcim na stanici s vozidlom, ktoré sa nachádza v čakacom fronte. 
+
+% Typ nabíjacej siete StochasticNetwork je viac vhodný než typ nabijacej siete ChargingNetwork hlavne pre uplatnenie v praxi, ale aj v pri generovaní udalostí zo štatistických modelov. \cite{lee2021acnsim}
+
+% Keďže my chceme, aby naše experimenty boli aplikovateľné v reálnom živote, tak používame typ siete StochasticNetwork v experimentoch. Tiež používame v našim experimentoch len nabíjačky, ktoré povoľujú prenos akéhokoľvek množstva energie medzi dolnou a hornou hranicou množstva energie.
+%TODO: zmenit opis lebo oni tam pisu ze vseliake typy nabijaciek s obmedzeniami sa vyuziva v realnom zivote
+% \UNFIN
+
+% \subsection{Obmedzenia pri nabíjaní.}
+% % \subsection{Obmedzenia pri nabíjaní.}
+% \label{Vych:konfig:obmedzenia}
+
+% Nabíjacie systémy často fungujú na princípe radiálnych sietí. Musíme preto obmedziť množstvo voltov prechádzajúcich cez každé úzke miesto siete. Pomocou Kirchhoffových zákonov vieme definovať obmedzenia pri nabíjaní takto: 
+% % V radialných sieťach dostávajú elektrické autá energiu prostredníctvom jediného zdroja. ... 
+
+% \begin{equation}\label{eq:current}
+%     |I_{j}(t)| = |\sum_{i=1}^{N} \, A_{ij} \, r_{i} (t) \,e^{j\phi_{i}}| \leq R_{j},
+% \end{equation}
+% kde $R_{j}$ je veľkosť prúdu, $I_{j}(t)$ je prúd prúdiaci cez úzke miesto siete, $N$ je počet nabíjačiek v nabíjacej stanici, $r_{i}(t)$ je prúd poskytovaný nabíjačkou $i$ v čase $t$. Dokopy máme $T$ časových krokov. Parametrom $\phi_{i}$ vyjadrujeme fázový uhol pre aktuálny fázor, ktorý závisí na tom ako je nabíjačka $i$ zapojená do siete. \cite{lee2021acnsim}  % v čase $t$ \\
+
+% \UNFIN
+
+
+%TODO: mozno pridat aj dalsi typ obmedzeni spominany v jednom z clankov?
+
+% CO pre kazdy experiment uviest:
+% ciel experimentu
+% data z kade a z akeho obdobia
+% kolko prichodov ev
+% obmedyenia a siet 
+% nastavenia pripadne ak maju algoritmy ine nastavenia spomenut
+% vysledky
+% diskusia
+
+
+
+% objective function treba rovnicu najst na maximalizovane dodanej energie
+% co je dane a co riesit vychadzam z datovej mnoziny 
+
+
+% 6 -> nesplana constrainty tiez 
+% 5 
+
+% buduci tyzden 13:30 stvrtok
+% preco toto je dobra cesta atd vysvetlit presny postup

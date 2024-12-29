@@ -3,25 +3,126 @@
 \addcontentsline{toc}{chapter}{Úvod} % rucne pridanie do obsahu
 \markboth{Úvod}{Úvod} % vyriesenie hlaviciek
 
+
+% elektrina za rozne ceny: cena energie sa sklada z dvoch casti regulovana (pre danu cast zakaznikov rovnaka stanovuje energeticky regulacny urad zavisla na nakladoch za prenos a distribucii energie od vyrobcovi ku mne domov) a neregulovana (vyplyva zo zmluvy s dodavatelom zalezi na tom za kolko moj dodavatel tuto elektrinu nakupi a predava ich spotrebitelom s marzi)
+% distributor elektriny zabezpecuje spravu elektrickej siete a aj rozvod elektrickej energie
+
+
+
+
+
 %TODO vysvetlit co je agregátor a co je flexibilita
 
-S neustále pribúdajúcim množstvom elektromobilov na trhu sa zväčšuje množstvo elektrickej energie, ktorú treba dodať elektromobilom. Môže nastať situácia, že kapacity jednotlivých nabíjacích staníc nebudú stačiť pre nabitie každého elektromobilu požadovaným množstvom energie. Preto sa postupne aj odberatelia elektrickej energie stávajú výrobcami elektrickej energie pomocou obnoviteľných zdrojov. Tým sa jednosmerná sieť, v rámci ktorej veľkí výrobcovia dodávajú energiu spotrebiteľom, mení na obojsmernú sieť, kde odberatelia, ktorí sú výrobcami elektrickej energie môžu poskytovať za týmto účelom podporné služby.
+% S neustále pribúdajúcim množstvom elektrických vozidiel na trhu sa zväčšuje nároky 
+% Štandardne pojem energetická sieť sa používa pre systém ktorý podporuje aspoň niekoľko operácii: generácia elektriny, distribúcia energie a na riadenie energie.
+% zmenit na distributor elektrickej energie
+
+% Energy distributors are responsible for getting electricity from the supplier to your home or business
+
+
+% “This transformation is critical because green energy sources often produce power variably, necessitating advanced storage and grid management technologies.”
+Energetická sieť je sieť infraštruktúry, vďaka ktorej môže distribútor elektrickej energie dodávať energiu z elektrární spotrebiteľom. Inteligentná energetická sieť je typ energetickej siete, ktorá používa aktuálne komunikačné technológie, pokročilé senzory, analýzy, monitorovanie a riadenie tokov elektrickej energie \cite{smartgrid0book}. Inteligentné merače sú jednou z najdôležitejších prvkov inteligentných energetických sietí. Tieto merače merajú spotrebu elektrickej energie jej spotrebiteľov a následne tieto údaj posielajú dodávateľovi elektrickej energie v krátkych intervaloch, a to v rozmedzí od 15 minút do 30 minút. Vďaka týmto údajom môžeme predpovedať spotrebu elektrickej energie v budúcnosti s veľkou presnosťou. Pomocou týchto predikcií spotreby energie dokáže inteligentná energetická sieť riadiť výrobu elektrickej energie v reálnom čase \cite{smartmeterpublication, smartmetergeneral}. 
+
+
+
+Vzhľadom na energetickú krízu, na zintenzívnenie snahy EU o zníženie uhlovodíkovej stopy, a na klimatické zmeny, ktorých sme svedkami, rastie snaha o integráciu obnoviteľných zdrojov (veterné a fotovoltické elektrárne) do energetických systémov. Pre distribútora elektrickej energie (na Slovensku sa nazýva SEPS) má veľký význam stabilita siete, stabilita dodávok elektrickej energie bez výpadkov a príprava na prechod zo štandardných výrobných zdrojov energie na obnoviteľné zdroje energie. Nestabilitu do energetickej siete vnášajú práve obnoviteľné zdroje, ktoré výrábajú elektrickú energiu v závislosti od počasia, a takto vyrobenú elektrickú energiu vo všeobecnosti nemožno skladovať, aj keď sa časť z nej dá uložiť do rôznych úložísk, a to napr. do (lítiových) batérií, do elektrických vozidiel \cite{renewableenergybook1, smartgrid0book, sepswebiste2024}.
+% narozdiel vs na rozdiel
+
+Komunikačné technológie inteligentnej energetickej siete umožnujú obojsmerný tok energie medzi dodávateľmi a spotrebiteľmi tejto energie narozdiel od tradičných energetických sietí, ktoré poskytujú výlučne jednosmerný tok energie od dodávateľov k spotrebiteľom. Inteligentné energetické sieťe majú schopnosť integrovať obnoviteľné zdroje energie, a tým nahradiť používanie fosilných palív vďaka svojej vylepšenej inteligencii a odolnosti \cite{smartgrid0book}. 
+% Vďaka spotrebiteľom, ktorý sú aj výrobcami energie z obnoviteľných zdrojov energie (týchto spotrebiteľov súhrnne nazývame prosumeri) dokážeme integrovať obnoviteľné zdroje energie do inteligentných energetických sietí.
+% TOD0: pridat zdroj alebo nie ked je to zo zadania??
+
+% Integrovať obnoviteľné zdroje do inteligentnej energetickej siete vieme  
+
+% how does smart grid balance supply and demand
+
+V závislosti od spotreby elektrickej energie kolíše jej cena podľa vopred dohodnutých taríf, ktoré zohľadňujú výšku výroby a spotreby počas dňa. Najvýhodnejším riešením je posúvať spotrebu elektrickej energie na čas, kedy je cena najnižšia a spotrebuvávať ju  najviac vtedy, keď je energia najlacnejšia \cite{dynamicpricingbook1, Lee2020PricingEC}. Riadiť spotrebu môže sám spotrebiteľ energie alebo môže túto právomoc delegovať agregátorovi flexibity. Agregátor flexibility totiž vie, koľko energie má k dispozícii, resp. koľko potrebuje kúpiť na trhu s elektrickou energiou, t. j. na spotovom trhu. Jeho miesto je medzi spotrebiteľom a distribútorom (správcom celej sústavy - na Slovensku sa nazýva SEPS) \cite{aggregaorDR}. 
+
+% trh s elektrinou vs spotovy trh???
+
+Úloha agregátora flexibility zatiaľ nie je presne definovaná. Táto úloha agrégatora môže byť určená treťou stranou alebo už učinkujúcim hráčom na trhu s elektrickou energiou. Nezávislý agregátor môže poskytovať jednu službu alebo viacero služieb. Medzi služby agregátora patria združovanie flexibility, dodávky energie spotrebiteľom, ako aj vyváženie dopytu a ponuky na trhoch s elektrickou energiou \cite{Granado2023}.
+
+Vlastníci elektromobilov môžu hrať rolu prosmerov, ak sa zapájajú do programov o vyvážení dopytu. Prosumeri môžu napríklad poskytovať nabíjacej sieti energiu za predpokladu, že technológie umožnujú obojsmerné nabíjanie. Participácia prosumerov benefituje prosumerov tým, že dostanú odmeny za poskytovanie energie. Nabíjacia sieť benefituje tým, že je menej odkázaná generovať energiu počas najvyššieho dopytu po energií pomocou nákladových generátorov, ako napríklad plynových turbín \cite{review-on-smart-charging}.
+
+% tuto dopisat este viac informacii
+Jednou z úloh agregátora flexibility je aj úloha minimalizácie nákladov na elektrickú energiu v spoločných garážach, kde sa nachádza určité množstvo nabíjacích staníc. Inšpirovaní článkami \cite{Li_information_aggregation, Li_2021,li2020realtimeflexibilityfeedbackclosedloop, chen2021smoothed, offlineoptimal}, sme sa zamerali na hľadanie optimalizácie nabíjania elektrických vozidiel tak, aby si každé elektrické vozidlo dobilo dostatok energie, nebol porušený maximálný možný príkon (spotrebovaná energia) v čase, a zároveň sa minimalizovala cena dobitia.
+
+V našom riešení uvažujeme interakciu agregátora a nezávislého systémového operátora v systéme uzavretej slučky (opísaný v druhej kapitole), aby sme vyriešili problém optimalizácie nabíjania, ktorý sme spomenuli v predchádzajúcom odseku. Agregátor privileguje úlohu optimalizácie nabíjania nezávislému systémovému operátorovi (podľa článku \cite{Li_information_aggregation} agregátor nemusí mať dostatok sily, aby sám vyriešil  optimalizačný problém). Systémový operátor vie minimalizovať svoje operačné náklady, optimalizovať nabíjanie elektromobilov, alebo dosiahnuť iné svoje ciele na základe získanej (dostatočne informatívnej) spätnej odozvy o flexibilite od agregátora. Signál spätnej odozvy o flexibilite poskytuje informácie o agregovanej flexibilite agregátora. Agregovaná flexibilita agregátora je sumárom obmedzení systému. Dizajn signálu spätnej odozvy o flexibilite je komplexný problém. My používame v našom riešení signál spätnej odozvy o flexibilite, ktorý nazývame maximálna entropická odozva.
+
+Nezávislý systémový operátor posiela kúpenú časovo meniacu sa energiu (energiu, ktorá je riešením optimalizačného problému a spľňa operačné obmedzenia) agregátorovi, z ktorej by agregátor mal čo najviac využiť na nabíjanie flotily elektromobilov. Kalifornský nezávislý systémový operátor je príkladom systémového operátora, ktorý zabezpečuje posúvanie spotreby energie v čase, skladovanie energie \cite{Li_information_aggregation,li2020realtimeflexibilityfeedbackclosedloop,machine-learning-dr-systematic-review}.
+
+V kapitole \ref{chapter:sucasnystav} opisujeme stručne existujúce riešenia problematiky optimalizácie nabíjania, ktoré používajú rozdielne prístupy na riešenie problematiky. Spomíname aj tabuľku notácií a aj opis modelu systému, ktorý používame pri riešení problému.
+V kapitole \ref{chapter:navrhries} opisujeme návrh riešenia problému, opis a vysvetlenie použitých algoritmov, prípadne aj definície alebo vysvetlenie premenných, ktoré sa v daných algoritmov vyskytujú. V kapitole \ref{chapter:data} sa venujeme opisu dátovej množiny, z ktorej vychádzame.
+V kapitole \ref{chapter:experimenty} opisujeme aké nastavenia v algoritmoch sme si zvolili na vykonávanie experimentov a aj výsledky experimentov a diskusia o výsledkoch.
+
+
+% dobitie -doplniť elektrickú energiu
+% o prosumeroch a agregatorovi napisat 
+
+% co je substation power level 
+% ok dobre skusim nabuduce 
+% utorok a kedy? 13:00 = ok dobre
+
+% skusim iny mikrofon
+
+% energetických sietí na decentralizované energetické siete.
+
+% Inteligentná energetická sieť je vylepšením v porovnaní s energetickými sieťami z dvadsiateho
+
+% Zabezpečenie dodávok energie v inteligentnej energetickej sieti a jej stabilita môže byť narušená integráciou obnoviteľných zdrojov energie (napríklad fotovoltických panelov alebo veterných generátorov) ale aj s pribúdajúcim množstvom elektrických vozidiel na cestách.
+
+% preco mame agregatora flexbility v jednosmernej sieti aj ked nemame obnovitelne zdroje vysvetlit
+
+% Zabezpečenie dodávok energie v energetickej sieti a jej stabilita môže byť narušená integráciou obnoviteľných zdrojov energie (napríklad fotovoltických panelov alebo veterných generátorov) ale aj s pribúdajúcim množstvom elektrických vozidiel na cestách. Na integráciu obnoviteľných zdrojov do energetickej siete potrebujeme nový typ energetickej siete, ktorú nazývame inteligentná energetická sieť. Vďaka inteligentnej energetickej sieti dokážeme zabezpečiť obojsmerný tok energie medzi energetickou sieťou a spotrebiteľmi elektrickej energie. Spotrebilia môžu poskytovať inteligentnej energetickej sieti svoju elektrickú energiu z obnoviteľných zdrojov energie (súhrnne takých spotrebiteľov nazývame prosumeri). 
+
+
+
+% Problém, ktorý musí inteligentná energetická sieť pri integrácii obnoviteľných zdrojov riešiť je náhodnosť toku energie z obnoviteľných zdrojov energie. Tento problém môže narušiť stabilitu inteligentnej siete. Na zlepšenie riadenia toku elektrickej energie v inteligentnej energetickej sieti vytvorili agregátora flexibility, ktorému prosumeri môžu poskytovať svoju flexibilitu. To znamená, že prosumeri delegujú práva na odber vyrobenej a uskladnenej elektrickej energie (napr z fotovoltických panelov) a práva na obmedzenie spotreby (napr vypnutie kúrenia) agregátorovi flexibility. Agregátor flexibility je prostredníkom medzi prosumermi a trhom s elektrinou, tým že združuje flexibilitu od prosumerov a následne ju predáva (ako jedna entita) na trhoch s elektrinou. Prosumeri sú odmeňovaní za poskytovanie flexibility agregátorovi. Služby, ktoré agregátor flexibility môže poskytovať sú združovanie flexibility od prosumerov, dodávanie energie spotrebiteľom a vyváženie dopytu a ponuky na trhoch s elektrinou.  Tradičná energetická sieť integráciu obnoviteľných zdrojov energie z vonkajších zdrojov neumožnujú, lebo zabezpečujú len jednosmerný tok energie od energetickej siete k spotrebiteľom. 
+% % In our problem flexibility aggregator with help of intelligent algorithms is able to optimize...
+
+% Náš problém, ktorý riešime je založený na nabíjaní elektrických vozidiel nabíjačkami z jednej nabíjacej stanice. Uvažujeme, že nabíjacia stanica v našom probléme je tradičná energetická sieť (bez integrácie obnoviteľných zdrojov), ktorá má konečný počet nabíjačiek a môže poskytnúť konečné množstvo energie elektrickým vozidlám v určitom čase (ďalej len kapacita nabíjacej siete). V našom probléme agregátor flexibility poskytuje jednu službu: pomocou nami implementovaných inteligentných algoritmov a dátovej analýze optimalizuje tok energie, ktorým nabíjame elektrické vozidlá pripojené na nabíjačky nabíjacej stanice. Cieľom práce je nájsť taký plán nabíjania elektrických vozidiel nabíjačkami z nabíjacej stanice, vďaka ktorému agregátor flexibility vie optimalizovať tok energie, zabezpečiť stabilné dodávky energie, minimalizovať náklady spotrebiteľov za nabíjanie elektrických vozidiel pri rešpektovaní kapacity nabíjacej siete. Svoje riešenia porovnáme s existujúcimi riešeniami.
+
+% V tejto práci používame tradičnú energetickú sieť
+
+% Inteligentná energetická sieť je sieť, ktorá dokáže riadiť výrobu a spotrebu elektrickej energie v čase.
+
+% Nabíjanie takého množstva vozidiel bez veľkej záťaže na infraštruktúry nabíjacích staníc bude vyžadovať pokroky v architektúre nabíjacej siete a v plánovaní nabíjania elektrických vozidiel. Súhrnne voláme tieto pokroky inteligentné nabíjanie.
+% % Množstvo elektrických vozidiel (okrem dvojkolových a trojkolových) sa má podľa predikcií \cite{iea2023} zvýšiť od takmer 30 miliónov áut v roku 2022 po 240 miliónov áut roku 2030. V takom scénari by elektrické vozidlá tvorili viac ako $10\%$ zo všetkých cestných vozidiel.  \cite{iea2023}
+
+
+% elektrickej energie, ktorú treba dodať elektrickým vozidlám. Môže nastať situácia, že kapacity jednotlivých nabíjacích staníc nebudú stačiť pre nabitie každého elektrického vozidla požadovaným množstvom energie. Preto sa postupne aj odberatelia elektrickej energie stávajú výrobcami elektrickej energie pomocou obnoviteľných zdrojov. Tým sa jednosmerná sieť, v rámci ktorej veľkí výrobcovia dodávajú energiu spotrebiteľom, mení na obojsmernú sieť, kde odberatelia, ktorí sú výrobcami elektrickej energie môžu poskytovať za týmto účelom podporné služby.
 
 
 
 
-Riešením týchto problémov sú inteligentné takzvané smart siete. Tieto siete obsahujú agregátor flexibility, ktorému poskytujú flexibilitu používatelia nabíjacej siete. To znamená, že agregátor flexibility má právo riadiť odber elektrickej energie pre elektromobily a prispôsobovať ho podľa potrieb a podľa podmienok nabíjacej siete. Používatelia, ktorí sú tiež výrobcami elektrickej energie z obnoviteľných zdrojov, môžu poskytovať podporné služby prostredníctvom agregátora flexibility (takýchto používateľov nazývame prosumeri), a to tým, že napríklad agregátor flexibility od nich kúpi energiu.  Používatelia v takýchto sieťach môžu nastaviť svoje preferencie, ako napríklad preferovaný čas nabíjania a množstvo požadovanej energie. Agregátor flexibility vie následne pomocou inteligentných algoritmov  optimalizovať tok energie. Využíva pritom optimalizačné metódy alebo metódy strojového učenia (napr. neurónové siete). Agregátor flexibility tiež minimalizuje cenu elektrickej energie pre jej spotrebiteľov tým, že nakupuje elektrickú energiu v čase, keď je najlacnejšia a predáva elektrickú energiu v čase, keď je najdrahšia.
+% Riešením týchto problémov sú inteligentné takzvané smart siete. Tieto siete obsahujú agregátor flexibility, ktorému poskytujú flexibilitu používatelia nabíjacej siete. To znamená, že agregátor flexibility má právo riadiť odber elektrickej energie pre elektrické vozidlá a prispôsobovať ho podľa potrieb a podľa podmienok nabíjacej siete. Používatelia, ktorí sú tiež výrobcami elektrickej energie z obnoviteľných zdrojov, môžu poskytovať podporné služby prostredníctvom agregátora flexibility (takýchto používateľov nazývame prosumeri), a to tým, že napríklad agregátor flexibility od nich kúpi energiu.  Používatelia v takýchto sieťach môžu nastaviť svoje preferencie, ako napríklad preferovaný čas nabíjania a množstvo požadovanej energie. Agregátor flexibility vie následne pomocou inteligentných algoritmov  optimalizovať tok energie. Využíva pritom optimalizačné metódy alebo metódy strojového učenia (napr. neurónové siete). Agregátor flexibility tiež minimalizuje cenu elektrickej energie pre jej spotrebiteľov tým, že nakupuje elektrickú energiu v čase, keď je najlacnejšia a predáva elektrickú energiu v čase, keď je najdrahšia.
 %  Problémy, ktoré musíme riešiť pri takejto situacií sú: optimálny scheduling elektrických vozidiel a množstvo dodanej energie v každom časovom kroku, aby sme minimalizovali náklady nabíjacej stanice na energiu (za predpokladu, že je cena energie premenlivá v čase).
 
+% electric energy vs energy???
+% energy mustnt be electric 
 
-Cieľom tejto práce je overiť model práce agregátora flexibility, ktorý vie pomocou inteligentných algoritmov a dátovej analýzy optimalizovať tok energie, zabezpečiť stabilné dodávky energie a zároveň minimalizovať náklady používateľov elektromobilov. Porovnáme naše riešenia tohoto problému s inými doterajšími riešeniami. \cite{lee2021acnsim}
-
-
-
-V prvej kapitole rozoberieme východiská pri tvorbe nášho modelu agregátora flexibility, opíšeme existujúce riešenia a aj obmedzenia infraštruktúry pri nabíjaní elektromobilov. V druhej kapitole predstavujeme model práce nášho agregátora flexibility a spomíname inteligentné algoritmy, ktoré sme v našom modeli použili. 
+% Cieľom tejto práce je overiť optimalizáciu nabíjania elektrických vozidiel agregátorom flexibility, ktorý vie pomocou inteligentných algoritmov a dátovej analýzy optimalizovať tok energie, zabezpečiť stabilné dodávky energie a zároveň minimalizovať náklady používateľov elektrických vozidiel. Porovnáme naše riešenia tohoto problému s inými doterajšími riešeniami. \cite{lee2021acnsim}
 
 
-V tretej kapitole overujeme model práce agregátora flexibility, kde porovnávame naše riešenie s existujúcimi riešeniami, a to vzhľadom na pomer dodanej energie, množstvo dodanej energie, cenu dodanej energie a počet výmen elektromobilov. Vstupné dáta o elektromobiloch získavame z nabíjacích staníc pre elektromobily: stanica ACN a stanica JPL. Výstupom našej implementácie je optimálny plán nabíjania elektrombilov vzhľadom k dodanej energii. V našej implementácii sa snažíme počet výmen elektromobilov minimalizovať, keďže to často vedie k nespokojnosti používateľov elektromobilov. 
+
+% V prvej kapitole opíšeme súčasný stav riešenej problematiky v skutočných nabíjacích staniciach. Potom spomenieme stav riešenej problematiky v literatúre. Spomenieme niekoľko riešení tohoto problému a pre každé riešenie stručne opíšeme metódy, ktoré používa k riešeniu problému. Výkonnosť riešenia opíšeme pomocou porovnaní riešenia s inými riešeniami, ktoré sa nachádzajú v literatúre.
+
+
+
+% V druhej kapitole rozoberieme cieľ práce a bližšie sa pozrieme na činnosť agregátora flexbility.
+
+
+
+
+% V tretej kapitole opíšeme náš návrh riešenia, ktorý zahŕňa teoretický základ na riešenie problému optimalizovania nabíjania agregátorom flexibility pomocou algoritmov (prevzatý z literatúry) a nami opísaný postup riešenia. Nami opísaný postup riešenia je opísaný do väčšej hĺbky ako v literatúre, v ktorej sa tieto algoritmy predstavujú. 
+
+
+
+% V štvrtej kapitole 
+% rozoberieme východiská pri tvorbe nášho modelu agregátora flexibility, opíšeme existujúce riešenia a aj obmedzenia infraštruktúry pri nabíjaní elektrických vozidiel. V druhej kapitole predstavujeme model práce nášho agregátora flexibility a spomíname inteligentné algoritmy, ktoré sme v našom modeli použili. 
+
+
+% V tretej kapitole overujeme model práce agregátora flexibility, kde porovnávame naše riešenie s existujúcimi riešeniami, a to vzhľadom na pomer dodanej energie, množstvo dodanej energie, cenu dodanej energie a počet výmen elektrických vozidiel. Vstupné dáta o elektrických vozidlách získavame z nabíjacích staníc pre elektrické vozidlá: stanica ACN a stanica JPL. Výstupom našej implementácie je optimálny plán nabíjania elektrických vozidiel vzhľadom k dodanej energii. V našej implementácii sa snažíme počet výmen elektrických vozidiel minimalizovať, keďže to často vedie k nespokojnosti používateľov elektrických vozidiel. 
 
 
 

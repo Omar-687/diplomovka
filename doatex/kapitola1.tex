@@ -1,259 +1,705 @@
-% !Tex root = main.tex
-
-% agregator ako nastroj na koordinaciu distribuovanych, kontrolovanych nalozi.
-
-%agregator must communicate efficiently the loads they control (called aggregate flexibility) to a system operator 
-% small attention to communication of aggregator a system operator 
+% % !Tex root = main.tex
 
 
-%maximum entropy feedback (MEF) - we get properties of it
+% %sucasny stav riesenia problematiky dopisat ako sekciu ako sa ten problem riesi
+% % co riesime prepisat lepsie nas sposob
+% % 
 
-%MEF is then used as a penalty in novel predictive control (PPC)
+% % \chapter{Opis problému}
+% % \chapter{Opis problému.}
+\chapter{Súčasný stav riešenej problematiky}
+\label{chapter:sucasnystav}
+%  least-laxity-first pisat aj chen a aj li to tak maju 
 
-% PPC system advantages - modification of vanilla MPC
-
-%No need for exact states and constraints of loads - only MEF is needed
-
-% fast computation less number of variables than MPC 
-
-% under certain regularity PPC is optimal
-
-%Distributed energy resources (DER) refers to often smaller generation units that are located on the consumer's side of the meter. Examples of distributed energy resources that can be installed include: roof top solar photovoltaic units. wind generating units. battery storage.
+V tejto kapitole opisujeme súčasné riešenia podobnej problematiky, z ktorých niektoré vychádzajú z dátovej množiny ACN-Data (viac o dátovej množine ACN-Data sa nachádza v kapitole \ref{chapter:data}), pomocou ktorej sú schopní testovať výkonnosť plánovacích algoritmov. Uvádzame jednotlivé prístupy, ktoré si autori článkov zvolili na riešenie podobnej alebo rovnakej problematiky. Opisujeme aj jednotlivé riešenia od autorov a výsledky testovania algoritmov, ktoré predstavili. 
 
 
-%An independent and federally regulated entity that coordinates regional transmission to ensure non-discriminatory access to the electric grid and a reliable electricity system.
+
+Algoritmy, ktoré riešia problematiku optimalizácie nabíjania elektromobilov spadajú (na základe článku \cite{chen2021smoothed}) do dvoch kategórii
+\begin{enumerate}
+    \item Online algoritmy riešia problém optimalizácie nabíjania elektromobilov pomocou metód, ktoré rozhodujú o pláne nabíjania elektromobilov len na základe o informácií o nabíjaných elektromobiloch po aktuálny čas.
+    \item Offline algoritmy riešia problém optimalizácie nabíjania elektromobilov pomocou metód, ktoré rozhodujú o pláne nabíjania elektromobilov na základe kompletných informácií o všetkých elektromobiloch.
+\end{enumerate}
+Na riešenie problematiky optimalizácie nabíjania elektromobilov si výskumníci zvolili prístupy modelového prediktívneho riadenia, učenia posilovaním a dynamického programovania. Tradičné algoritmy ako least-laxity-first a earliest-deadline-first nie sú schopné sami riešiť túto problematiku, lebo ich hlavným cieľom je maximalizovať množstvo nabitej energie (t. j. zameriavajú sa len na úspešné dobitie elektromobilov). V tejto kapitole opisujeme hlavne online algoritmy na riešenie problematiky optimalizácie nabíjania elektromobilov. \cite{lee2021adaptivephd}
 
 
-% by reinforcement learning aggregator can send flexibility (MEF) feedback
+% l_2 norma vektora sa pise do subskriptu 
 
-%aim of system operator (ISO) is to minize costs
+% Existuje viacero článkov (napr. \cite{chen2021smoothed}, \cite{Lee2018LargeScaleAE}, \cite{mpcrealpredictive}, \cite{Li_2021}) popisujúcich metódy, pomocou ktorých jednotlivé algoritmy riešia problém optimalizácie nabíjania elektrických vozidiel. Algoritmy, pomocou ktorých dokáže agregátor flexibility optimalizovať nabíjanie elektrických vozidiel spadajú do dvoch kategórií:
 
-%MEF should be general for various controllable loads:heating,air conditioning 
-%power grid - energeticka siet
-
-%%%%%PHD praca 
-%straty na vedeniach - transmission loss
-
-%First, they defined physical inefficiencies of power grids due to aging infrastructure – old wires, for example – as technical losses
-
-%Next, they defined regulatory inefficiencies resulting in power consumption without financial compensation – such as fraud, meter tampering, and stealing – as non-technical losses, which can alter demand for electric power and thus its consumption patterns. These losses can be estimated (with uncertainty) from data for power generated, consumed, and paid for within each country.
+% opisat tam trochu ze vedomost o informaciach o prichodoch novych elektrickych vozidiel je podstatna pre vykonnost algoritmu
+% offline algoritmus je lahsi ten vyskusat
 
 
-%The proportion of technical to non-technical losses helps inform us of region-specific (rather than global) needs to lower emissions from T&D losses. For example, countries experiencing war and conflict, such as Haiti, Iraq, and Pakistan, suffer from some of the highest T&D losses in the world due to widespread destruction of their infrastructure. Without the resources to repair and reconstruct, these countries suffer from highly inefficient power grids and thus higher emissions that are not simple to address.
+% po dvojbodke male pismena idealne pozriet
+
+% cas som nedefinoval este pridat to tam
+% Autori článku \cite{chen2021smoothed} predstavili nový algoritmus Smoothed Least-Laxity-First (skrátene sLLF), ktorý dokáže riešiť problémy vyskytujúce sa v algoritme Least-Laxity-First (skrátene LLF). 
+% % Algoritmus LLF optimalizuje nabíjanie vykonaním dvoch krokov:
+% % \begin{enumerate}
+% %     \item usporiada pripojené elektrické vozidlá, a to prioritne od elektrických vozidiel s najnižšou laxitou, až po elektrické vozidlá s najvyššou laxitu (laxitu definujeme v sekcii)
+% %     \item postupne dodáva elektrickým vozidlám energiu $\min(\overline{r}_{i},e_{i}(k), P(k) - \sum_{j < i}^{} r_{j}(k))$ od najnižšej priority po \\ najvyššiu prioritu  energie v čase $k$. Sumou $\sum_{j < i}^{} r_{j}(k)$ vyjadrujeme množstvo dodanej energie pre všetky vozidlá s nižšou prioritou než elektrické vozidlo $i$.
+% % \end{enumerate}
+% % definovat cas v akom case
+% % Problém algoritmu LLF spočíva v tom, že zmena priority nabíjania elektrických vozidiel v čase môže spôsobiť veľké zmeny v rýchlosti tohto nabíjania, (čo môže viesť k skráteniu životnosti niektorých batérii). 
+% Algoritmus sLLF vyriešil tento problém výkyvov v nabíjani v čase tak, že maximalizoval minimálnu laxitu pripojených elektrických vozidiel. Vďaka algoritmu sLLF vieme zabezpečiť odstránenie problémových výkyvov v rýchlostí nabíjaní elektrických vozidiel, čo môže prispieť k dlhšej životnosti ich batérii. 
+% elektrických vozidiel tak, že najskôr usporia
 
 
-%Thus the goal is to design a model which derives the expected line
-% losses from estimates on electrical supply, demand and exchange flows. The task is
-% to increase the accuracy and precision of the existing line loss prediction method
-% at Svk and reduce the existing error between actual and predicted line losses. The
-% final objective is to provide recommendations on how to administer transmission
-% line losses at Svk in the future. Thus, this thesis intends to complete the following
-% aims:
+% mozno MPC pouzijeme takze nepisat o tom az tak 
+Autori článku \cite{lee2020adaptive} predstavujú online adaptívny plánovací algoritmus založený na modelovom prediktívnom riadení a metódach konvexnej optimalizácie.  Porovnania adaptívne plánovacieho algoritmu s algoritmami least-laxity-first, Round Robin a earliest-deadline-first ukázali, že adaptívny plánovací algoritmus dokáže zabezpečiť dodanie väčšieho množštva požadovanej energie elektrickým vozidlám  ako algoritmy v nabíjacej sieti s nízkou kapacitou na energiu. Na ďalšom príklade ukázali, že adaptívny plánovací algoritmus dokáže minimalizovať náklady spotrebiteľov na spotrebovanú energiu.
 
-%sucasny stav riesenia problematiky dopisat ako sekciu ako sa ten problem riesi
-% co riesime prepisat lepsie nas sposob
+
+% Autori článku \cite{VANKRIEKINGE20218760} prezentujú dva plánovače nabíjania, ktoré sú založené na modelovom prediktívnom riadení. Tieto plánovače využívajú pre štyri stratégie nabíjania tak, aby minimalizovali ceny za nabíjanie energie elektromobilov a minimalizovali najvyššiu spotrebu energie v čase. Ukázali, že všetky štyri stratégie nabíjania znižujú najvyššiu spotrebu energie v čase (v rozmedzí od 14.6\% až 33.7\%) pri zabezpečení obmedzení elektromobilov v porovnaní s nekoordinovaným nabíjaním.
+% Nekoordinovaným nabíjaním nabíjame každé pripojené vozidlo na nabíjačku maximálnou možnou energiou. Nekoordinované nabíjanie neberie do úvahy obmedzenia infraštruktúry na energiu. 
 % 
 
-\chapter{Opis problému}
-% \chapter{Opis problému.}
+% prerobit tuto cast mozno nie je to dobre opisane myslim si 
+Autori článku \cite{two-stage-optimal-scheduling-liu} implementujú dvojfázovú nabíjaciu schému založenej na transakčnej riadení. Agregátor vykonáva nabíjanie elektromobilov v reálnom čase, aby minimalizoval svoje celkové operačné náklady. Predstavujú algoritmus založený na modelovom prediktívnom riadení, pomcou ktorého agregátor vie dokončiť všetky transakcie na transakčnom trhu. Agregátor sa rozhoduje o pláne nabíjania elektromobilov na základe dokončených transakcií na trhu, ktoré pozostávajú z časových požiadaviek a preferencií používateľov elektromobilov. Verifikovali funkčnosť navrhnutej schémy na svojich experimentoch.
 
-V tejto kapitole formulujeme problém, ktorý riešime a hovoríme aj o súčasnom stav jeho riešenia. Spomíname viacero prístupov od iných autorov, ktoré tento problém riešia.
 
-% TODO: mozno viac dodat, ze ake obmedzenia atd, ale to mozno neskor
 
-%V časti Súčasný stav riešenej problematiky doma a v zahraničí autor uvádza dostupné informácie a poznatky týkajúce sa danej témy. Zdrojom pre spracovanie sú aktuálne publikované práce domácich a zahraničných autorov. Podiel tejto časti práce má tvoriť približne 30 % práce.
-% optimalny plan nabijania asi nie
-\section{Formulácia problému.}
-% optimálny nie lebo MPC offline je optimum a my hladame v online algoritmoch
-Problém, ktorý riešime formulujeme takto:
-Hľadáme plán nabíjania elektromobilov v nabíjacej sieti, ktorý zabezpečí maximálne dodávky požadovanej energie. Plán nabíjania musí dodržiavať obmedzenia nabíjacej siete. Obmedzenia, ktoré používame pri riešení problému sú:
-% JPL ma tazsie obmedzenia zda sa 
-\begin{enumerate}
-    \item Jednofázové. Jednofázové obmedzenia infraštruktúry sú množinou linearných obmedzení. 
-    \item Nevyvážené trojfázové. Nevyvážené trojfázové obmedzenia pozostávajú z množiny obmedzení kužeľa druhého rádu. Tento typ obmedzení má nabíjacia sieť Caltech ACN.
-\end{enumerate}
-Ďalšie parametre nabíjacej siete, ktoré pri riešení problému nastavujeme sú nabíjačky (ich počet a typ), transformátor (jeho kapacita). Musíme si zvoliť aj tarify (ceny nabíjania v čase). Viac informácii o obmedzeniach a parametroch sa nachádza v článkoch \cite{lee2021acnsim,Lee2018LargeScaleAE}.
 
+V článku \cite{Zhang2018RealTimeSC} autori predstavujú dvojfázový aproximačný algoritmus dynamického programovania s cieľom dodať elektrickým vozidlám ich požadovanú energiu a minimalizovanť náklady za nabíjanie elektrických vozidiel na parkoviskách komerčných budov. Vstupné dáta o prichádzajúcich elektrických vozidlách modelujú na základe Poissonovej distribúcie. Na zistenie funkčnosti ich algoritmu porovnali ceny nabíjania pri nabíjaní pomocou ich algoritmu s cenou nabíjania pomocou štandardného aproximačného algoritmu. Zistili, že ich algoritmus v porovnaní so štandardným aproximačným algoritmom dynamického programovania dosahuje v priemere o $2.5\%$ nižsiu cenu nabíjania elektrických vozidiel.
 
-Problém, ktorému sa venujeme je optimalizačným problémom, lebo hľadáme taký plán nabíjania, ktorý maximalizuje účelovú funkciu. 
 
-% zarovnat tu pravu cast nejako
+% toto sa zda ze je ok, len abstrakt a zaver som cital ale myslim ze tento RL algoritmuus ok 
+Autori článku \cite{rl_costmin_1} predstavujú metódu založenú na hlbokom učení posilňovaním (ktorá používa algoritmus hlbokého učenia posilňovaním DDPG) na riešenie problému minimalizácie cien za dobitie elektromobilov. Na riešenie problému najskôr použijú vylepšenú verziu LSTM neurónovej siete nazývajúcu sa JANET na to, aby získali (extrahovali) vlastnosti cien elektriny. Potom aplikovaním navrhovanej metódy vedia vyriešiť problém optimalizácie nabíjania, t. j. nastaviť stratégiu nabíjania na základe extrahovaných vlastností cien elektriny tak, že sa zníži cena za nabíjanie energie pre vodičov elektromobilov. Výkonnosť navrhovanej metódy otestovali na simulovaných experimentoch. Z testov na simulovaných experimentoch zistili, že navrhovaná metóda môže znížiť cenu za nabíjanie elektromobilov až o 70.2\% v porovnaní s inými metódami. 
 
-Formálnejšie definujeme tento optimalizačný problém takto:
-$\overset{above}{main}$
-% $\underset{\underset{r}{\max}}{SCH}$
-\begin{align}
-    \label{eq:utility-function-general}
-    \overset{SCH}{\underset{r}{\max}} \; U_{k}(r) \\
-    \text{subject to:} \\
-    0 ≤ r_{i}(t) ≤ \overline{r}_{i}(t)  \qquad t < d_{i}, i ∈ V \\
-    r_{i}(t) = 0 \qquad t ≥ d_{i}, i ∈ V \\
-    \sum_{t = a_{i}}^{d_{i} - 1} r_{i}(t) \delta ≤ e_{i} \qquad i ∈ V \\
-    f_{j}(r_{1}(t), \dots, r_{N}(t) ) ≤ R_{j}(t) \qquad t ∈ T, j ∈ \hat{R}
-    % r \in R_{k}
-\end{align}
-$\hat{R}$
-% napisat R so striezkou neviem ako to spravit
-\ref{eq:einstein}
+V  článku \cite{ev-charging-cost-minimization-modified-DP} autori riešia problém minimalizácie nákladov za nabíjanie elektromobilov v solárnej nabíjacej stanici na základe modifikovaného algoritmu dynamického programovania. Algoritmus otestovali na štyroch prípadoch. Výsledky ukázali, že s použitím algoritmu modifikovaného dynamického programovania je možné značne zredukovať náklady solárnej nabíjacej stanice na energiu (od 6\% do 30.7\%), čo indikuje nižšie ceny nabíjania pre vlastníkov elektromobilov. 
 
-% sa snažíme maximalizovať množstvo dodanej energie elektromobilom. 
 
+Autori článku \cite{Li_information_aggregation} prezentujú vylepšenú verziu našeho riešenia problému optimalizácie nabíjania elektromobilov. Predpokladajú, že systémový operátor má pefektné predikcie cenových funkcií a spätných odoziev o flexibilite $w$ časových krokov t. j. o aktuálnom časovom kroku a budúcich. Ukázali, že pre ich riešenie problému čím je $w$ vyššie, tým viac výsledne riešenie minimalizuje systémové náklady. Riešenie testovali pre premmenú $w$ od 1 do 4. Riešenia s premmenou $w$ vyššou ako 4 mali horší výsledok, lebo negenerovali presnú spätnú odozvu o flexibilte. Odmena vrátená počas trénovacej fáze pomocou algoritmu učenia posilňovaním SAC nekonvergovala veľmi dobre.   
+% tento odsek by mal byt ok 
 
 
 
+V tabuľke \ref{notation-table} prezentujeme notáciu, ktorú používame v ďalšom texte, ak nie je explicitne uvedené inak.
 
 
 
+% pozriet si bakalarku na to aby som vedel pisat definicie (lepsie to bude vyzerat)
 
 
+% s použitím obojsmerné nabíjania dosahujú lepšie výsledky ako s jednosmerným nabíjaním. 
 
 
 
-%  elektromobilom v nabíjacej sieti.
+% V tejto kapitole formulujeme problém, ktorý riešime a hovoríme aj o súčasnom stav jeho riešenia. Spomíname viacero prístupov od autorov, ktoré tento problém riešia.
 
+% % TODO: mozno viac dodat, ze ake obmedzenia atd, ale to mozno neskor
 
+% %V časti Súčasný stav riešenej problematiky doma a v zahraničí autor uvádza dostupné informácie a poznatky týkajúce sa danej témy. Zdrojom pre spracovanie sú aktuálne publikované práce domácich a zahraničných autorov. Podiel tejto časti práce má tvoriť približne 30 % práce.
+% % optimalny plan nabijania asi nie
 
+% Your API Token: nt1xfnszbfJvQbXusIz8kHWWCIRqx01lwbVE503H9ws
 
+% clanky ktore riesia problemy s acndata
 
 
 
 
 
+% \section{Súčasný stav riešenej problematiky.}
+% \label{sucasny-stav}
+% Množstvo elektrických vozidiel (okrem dvojkolových a trojkolových) sa má podľa predikcií \cite{iea2023} zvýšiť od takmer 30 miliónov áut v roku 2022 po 240 miliónov áut roku 2030. V takom scénari by elektrické vozidlá tvorili viac ako $10\%$ zo všetkých cestných vozidiel.  \cite{iea2023} 
+% % Kapacity nabíjacích staníc by pri nabíjaní čoraz väčšieho množstva elektromobilov nemuseli stačiť. 
 
-\section{Súčasný stav riešenej problematiky.}
-Množstvo elektromobilov (okrem dvojkolových a trojkolových) sa má podľa predikcií \cite{iea2023} zvýšiť od roku 2022 do roku 2030 o 230 miliónov. Zvýši sa počet nielen súkromných elektrických aút, ale napríklad aj počet elektrických autobusov v mestskej hromadnej dopravne. \cite{iea2023} Veľa nabíjacích staníc dnes používa na nabíjanie elektromobilov plánovací algoritmus neriadeného nabíjania. Tento algoritmus sa už nebude môcť pri pribúdajúcom množstve elektromobilov použiť z dôvodu, že neberie do úvahy kapacitu nabíjacej stanice na energiu. \cite{lee2021acnsim} 
 
-V poslednom desaťročí sa vedci snažili hľadať rôzne ďalšie algoritmy, ktoré by vedeli vyriešiť problém nabíjania elektromobilov pri zachovaní obmedzení infraštruktúry. \cite{iea2023} Potreby používateľov elektromobilov ako spotrebiteľov sú veľmi dôležité pri formulovaní optimalizačného problému, ktorý má tieto algoritmy riešiť.
 
+% % adaptive
+% % Zvýši sa počet nielen súkromných elektrických aút, ale aj počet elektrických autobusov v mestskej hromadnej dopravne. \cite{iea2023} 
+% % cast pod tym je ok  cast nad tzm 
 
+% % elektromobil je vozidlo pohanane elektrickym motorom, zdroje: alza, ceska wiki a dalsia stranka
 
-My sa venujeme optimalizačnému problému dodania najväčšieho množstva požadovanej energie elektromobilom pri zachovaní obmedzení infraštruktúry siete. Riešením tohoto problému vieme zabezpečiť to, že nabíjané elektromobily získajú čo najväčšie množstvo požadovanej energie. 
+% Veľa nabíjacích staníc dnes neriadí nabíjanie elektrických vozidiel, čo znamená, že nabíjačky nabíjajú elektrické vozidlá najväčším povoleným množstvom energie. Neriadené nabíjanie väčšieho množstva elektrických vozidiel už nebude použitelné, lebo neberie do úvahy obmedzenia infraštruktúry nabíjacej siete na energiu \cite{lee2021acnsim}. Pokroky v architektúre nabíjacej siete a v plánovaní nabíjania elektrických vozidiel umožnia nabíjanie väčšieho množstva  elektrických vozidiel za prijateľnú cenu a bez priveľkej záťaže na infraštruktúru nabíjacej siete. Súhrnne tieto pokroky voláme inteligentné (aj adaptívne) nabíjanie (\cite{lee2021adaptivephd}, \cite{Lee2018LargeScaleAE}). 
 
+% % TODO: pridat obrazok ktory zachary lee pouzival v prezentacii o adaptivnom nabijani TU
 
-% acnsim clanok 
+% % inteligentné nabíjanie alebo smart nabijanie
 
+% % neberie do uvahy ten jeden constraint
+% % TODO:roky a mnozstvo do matematickeho modu? 
+% Cieľom tejto práce je nájsť taký plán nabíjania elektrických vozidiel v nabíjacej stanici vďaka ktorému dokáže agregátor flexibility optimalizovať tok energie, zabezpečiť stabilné dodávky energie a minimalizovať náklady spotrebiteľov na energiu pri rešpektovaní obmedzení infraštruktúry nabíjacej siete. Správny plán nabíjania dokáže oddialiť náklady na vylepšenia infraštruktúry nabíjacej siete a pritom spĺňať stanovené vlastnosti. Algoritmy na nabíjanie elektrických vozidiel (plánovacie algoritmy) delíme do dvoch skupín online a offline. Offline algoritmy na plánovanie nabíjania elektrických vozidiel potrebujú všetky informácie o budúcich príchodoch elektrických vozidiel. Online algoritmy používajú informácie len o príchodoch elektrických vozidiel po aktuálny čas na plánovanie nabíjania  elektrických vozidiel. 
 
-% Neriadené nabíjanie, ktoré dnes veľa nabíjacích staníc pre elektrické vozidlá využíva na nabíjanie ele sa už nebude môcť  
+% % \begin{figure}[H]
+% %     \includegraphics[width=\textwidth]{images/future_knowledge_cars.png}
+% %     \centering
+% %     \caption[Vplyv vedomostí o budúcich príchodov elektromobilov na výkonnosť plánovacieho algoritmu.]{Graf z článku \cite{Tang2016OnlineCS}, ktorý ilustruje vplyv vedomostí o budúcich príchodoch elektrických vozidiel na výkonnosť plánovacieho algoritmu.}.
+% %     \label{architectureacnsim:obr2}
+% %     \end{figure}
 
 
-\section{Súčasný stav riešenej problematiky v reálnom živote.}
 
+% Najčastejšie používané online plánovacie algoritmy (ako napríklad Earliest Deadline First, Least Laxity First) vieme použiť, aby sa infraštruktúra nabíjacej siete nepreťažovala, ale nedokážu vyprodukovať plán nabíjania elektrických vozidiel, ktorý napríklad minimalizuje náklady spotrebiteľov \cite{lee2021adaptivephd,chen2021smoothed}. Výskumníci dokázali nájsť plán nabíjania s týmito vlastnostami vďaka trom prístupom: 
 
-Problematiku riešenia optimalizačného problému dodania najväčšieho množstva požadovanej energie elektromobilom pri zachovaní obmedzení infraštruktúry riešia v článkoch \cite{lee2021adaptivephd,Li_2021,chen2021smoothed}. 
-Na riešenie tohoto optimalizačného problému sa v súčasnosti využíva neriadené nabíjanie, spomína sa v \cite{lee2021acnsim}. Jednou z komplikácii pri takomto riešení optimalizačného problému je, že môže dôjsť k preťaženiu infraštruktúry nabíjacej siete. Nižšie spomíname, ako tento optimalizačný problém riešia v literatúre, a ako ho riešime my. \cite{lee2021acnsim}
 
+% % Model Predictive Control (skrátene MPC), učenia posilňovaním a dynamického programovania.
+% % \begin{enumerate}
+% %     \item Model Predictive Control (skrátene MPC). Autori článkov \cite{mpcpredictive_uncertainty, Zhang2018RealTimeSC} používajú tento prístup..
+% %     \item Učenie posilňovaním. Tento prístup používajú v autori článkov \cite{rl_costmin_1}.
+% %     \item Dynamické programovanie. Týmto prístupom autori článku \cite{jakus2023optimal} riešia cieľ tejto práce.
+% % \end{enumerate}
+% % TODO najst dalsie clanky k DP
+% % Model Predictive Control (MPC), učenie posilňovaním alebo 
+% % nepouzivat large scale citaciu ale adaptive lebo tam popisuju vysledky
+% \begin{table}[H]
+%     \begin{tabular}{ll}
+%     Prístup                        & Článok \\
+%     Modelové prediktívne riadenie &      \cite{lee2020adaptive}      \\
+%     Učenie posilňovaním            &   \cite{rl_costmin_1}        \\
+%     Dynamické programovanie        &   \cite{Zhang2018RealTimeSC}
+%     \end{tabular}
+%     \end{table}
 
-\section{Súčasný stav riešenej problematiky v literatúre.}
+% TODO: prepisat 
 
-V dostupnej literatúre je veľa zaujímavých algoritmov, ktoré sa však nedájú využiť priamo v praxi. Hlavným dôvodom prečo sa nedajú aplikovať je poďla \cite{lee2021adaptivephd} to, že výchádzajú z predpokladov, ktoré v praxi nefungujú alebo im chýba schopnosť splniť praktické obmedzenia a ciele. 
-% viac specifikovat prakticke obmedzenia a ciele
+% % nepisat o trojfazovej infrastrukture a neidealnom spravani baterie v praci
+    % Autori článku \cite{lee2020adaptive} implementujú adaptívneho plánovací algoritmus založený na modelovom prediktívnom riadení a metódach konvexnej optimalizácie. Adaptívny plánovací algoritmus je online algoritmus, ktorý pomocou metód konvexnej optimalizácie dokáže nájsť plán nabíjania elektrických vozidiel v nabíjacej stanici s vlastnosťami, ktoré vyžadujeme. Na porovnaní adaptívne plánovacieho algoritmu s algoritmami Least Laxity First, Round Robin a Earliest Deadline First ukázali, že adaptívny plánovací algoritmus dokáže dodať oveľa viac požadovanej energie elektrickým vozidlám ako tieto algoritmy v nabíjacej sieti s nízkou kapacitou na energiu. Na ďalšom príklade ukázali, že adaptívny plánovací algoritmus dokáže minimalizovať náklady spotrebiteľov za nabítu energiu.
+    
+%     % Plánovací algoritmus modelového prediktívneho riadenia, 
+%     % ktorý je popísaný v tomto článku sa odlišuje od ostatných algoritmov modelového prediktívneho riadenia tým, že uvažuje:
+%     % \begin{enumerate}
+%     %     \item  obmedzenie trojfázovej nevyváženej infraštruktúry nabíjacej siete.
+%     %     \item neideálne správanie batérie elektrického vozidla
+%     %     \item viacero cieľov systémových operátorov v účelovej funkcií v algoritme modelového prediktívneho riadenia
 
-V článku \cite{Li_2021} tento problém rieši hlavne systémový operátor. Systémový operátor vyrieši optimalizačný problém, a tým získa množstvo energie, ktorú pošle agregátorovi.  Agregátor pomocou plánovacieho algoritmu získa plán nabíjania elektromobilov a dodá energiu elektromobilom.
+%     % \end{enumerate}
+%     % Porovnávanie výkonnosti algoritmov vykonávajú na trojfázovej nevyváženej infraštruktúre nabíjacej stanice Caltech ACN so vstupnými dátami z článku \cite{acndata}.
+%     % Pri porovnávaní plánovacieho algoritmu MPC s inými algoritmami používajú trojfázovú nevyváženú infraštruktúru nabíjacej stanice Caltech ACN. 
+    
+%     V článku \cite{rl_costmin_1} riešia problém minimalizovania nákladov spotrebiteľov za nabíjanie elektrických vozidiel. 
+%     % V ich stanovenom probléme uvažujú:
+%     % \begin{enumerate}
+%     %     \item obojsmerné nabíjanie elektrických vozidiel v nabíjacej sieti.
+%     %     \item neistotu vo výkyvoch cien nabíjania.
+%     %     \item  náhodnosť v odpájaní elektrických vozidiel z nabíjačiek v nabíjacích staniciach.
+%     % \end{enumerate}
+    
+%     % Proces nabíjania elektrických vozidiel definujú ako markovský rozhodovací proces.  Problém minimalizovania nákladov spotrebiteľov za nabíjanie elektrických vozidiel riešia pomocou algoritmu deep deterministic policy gradient (skrátene DDPG). Ich metódu riešenia problému porovnali s inými, štandardnými metódami a zistili, že ich metóda vie najviac o 70 percent v porovnaní so štandardnými metódami. 
+%     % Algoritmus Model Predictive Control porovnávajú s algoritmom neriadeného nabíjania. Používajú pritom vstupné dáta z ACN [zdroj]
+%     % Na realistickej trojfázovej nevyváženej infraštruktúre Caltech ACN nabíjacej stanice 
 
 
+%     V \cite{Zhang2018RealTimeSC} autori implementujú dvojfázový aproximačný algoritmus dynamického programovania s cieľom dodať elektrickým vozidlám ich požadovanú energiu a minimalizovanť náklady za nabíjanie elektrických vozidiel na parkoviskách komerčných budov. Vstupné dáta o prichádzajúcich elektrických vozidlách modelujú na základe Poissonovej distribúcie. Na zistenie funčknosti ich algoritmu porovnali ceny nabíjania pri nabíjaní pomocou ich algoritmu s cenou nabíjania pomocou štandardného aproximačného algoritmu. Zistili, že ich algoritmus v porovnaní so štandardným aproximačným algoritmom dynamického programovania dosahuje v priemere o $2.5\%$ nižsiu cenu nabíjania elektrických vozidiel.
+%     % Na scénaroch s týmito vstupnými dátami porovnali náklady na nabíjanie energie ich algoritmu s bežným aproximačným algoritmom dynamického programovania.  
 
-My pri riešení tohoto optimalizačného problému využívame online plánovacie algoritmy s využitím balíka acnportal. Vstupom do online algoritmov sú elektromobily a ich parametre, ako napríklad čas ich príchodu, čas ich odchodu a ich požadovaná energia. Pomocou online plánovacích algoritmov získame poradie, v ktorom elektromobily nabíjame. Aby sme zistili množstvo energie, ktorú treba každému elektromobilu dodať, musíme vyriešiť spomínaný optimalizačný problém. Naším zámerom je riešiť optimalizačný problém osobitne pre každý elektromobil. Tento optimalizačný problém riešime metódou lineárneho vyhľadávania, metódy bisekcie, metódy dichotómie a pomocou kontrolných algoritmov (MPC). Riešením tohoto optimalizačného problému je optimálny plán nabíjania elektromobilov vzhľadom k dodanej energii.
+% % V \cite{jakus2023optimal} autori implementujú program zmiešaného celočíselného programovania.
 
-% Riešenie tohoto optimalizačného problému v článku+
-% pozriet ako toxin li v tom jeho clanku spominal podobne riesenia
 
 
-%first sentences of the thesis strong and clear - to get interest of the reader
-\chapter{Cieľ práce}
 
-Cieľ práce je navrhnúť a overiť model agregátora flexibility pre zvolený typ prosumerov. To znamená, že musíme popísať ako agregátor flexibility kupuje energiu, a ako ju následne elektromobilom dodáva. Energiu agregátor flexbility bude dodávať elektromobilom na základe plánovacieho algoritmu, ktorý rieši optimalizačný problém.  Vyriešime optimalizačný problém dodania najväčšieho množstva energie elektromobilom pri zachovaní obmedzení infraštruktúry. Využívame pri riešení optimalizačného problému online plánovacie algoritmy (kontrolné alebo triediace), pričom vychádzame zo základných tried v balíku acn portal, ktoré definujú obmedzenia nabíjacej siete a zjednodušujú prácu s novo implementovanými algoritmami. Vstupom algoritmu, ktorý rieši tento optimalizačný problém sú údaje o príchodoch elektromobilov do nabíjacej siete Caltech. Výstupom tohoto algoritmu je celkový pomer dodanej požadovanej energie elektromobilom a celkové cena dodanej energie elektromobilom atď. Overíme si navrhnutý model agregátora flexibility na verejne dostupných vstupných dátach z Caltech nabíjacej siete.  
+% % ziadne rovnice v tejto sekcii okrem tej tabulky
 
 
 
+% % TODO: zmenit
+% % V poslednom desaťročí sa vedci snažili hľadať rôzne ďalšie algoritmy, ktoré by vedeli vyriešiť problém nabíjania elektromobilov pri zachovaní obmedzení infraštruktúry. \cite{iea2023} Potreby používateľov elektromobilov ako spotrebiteľov sú veľmi dôležité pri formulovaní optimalizačného problému, ktorý má tieto algoritmy riešiť.
 
 
 
+% % My sa venujeme optimalizačnému problému dodania najväčšieho množstva požadovanej energie elektromobilom pri zachovaní obmedzení infraštruktúry siete. Riešením tohoto problému vieme zabezpečiť to, že nabíjané elektromobily získajú čo najväčšie množstvo požadovanej energie. 
 
 
-% \section{Činnosti agregátora flexibility}
+% % acnsim clanok 
 
 
-\section{Úlohy agregátora flexibility}
-V súčastnosti pozorujeme pokrok v oblasti distribuovania obnoviteľnej energie. S čoraz vyšším dopytom po energii sa vedci musia zaoberať výskumnou otázkou: Ako môžu spotrebitelia dodávať energiu a zároveň ju prijímať? To znamená, že treba zmeniť jednosmernú sieť, kde veľké firmy dodávajú energiu spotrebiteľom, na obojsmernú sieť, kde spotrebitelia dodávajú a zároveň prijímajú energiu (skrátene takých spotrebiteľov nazývame prosumeri). Vedci ako odpoveď na túto výskumnú otázku zaviedli novú kategóriu hráčov na trhu s energetikou. Túto novú kategóriu hráčov nazývame agregátori. 
+% % Neriadené nabíjanie, ktoré dnes veľa nabíjacích staníc pre elektrické vozidlá využíva na nabíjanie ele sa už nebude môcť  
 
 
-Agregátor je prostredníkom medzi prosumermi a trhom s elektrinou, tým že združuje flexibilitu od prosumerov, a následne flexibilitu predáva (ako jedna entita) na trhoch s elektrinou. Prosumeri sú odmeňovaní za poskytovanie flexibility agregátorovi.
 
-Rola agregátora zatiaľ nie je presne definovaná. Rola agrégatora môže byť určená tretou stranou alebo môže byť určená už učinkujúcim hráčom na trhu s elektrinou, ktorý má napríklad záujem použiť agregátor na doplňujúce veci.
-%doplnujuce veci - vysvetlit
+% % ako problem riesia iny - pouzit priklady, ktore sme nepouzili, lebo je divne pisat o tom istom dvakrat
 
-Nezávislý agregátor môže poskytovať jednu službu alebo viac služieb. Medzi služby agregátora patria agregovanie flexibility, dodávky energie spotrebiteľom a vyváženie dopytu a ponuky na trhoch s elektrinou. \cite{Granado2023}
+% % \section{Súčasný stav riešenej problematiky}
+% % \section{Súčasný stav riešenej problematiky v reálnom živote.}
 
 
-% Systémy v elektrickej sieti môžu mat jeden centrálny agregátor alebo viac agregátorov.
 
 
+% % \section{Súčasný stav riešenej problematiky v literatúre.}
 
+% % V dostupnej literatúre je veľa zaujímavých algoritmov, ktoré sa však nedájú využiť priamo v praxi. Hlavným dôvodom prečo sa nedajú aplikovať je poďla \cite{lee2021adaptivephd} to, že výchádzajú z predpokladov, ktoré v praxi nefungujú alebo im chýba schopnosť splniť praktické obmedzenia a ciele. 
+% % % viac specifikovat prakticke obmedzenia a ciele
 
+% % V článku \cite{Li_2021} tento problém rieši hlavne systémový operátor. Systémový operátor vyrieši optimalizačný problém, a tým získa množstvo energie, ktorú pošle agregátorovi.  Agregátor pomocou plánovacieho algoritmu získa plán nabíjania elektromobilov a dodá energiu elektromobilom.
 
 
-% Prosumeri poskytujú agregátorovi svoju flexibilitu. 
 
+% % My pri riešení tohoto optimalizačného problému využívame online plánovacie algoritmy s využitím balíka acnportal. Vstupom do online algoritmov sú elektromobily a ich parametre, ako napríklad čas ich príchodu, čas ich odchodu a ich požadovaná energia. Pomocou online plánovacích algoritmov získame poradie, v ktorom elektromobily nabíjame. Aby sme zistili množstvo energie, ktorú treba každému elektromobilu dodať, musíme vyriešiť spomínaný optimalizačný problém. Naším zámerom je riešiť optimalizačný problém osobitne pre každý elektromobil. Tento optimalizačný problém riešime metódou lineárneho vyhľadávania, metódy bisekcie, metódy dichotómie a pomocou kontrolných algoritmov (MPC). Riešením tohoto optimalizačného problému je optimálny plán nabíjania elektromobilov vzhľadom k dodanej energii.
 
 
 
-% Agregátor má viacero úloh, ktoré rieši. Agregátor združuje elektrickú energiu od prosumerov. Agregátor pozoruje cenu energie na trhoch. Ak je cena energie veľmi vysoká, tak agregátor poskytuje spotrebiteľom menej energie. Naopak, keď je cena energie nízka, tak agregátor poskytuje spotrebiteľom viac energie.
 
+% % formulacia problemu/ ciel 
+% % vstup + (priklad)
+% % vystup + (priklad)
+% % obmedzenia
 
-% optional link
 
-% https://en.energinet.dk/Electricity/Green-electricity/Demand-side-response/What-is-an-aggregator/
+% % There is a vast literature of algorithms for smart EV charging, which are outlined in
+% % [23] and [24].
+
+% % 23 link below
+% % https://www.researchgate.net/publication/290451911_Smart_Charging_for_Electric_Vehicles_A_Survey_From_the_Algorithmic_Perspective
+
+% % 24 link below
+% % https://www.researchgate.net/publication/286801210_A_Review_of_Charge_Scheduling_of_Electric_Vehicles_in_Smart_Grid
+
+
+% %  elektricke vozidlo = elektromobil > elektricke auto
+
+% % EV - either full electric source or also internal combustion engine
+
+% % preto je dobre aj zmenit elektromobil na elektricke vozidlo
+% % pridat tam aj indexovane parametre? zatial nie lebo mozno sa zide pouzivat aj ine velicy na indexovanie
+% % mozno pridat dalsie tabulky s dalsimi udajmi
+% V tabuľke \ref{tab:notation} popisujeme notáciu, ktorú používame v ďalšom texte. 
+% dat left a right pred () zatvorky ak je tam tazsi matematicky vyraz
+% spomenut viac definovanie uvedenych veci, lebo v tabulke zostat nemozu
+
+\begin{table}[H]
+    \begin{tabular}{ll}
+    notácia & vysvetlenie \\
+    $\mathcal{T}$  & Množina diskrétneho času systému \\
+    $K$  & Množina všetkých nabíjačiek v nabíjacej stanici   \\
+    $N$  & Množina všetkých obsluhovaných elektromobilov   \\
+    $N'$  & Množina aktívnych (pripojených) elektromobilov  \\
+    $X$  & Množina realizovateľných stavov    \\
+    $X_{t}$  & Množina realizovateľných stavov v čase $t$   \\
+    $U$  & Množina realizovateľných akcií  \\
+    $U_{t}$  & Množina realizovateľných akcií v čase $t$   \\
+    $a(i)$ & Čas príchodu (pripojenia) elektromobilu $i$  \\
+    $d(i)$ & Čas odchodu (odpojenia) elektromobilu $i$  \\
+    $e(i)$ & Množstvo požadovanej energie elektromobilu $i$ (jednotka: kWh) \\
+    $r(i)$ & Maximálna rýchlosť nabíjania elektromobilu $i$ (jednotka: kW) \\
+    % $P(t)$ &  Power limit of the charging station at time $t \in T$ (unit: kW)\\
+    $d_{t}(i)$ & Zostávajúci čas nabíjania elektromobilu $i$ (jednotka: hod) \\
+    $e_{t}(i)$ & Zostávajúca požadovaná energia elektromobilu $i$ v čase $t$ (unit: kW)    \\
+    $x_{t}$ & Stav agregátora v čase $t$    \\
+    $u_{t}$ & Realizovaná akcia v čase $t$  \\
+    $f_{t}$ & Deterministická prechodová funkcia v čase $t$ \\
+    $\pi$ & Jednoduchý plánovací algoritmus \\
+    $s_{t}$ & Plán nabíjania pre čas $t$   \\
+    $s_{t}(i)$ & Plán nabíjania elektromobilu $i$ v čase $t$   \\
+    $\Delta$ & Časová jednotka (jednotka: hodiny) \\
+    $p_{t}$ & Agregovaná spätná odozva o flexibilite v reálnom čase $t$  \\
+    $c_{t}$ & Cenová funkcia v čase $t$   \\
+    $C_{t}$ & Kumulatívna náklady systému v čase  $t$ \\
+    $\Psi_{SAC}$ & Agregátorova funkcia   \\
+    $||x||_{2}$ & $l_{2}$-norma vektora $x$ \\
+    $|x|_{+}$ & $max\{0, x\}, x \in R$ \\
+    $|x|_{a}^{b}$ & Projekcia skalára $x$  na interval $[a, b]$ \\
+    $l_{t}(i)$ & Laxita elektromobilu $i$ v čase $t \in \mathcal{T}$ \\
+    $I(\cdot)$ & Indikátorova funkcia,ak je boolovský výraz vo vnútri pravdivý, vráti 1, inak 0 \\
+    $H(\cdot)$ & Diskrétna entropická funkcia
+    \end{tabular}
+    \caption[Tabuľka notácií.]{Tabuľka notácií. Zdroje tabuľky sú \cite{Li_information_aggregation, Li_2021,lee2021adaptivephd,chen2021smoothed, indicator-function}.}
+    \label{notation-table}
+\end{table}
+% zdroj z kade som zohnal info o indikatorovej funkcii
+Náhodné premenné označujeme veľkými písmenami ako napríklad $X$, $U$. Realizácie náhodných premenných označujeme malými písmenami ako napríklad $u$. Základ logaritmu $log$ je prirodzené číslo $e$, ak nie je uvedené inak. Premenná $u_{t}$ je vektor euklidovskom priestore. Zlúčenie dvoch sekvencií $u$ a $v$ označujeme pomocou zátvorky $(u, v)$. Na zjednodušenie zápisu premennú $p_{t}$ nazývame v ďalšom texte ako spätná odozva o flexibilite \cite{Li_information_aggregation}.
+% \begin{table}[H]
+%     \begin{center}
+%         \begin{tabular}{ c l }
+%          $V$ & Množina elektrických vozidiel.  \\ 
+%          $V_{k}$ & Množina aktívnych (pripojených) elektrických vozidiel na nabíjacej stanici v čase $k$.  \\  
+%          $K$ & Diskrétna množina časov $\left(K:= \{1, 2, \dots\}\right)$. \\
+%          $\delta$ & Dĺžka časového intervalu (jednotka: minúty). \\
+%          $a_{i}$ & Čas príchodu (pripojenia) elektrického vozidla $i$ \\  & normalizovaný na základe množiny časov $K$ ($a_{i} \in K$). \\  
+%          $d_{i}$ & Čas odchodu (odpojenia) elektrického vozidla $i$ \\  & normalizovaný na základe množiny časov $K$ ($d_{i} \in K$). \\  
+%          $e_{i}$ & Požadovaná energia elektrického vozidla $i$ (jednotka: kWh).  \\ 
+%          $e_{i}(k)$ & Zostávajúca požadovaná energia elektrického vozidla $i$ v čase $k$.  \\
+%          $d_{i}(k)$ & Zostávajúci čas nabíjania elektrického vozidla $i$ v čase $k$. \\
+%          $r_{i}(k)$ & Rýchlosť nabíjania elektrického vozidla $i$ v čase $k$ (jednotka: kWh).   \\ 
+%          $\overline{r}_{i} $ & Maximálna rýchlosť nabíjania elektrického vozidla $i$ (jednotka: kWh). \\
+%          $P(t)$ & Kapacita nabíjacej siete v čase $t$. \\
+%          $[x]^{+}$ & Projekcia $x$ do množiny reálnych nemínusových čísel $R^{+}$.  \\
+%          $[x]_{a}^{b}$ & Projekcia $x$ na interval $[a, b]$. \\
+%          $N$ & množina nabíjačiek nabíjacej stanice.  \\
+%          $N_{k}$ & množina voľných nabíjačiek v čase $k$. \\
+%          $N_{k}'$ & množina obsadených nabíjačiek v čase $k$.
+
+%         \end{tabular}
+%         \caption[Notácia používaná v texte.]{Notácia, zdroje tabuľky sú  (\cite{chen2021smoothed}, \cite{Li_2021}).}
+%         \label{tab:notation}
+%         \end{center}
+%     \end{table}
+
+
+
+
+
+
+
+\section{Model systému}
+% TODO add more in this section about car arrivals and EVSE#
+\label{sysmodel:solution}
+Model systému, ktorý v tejto sekcií definujeme a používame je kombinácia modelov systému z publikácii \cite{Li_2021,offlineoptimal,chen2021smoothed,Li_information_aggregation}. Definície, predpoklady a opisy v tejto sekcií čerpáme z článkov \cite{Li_2021,offlineoptimal,chen2021smoothed,Li_information_aggregation}.
+
+
+
+Uvažujeme systém s jednou nabíjacou stanicou s $k \in K = \{1, \dots, 54\}$ nabíjačkami, ktoré riadi agregátor. Nabíjačky obsluhujú flotilu elektromobilov $i \in N= \{1,2,3,\dots \}$.
+Používame diskrétny časový model, v ktorom je čas rozdelený na intervaly rovnakých vzorkovaní s indexom $t \in \mathcal{T} = \{1,\dots,T\}$. Každý elektromobil $i \in N$ prichádza na nabíjaciu stanicu (pripája sa na voľnú nabíjačku) v čase $a(i)$ s požadovanou energiou $e(i)$ (jednotka: kWh), maximálnou rýchlosťou nabíjania $r(i)$ (jednotka: kW) a s časom odchodu (čas odpojenia od nabíjačky) $d(i)$. Časové hodnoty premenných $a(i)$ a $d(i)$ sú normalizované na základe intervaloch rovakých vzorkovaní $\mathcal{T}$. Platí, že $1 \leq a(i) \leq T$ a  $1 \leq d(i) \leq T$. Predpokladáme, že je dostatočné množstvo nabíjačiek na obsluhovanie elektromobilov vo všetkých časoch $t \in \mathcal{T}$. To znamená, že každý elektromobil $i \in N$ sa vždy pripojí na voľnú nabíjačku v čase jeho príchodu $a(i)$ a odpojí sa od danej nabíjačky v čase odchodu $d(i)$. Agregátor rozhoduje o dodávaní energie elektromobilov. 
+% V nami definovanom systéme uvažujeme koordináciu medzi vzdialeným systémovým operátorom a agregátorom, ak nie je explicitne uvedené inak.
+
+% pridat tam aj 
+% prvy odsek je zrejme ok 
+
+
+V čase $t \in \mathcal{T}$ agregátor dodá $s_{t}(i) \in R^{+}$  energie elektromobilu $i$. Množina $R^{+}$ je množinou nezáporných reálnych čísel. Hodnoty $s_{t}(i) \in R^{+}, i \in N$ vypočíta agregátor na základe jednoduchého plánovacieho algoritmu $\pi$ a pomocou signálu $u_{t} \in U$  získaného od systémového operátora. Jednoduché plánovacie algoritmy, ktoré v ďalšom texte opisujeme sú least-laxity-first, earliest-deadline-first a smoothed least-laxity-first. Signál $u_{t}$ sa generuje v každom čase $t \in \mathcal{T}$ z diskrétnej a uzavretej domény $U \subseteq R$. Dodaním energie $u_{t}$ elektromobilom a aktualizovaním ich zostávajúceho času nabíjania agregátor zmení svoj stav z $x_{t}$ na $x_{t + 1}$. Stav agregátora $x_{t}$ v čase $t$ je kolekcia $n$ dvojíc $(d_{t}(i), e_{t}(i)| \, a(i) \leq t \leq d(i), i \in N)$ v stavovom priestore $X \subseteq R^{2n}$. Premenná $d_{t}(i)$ vyjadruje zostávajúci čas nabíjania elektromobilu $i$ v čase $t$ a premenná $e_{t}(i)$ vyjadruje množstvo zostávajúcej požadovanej energie elektromobilu $i$ v čase $t$. 
+% stavovy priestor by mal byt R^2n
+
+
+Potom agregátor pomocou funkcie $\psi_{SAC}$ vygeneruje spätnú väzbu o  flexibilite $p_{t+1}$ na základe svojho stavu $x_{t+1}$. Systémový operátor v každom čase $t$ na základe získanej spätnej odozvu o flexibilite $p_{t}$ od agregátora a na základe a ceny energie $c_{t}$ vygeneruje také $u_{t}$, ktoré je riešením optimalizačného problému, ktorý riešime (optimalizačný problém definujeme v sekcií \ref{problemthatwearesolving}). Viac informácii o interakcii medzi agregátorom a systémovým operátorom, učení a generovaní spätnej odozvy o flexibilite a generovaní signálu $u_{t}$ je v kapitole \ref{chapter:navrhries}. Platí, že $s_{t} = \pi(u_{t}, x_{t}) = (s_{t}(i) | \, i \in N)$.  Na základe pridelenej energie $s_{t}$ elektromobilom $i \in N$ sa v každom čase $t \in \mathcal{T}$ aktualizuje stav systému
+\begin{gather}
+    x_{t + 1} = f_{t}(x_{t}, u_{t}), \, x_{t} \in X_{t}(x_{<t}, u_{<t}), \, u_{t} \in U_{t}(x_{<t}, u_{<t}),
+\end{gather}
+kde $f_{t}$ je deterministická prechodová funkcia a  množiny $X_{t}(x_{<t}, u_{<t})$ a $U_{t}(x_{<t}, u_{<t})$ sú obmedzenia systému. Obmedzenia $X_{t}(x_{<t}, u_{<t})$ a $U_{t}(x_{<t}, u_{<t})$ sú závislé od predchádzajúcich stavov $x_{<t} = (x_{1}, \dots, x_{t - 1})$ a akcií $u_{<t} = (u_{1}, \dots, u_{t - 1})$. Stav agregátora $x_{t}$ a akcia $u_{t}$ sa musia vyberať z množín $X_{t}$ a $U_{t}$. Pre zjednodušenie zápisu premenných budeme označovať v daľšom texte $X_{t}$ namiesto $X_{t}(x_{<t}, u_{<t})$ a $U_{t}$ namiesto $U_{t}(x_{<t}, u_{<t})$.
+% find a way how to label constraints and other equations with chapter.a ... chapter. e
+Obmedzenia na plány nabíjania $s_{t}, t = 1, \dots, T$ sú
+\begin{gather}
+\label{chargingdecision:con1} 
+s_{t}(i) = 0,t < a(i), \, i \in N, \\
+\label{chargingdecision:con2} 
+s_{t}(i) = 0,t > d(i), \, i \in N, \\
+\label{chargingdecision:con3}
+\sum_{i \in N} s_{t}(i) = u_{t}, \, t = 1, \dots, T,  \\
+\label{chargingdecision:con4} 
+\sum_{t=1}^{T} s_{t}(i) = e(i), \, i  \in N, \\
+\label{chargingdecision:con5} 
+0 \leq s_{t}(i) \leq r(i), \, t = 1, \dots, T.
+\end{gather}
+Obmedzenie \eqref{chargingdecision:con1} zabezpečuje, že elektromobily nie sú nabíjané pred ich pripojením sa na nabíjačky. Analogicky, obmedzenie \eqref{chargingdecision:con2} zabezpečuje, že elektromobily nie sú nabíjané po ich odpojení z nabíjačiek. Zavádzame obmedzenie \eqref{chargingdecision:con3}, lebo agregátor by mal vedieť využiť celú získanú energiu $u_{t}$ na nabíjanie elektromobilov v čase t.  Obmedzenie \eqref{chargingdecision:con4} garantuje, že agregátor dodá požadovanú energiu elektromobilom do konca ich nabíjania.  Obmedzenie \eqref{chargingdecision:con5} garantuje, že každý elektromobil $i$ sa nabíja po svoju maximálnu rýchlosť nabíjania $r(i)$.
+Obmedzenia \eqref{chargingdecision:con1}, \eqref{chargingdecision:con2} a \eqref{chargingdecision:con5} sú vždy splnené pomocou jednoduchého plánovacieho algoritmu $\pi$. Jediné obmedzenia, ktoré môžu byť porušené sú \eqref{chargingdecision:con3} a \eqref{chargingdecision:con4}. Obmedzenie \eqref{chargingdecision:con3} je porušené, ak $\exists t \in \mathcal{T}: u_{t} > \sum_{i \in N} s_{t}(i)$ a obmedzenie \eqref{chargingdecision:con4} je porušené, ak $\exists i \in N: \sum_{t=1}^{T} s_{t}(i) < e(i)$. Dôvod, prečo môžu byť porušenia porušené sa nachádza na konci podsekcie \ref{subsection:mef:approximation}.
+% ok odsek len ten dovod porusenia najst v texte a presne na to linkovat 
+
+Predpokladáme, že cenové funkcie $c_{1}, \dots, c_{T}$ sú dostupné len systémovému operátorovi. Cenová funkciu v čase $t$ je zobrazenie $c_{t}(\cdot): U \rightarrow R^{+}$. Zavádzame podmienku pre hladkosť cenovej funkcie. Predpokladáme, že každá cenová funkcia musí byť Lipschitzovsky spojitá. 
+
+To znamená, že pre každý čas $t$ cenová funkcia $c_{t}$ je Lipschitzovsky spojitá. Predpodkladáme, že $\exists L_{c} > 0$ také, že
+\begin{equation*}
+    |c_{t}(u_{1}) - c_{t}(u_{2})| \leq L_{c}||u_{1} - u_{2}||_{2},  \forall u_{1}, u_{2} \in U, t \in \mathcal{T},
+\end{equation*}
+kde $L_{c}$ Lipschitzovská konštanta. Pre daný vektor $x$ je $l_{2}$-norma vektora $x$ (definovaná v \cite{normedspaces})  $||x||_{2} = (|x_{1}|^{p} + \dots + |x_{n}|^{p})^{\frac{1}{p}}$.
+
+
+Predpokladáme, že obmedzenie $X_{t}$ je borelovská množina v $R^{n}$ a obmedzenie $U_{t} $ je borelovská množiny v $R$. Predpokladáme aj, že množina $U \subseteq R$ je uzavretá a ohraničená. Deterministická prechodová funkcia $f_{t}(\cdot,\cdot):X_{t} \; x \; U_{t} \rightarrow X_{t+1}$ je borelovský spočítateľná funkcia pre každé $t \in \mathcal{T}$.
+
 
 \begin{figure}[H]
-    \includegraphics[width=\textwidth]{images/prosumers_aggregator.png}
-    \centering
-    \caption[Funkcie agregátora flexibility]{Distribúcia flexibility medzi prosumermi, agregátorom a trhom s elektrinou. Zdroj obrázka je \cite{usef2018}.}
-    % \label{onlinealg:obrnotyet}
-    \end{figure}
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/framework.jpg}
+    \caption[Model systému.]{Model systému (prevzatý z \cite{Li_2021}), z ktorého vychádzame. Namiesto označenia $\Psi_{t}$ používame označenie $\Psi_{SAC}$ a namiesto označenia $\phi_{t}$ používame označenie PPC.}
+    \end{center}
+    
+\end{figure}
+
+% predchadzajuce odseky by mali byt ok 
+% Náhodné premenné označujeme veľkými písmenami napríklad $U$ a ich realizácie malými písmenami, napríklad $u_{t}$.
+\section{Problém, ktorý riešime}
+% READ: netreba davat opis premennych velmi tu lebo aj tak sa optimalizacny problem odkazuje na obmedzenia v predchadzajucej sekcii  
+\label{problemthatwearesolving}
+Našim cieľom je vyriešiť online verziu offline optimalizačného
+problému reálnom čase pomocou koordinácie agregátora a systémového operátora
+\begin{gather}
+    \label{offlineoptimisation:problem1}
+    \underset{u_{1}, \dots, u_{T}}{min} C_{T} (u_{1}, \dots, u_{T}) \\
+    \notag
+    \text{vzhľadom na $\forall t = 1, \dots, T$:} \\
+    x_{t + 1} = f_{t}(x_{t}, u_{t}) \label{transition:1}, \\
+    x_{t} \in X_{t} \label{con:1}, \\
+    u_{t} \in U_{t} \label{con:2},
+\end{gather}
+kde $C_{t}(u_{1}, \dots, u_{T}) = \sum_{t=1}^{T} c_{t}( u_{t}) = \sum_{t=1}^{T} c_{t} u_{t}$ sú kumulatívne náklady systému za energiu. Agregátor zabezpečuje dodržanie obmedzení systému \eqref{transition:1}-\eqref{con:2} a systémový operátor vykonáva minimalizáciu svojich kumulatívných nákladov $C_{T}(u_{1},\dots,u_{T})$. Tento optimalizačný problém je generický formulovaný. My riešime špecificky online verziu offline optimalizačného problému  
+% pisat u1,..., uT alebo u1:T??
+\begin{gather}
+    \label{onlineoptimisation:problem:aim}
+    \underset{u_{1}, \dots, u_{T}}{min} C_{T} (u_{1}, \dots, u_{T}) \\
+    \notag
+    \text{vzhľadom na:} \\
+    \eqref{chargingdecision:con1}-\eqref{chargingdecision:con5}, \\
+    \label{transition:requested_energychange}
+    e_{t}(i) = e_{t-1}(i) - s_{t}(i), \, i \in N, \, t = 1,\dots, T, \\
+    \label{transition:remaining_timechange}
+    d_{t}(i) = d_{t-1}(i) - \Delta, \, i \in N, \, t = 1,\dots, T,
+\end{gather}
+kde \eqref{transition:requested_energychange} a \eqref{transition:remaining_timechange} sú konkrétne príklady prechodových funkcií $f_{1},\dots,f_{T}$. Premenná $\Delta$ je čas medzi dvoma po sebe idúcimi časovými krokmi. Vyriešením optimalizačného problému \eqref{onlineoptimisation:problem:aim}-\eqref{transition:remaining_timechange} dokážeme optimalizovať nabíjanie tak, ako sme spomínali v úvode, lebo energia $u_{t}$ je v tomto probléme definovaná ako súčet nabitej energie v čase $t$ (platí pre  $t = 1, \dots, T$). 
+% napisat aj o nakladoch spotrebitelov ak ich nejak zavedieme ze sa odvijaju hlavne od tych operacnych nakladov 
+% inak je tato sekcia OK
+
+% offline optimal algorithm should be in navrh riesenia
+% 
 
 
-\UNFIN
-% image source https://www.usef.energy/app/uploads/2016/12/USEF_IndependentAggregator.pdf
 
-% \cite{KUBLI2021110908}
+% Model systému, v ktorom problém riešime, je založený na nabíjaní množiny elektrických vozidiel $V$ na jednej nabíjacej stanici, ktorá má $N$ nabíjačiek.
 
-% \chapter{Východiská}
-% \label{kapitola:vychodiska}
-% V tejto kapitole popisujeme technologické a teoretické východiská, ktoré využívame v implementácii. Technologické východiská tvoria najmä Balíke, ktoré implementujú existujúce riešenia. Teoretické východiská zostávajú z veľkej časti podobné ako pri existujúcich riešeniach, aby sme vedeli následne efektívne porovnať našu implementáciu s existujúcimi riešeniami.
+% % Model systému, v ktorom problém riešime, pozostáva z jednej nabíjacej stanice, ktorá obsluhuje množinu elektrických vozidiel $V$.
+% % , pričom jeden elektromobil z množiny $V$ označujeme $i$.
+
+% % TODO pridat veci ohladom nabijaciek
+
+%  Používame model systému s diskrétnym časom. V modeli systému s diskrétnym časom je čas $k \in K$ rozdelený do časových intervalov s rovnakými dĺžkami $\delta$. 
+% %  rovnako dlhých časových intervalov (dĺžku časových intervalov označujeme $\delta$). 
+%  Každé prichádajúce elektrické vozidlo $i \in V$ sa pripojí na dostupnú nabíjačku $n \in N_{a_{i}}$ na nabíjacej stanici v čase $a_i$ s požadovanou energiou $e_i$ a s časom odchodu $d_i$ a maximálnou rýchlosťou nabíjania batérie $\overline{r}_{i}$. Nabíjacia stanica obsluhuje v čase $k \in K$ všetky pripojené elektrické vozidlá $i \in V_{k}$ ($V_{k} \subseteq V$). Každé elektrické vozidlo reprezentujeme pomocou štvorice $(a_{i}, d_{i}, e_{i},\overline{r}_{i}) \in R^{4}$   (\cite{chen2021smoothed}, \cite{Lee2018LargeScaleAE}, \cite{Li_2021}). Obmedzenia, ktoré dodržiavame počas nabíjania elektrických vozidiel sú:
+
+%  pozriet ci aj oni tam pisu ze obmedzenia v systemovom modeli 
+% Množinou $V_{k}$ označujeme všetký aktívne elektromobili (=elektromobily, ktorým ešte nebola dodaná požadovaná energia $e_{i}$ v čase $k$) v nabíjacej stanici v čase $k$ (platí, že $V_{k} \subseteq V$). 
+
+% Stav elektromobilu $i$ v čase $k$ je štvorica hodnôt $(a_{i}, d_{i}, e_{i},\overline{r_{i}})$ 
+% % $(e_{i}(k), \, d_{i}(k), \, \overline{r_{i}}(k))$,
+
+% kde $e_{i}(k)$ je množstvo zostávajúcej požadovanej energie elektromobilu $i$ v čase $k$, $d_{i}(k)$ je zostávajúci čas do konca nabíjania elektromobilu $i$ v čase $k$ a $\overline{r_{i}}(k)$ je maximálna rýchlosť nabíjania elektromobilu $i$ v čase $k$. 
 
 
-% \subsubsection*{Parametre spotrebiteľa.} 
-% % \subsubsection*{Parametre spotrebiteľa} 
-
-% Každému spotrebiteľovi $j = 1, \ldots, N$ je pridelená štvorica dát \\ $(a(j), d(j),  e(j), r(j)) \in R^{4}$. Parameter $a(j)$ znamená čas príchodu a parameter $d(j)$ je čas odchodu. Obe premenné sa normalizujú. Parameter $e(j)$ označuje množstvo požadovanej energie v jednotkách kWh a $r(j)$ je maximálne množstvo nabíjacej energie.
-
-% \subsubsection*{Rozhodnutie agregátora.}
-% % \subsubsection*{Rozhodnutie agregátora}
-% Rozhodnutie agregátora v čase $t$ pre všetkých spotrebiteľov označujeme $s_{t}$. Premenná $s_{t}$ obsahuje pridelenie energie pre každého spotrebiteľa v čase $t$ na základe nejakého trediaceho algoritmu. Nech $\pi_{t}$ je použitý triediaci algoritmus (napr. Least Laxity First, Early Deadline First) v čase $t$. Potom premennú $s_{t}$ vypočítame takto:
-% \begin{equation}
-%     s_{t} = \pi_{t}(u_{t}),
-% \end{equation}
-% kde $u_{t} \in U$ je úroveň výkonu agregátnej rozvodne v čase $t$. 
-
-% \subsubsection*{Stav agregátora.}
-% % \subsubsection*{Stav agregátora}
-% Stav agregátora v čase $t$ označujeme $x_{t}$. Hodnotu premennej $x_{t}$ zistíme takto:
-% \begin{equation}
-%     x_{t} = \{(d_{t}(j), e_{t}(j):a(j) < t < d(j)), j = 1, \ldots, N\},
-% \end{equation}
-% kde $e_{t}(j)$ je zostávajúca požadovaná energia a $d_{t}(j)$ je  zostávajúci čas na nabíjanie v čase $t$.
-
-% \subsubsection*{Prechodové funkcie.}
-% Každé rozhodnutie $s_{t}(j) \in R$ agregátora v čase $t$ pre spotrebiteľa $j$ zmení stav agregátora. Keď sa zmena aplikuje na všetkých spotrebiteľov stav agregátora sa zmení z $x_{t}$ na $x_{t + 1}$. Aplikujeme dve prechodové funkcie na $e_{t}(j)$ a na $d_{t}(j)$ takto:
-
+% The goal of closed-loop system is to solve following offline optimisation problem in real-time (online):
 % \begin{gather}
-%     e_{t}(j) = e_{t - 1}(j) - s_{t}(j), \\ 
-%     d_{t}(j) = d_{t - 1}(j) - \Delta,
+%     \tag{2a}
+%     \underset{u_{1}, \dots, u_{T}}{min} C_{T} (u_{1}, \dots, u_{T}) \\
+%     \notag
+%     \text{subject to $\forall t = 1, \dots, T$:} \\
+%     \tag{2b}
+%     x_{t + 1} = f_{t}(x_{t}, u_{t}) \label{transition:1} \\
+%     \tag{2c}
+%     x_{t} \in X_{t} \label{con:1} \\
+%     \tag{2d}
+%     u_{t} \in U_{t} \label{con:2}
 % \end{gather}
-% kde časový interval $\Delta$ je 12 minút. Predpokladáme, že nenastane žiadna strata energie. Tým dostaneme nový stav: 
-% \begin{gather}
-% x_{t + 1} = f(x_{t} \in X_{t}).
-% \end{gather}  
+% Described in words, we optimise power signals $u_{1}, \dots, u_{T}$ so operator costs are minimal, securing minimal prices for EV charging while satisfying infrastructure and EV charging constraints. Operator aims to minimise its cost $C_{t}$ while aggregator needs to fulfill its obligations in form of constraints \label{transition:1}-\label{con:2}.
+
+
+
+% % Lepsie je uviest basic veci aby clovek nemusel citat dalsi clanok aby pochopil, ale na komplikovanejsie veci sa radsej odkazuj na dany clanok kde to bolo spomenute
+
+
+% % smoothed asi ciel prace dali do introduction
+
+
+% % Constraints
+
+% \renewcommand{\labelenumi}{\alph{enumi})}
+
+
+% % v adaptive maju maximalnu rychlost nabijania vztahujuca sa na cas
+% % v PPC nemaju 
+
+% % ak by sme mali online, tak nemusime definovat ak t < a_i, ale zatial pracuejeme s offline definicou
+
+
+% % how to align equations to left
+
+% % rethink indexing of time if u use the 
+
+
+% % elektromobil vymenit za elektricke vozidlo -> lepsie to znie
+
+
+% % oznacenie rovnic sa zide 
+% % subequations umoznuje ich pomenovavat napr (1a), ... (1d) bez toho je to (1),..(N)
+
+
+
+% \begin{subequations}
+% \begin{align}
+%     0 \leq r_{i}(k) \leq \overline{r}_{i}, & \qquad a_{i} \leq k < d_{i}, \; i  \in V \label{basic-constraints:subeq1}  \\
+%     r_{i}(k) = 0,  & \qquad   k \geq d_{i},\;  i \in V  \label{basic-constraints:subeq2} \\
+%     r_{i}(k) = 0, & \qquad k < a_{i},  \; i \in V \label{basic-constraints:subeq3} \\
+%     \sum_{k = a_{i}}^{d_{i} - 1} r_{i}(k) \delta \leq e_{i} & \qquad i \in V \label{basic-constraints:subeq4}\\
+%     \sum_{i \in V}^{} r_{i}(k) \leq P(k), & \qquad \forall k \in K \label{basic-constraints:subeq5} 
+% \end{align}
+% \end{subequations}
+% maximalna - je to slovenske slovo???
+% elektromobil -> elektricke vozidlo treba zmenit kedze EV pouzivaju v publikaciach elektromobil = BEV v anglictine, EV = elektricke vozidlo = BEV + PHEV
+% Obmedzenie \eqref{basic-constraints:subeq1} zaručuje, že rýchlosť nabíjania $r_{i}(k)$ môže byť nanajvýš rovnaká ako maximálna rýchlosť nabíjania $\overline{r}_{i}$ pre elektrické vozidlo $i$ a čas $k$. Nabíjanie len aktívnych (pripojených) elektrických vozidiel v nabíjacej stanici zabezpečujú obmedzenia \eqref{basic-constraints:subeq2} a \eqref{basic-constraints:subeq3}. Nabíjanie elektrických vozidiel maximálne ich požadovanou energiou zabezpečuje obmedzenie \eqref{basic-constraints:subeq4}.  
+% Obmezenie \eqref{basic-constraints:subeq5} používame na zabezpečenie množiny obmedzení $\hat{R}$ infraštruktúry nabíjacej siete. 
+% Funka $f_{j}$ je konvexná funkcia, ktorá mapuje nticu $(r_{1}(k), \dots, r_{N}(k))$ na agregovanú rýchlosť nabíjania $f_{j}(r_{1}(k), \dots, r_{N}(k))$ ($f_{j}: R_{+}^{N} \rightarrow R_{+}$). Obmedzením \eqref{basic-constraints:subeq5} zabezpečujeme, že agregovaná rýchlosť $f_{j}(r_{1}(k), \dots, r_{N}(k))$ nabíjania nepresahuje limit infraštruktúry $R_{j}(k)$ pre každé $j \in \hat{R} $ \cite{Lee2018LargeScaleAE}. Obmedzenia infraštruktúry nabíjacej siete $j \in \hat{R}$ sú:
+
+
+
+
+
+
+% % vzdy skontrolovat ci hyperlinky funguju - v tomto pripade zjavne funguju po tento text
+
+
+
+
+% % uviest info ako funguje ta funkcia f ako to ma vplyv na obmedzenia 
+
+
+
+
+
+% % Obmedzenia systémového modelu, ktorý používame rozďeľujeme takto:
+% % mozno pridat ze prve obmedzenia su linearne a druhe SOC
+
+
+% % odkial pochadzaju vstupne data sa da dat aj do casti experimenty
+% % takisto vystupne data treba v casti experimenty specifikovat
+% % aj smoothed least laxity first to ma tak 
+
+% % Problém, ktorý riešime formulujeme takto:
+% % Hľadáme plán nabíjania elektromobilov v nabíjacej sieti, ktorý zabezpečí stabilné dodávky energie spotrebiteľom a zároveň minimalizuje náklady spotrebiteľov. 
+% % minimalizuje náklady spotrebiteľov na energiu 
+% % zabezpečí maximálne dodávky požadovanej energie. 
+% % vstup
+% % Vstupom algoritmu, ktorý tento problém rieši je zoznam aktívnych elektromobilov, kde je pre každý elektromobil určený jeho čas príchodu, čas odchodu a množstvo požadovanej energie. Aktívnym elektromobilom rozumieme taký elektromobil, ktorý je napojený na nabíjaciu stanicu a ešte nedostal svoju požadovanú energiu. 
+% % % V prípade online algoritmu, ktorý rieši tento problém zisťujeme plán nabíjania postupne pre každý časový krok.
+% % % vystup
+% % Výstupom algoritmu riešiaceho tento problém je slovník (plán nabíjania), ktorý mapuje nabíjačky na množstvá energie, ktoré poskytli po celú dobu nabíjania. Údaje o tom, aké nabíjačky nabíjali jednotlivé elektromobily vieme jednoducho zistiť cez triedu EV definujúcu elektromobily.
+
+
+% % % vysvetlit preco tento problem je optimalizacny problem
+
+
+
+% % % potrebujú na riešenie tohoto problému musia vyriešiť tento (optimalizačný) problém v každom časovom kroku:
+
+
+
+
+
+% % % co to je vztah kuzela druheho radu a konvexny problem
+
+% % Tento problém, ktorý riešime je kovexný problém spomína sa v (). Konkrétne ide o problém špeciálnej triedy konvexných problémov nazývajúcu sa kužeľ druhého rádu, lebo naša účelová funkcia, ktorú maximalizujeme je lineárna funkcia a obmedzenia sú lineárne a aj kužeľa druhého rádu. (uviest zdroj ...) V prípade, keby sme použili jednofázové obmedzenia siete, tak by sme pracovali s problémom lineárneho programovania (všetky obmedzenia a účelová funkcia sú lineárne).
+
+
+
+% % % tu ako my ho riesime
+
+% % % ake algoritmy pouzivame na tento problem
+% % Algoritmy, ktoré riešia tento problém sa nazývajú optimalizačné algoritmy. My spočiatku používame na riešenie tohoto problému optimalizačné metódy (metóda bisekcie, metóda lineárneho vyhľadávania, metóda zlatého rezu) v algoritmoch založené na triedení (LLF, EDF). Optimalizujeme plán nabíjania spočiatku pre jeden krok dopredu($\mathcal{T} = {1}$). Následne používame algoritmus PPC, ktorý rieši tento problém nazývajúci sa , 
+
+% % ujasnit co presne riesi, lebo to co riesi PPC je trochu ina rovnica 
+
+
+% % použitím MPC s $\mathcal{T} = {1, \dots, T}$. Online algoritmy riešia stanovený problém v každom časovom kroku $k$. 
+
+
+
+% % https://www.solver.com/conic-optimization#Second%20Order%20Cone%20Programming%20(SOCP)
+
+% % upravit zdroj zachary leeho diplomovky
+
+
+
+% % One of the most challenging parts of scheduling charging in a real system is that
+% % the algorithm does not know what the future holds. As new EVs arrive, or when
+% % users need to change their input parameters, the algorithm must adapt its schedule
+% % accordingly. ASA also incorporates many realistic constraints such as unbalanced
+% % three-phase infrastructure, control signal quantization, and battery management
+% % system behavior.
+
+
+% % 30,32
+
+% % 33,34
+
+% % 36
+
+% % 28,62
+% % 68
+
+% % 15 predict user behavior
+
+% % realistic environment for experiments
+
+% % 33- statistical model to MPC, with minor modifications 
+% % there was no algorithm in literature that satisfied adaptive 
+
+% % they dont consider other ev charging alg because they are not realistic -> to work with discrete pilot signals and
+% % unbalanced three phase infrastructure
+
+% % smart charging algorithms 24, 25
+
+
+
+
+
+% % To give us Property 7, we propose an algorithm called
+% % ramp-down to reclaim idle capacity from EVs that are not using their full allocation.
+% % The most common reason for this is the vehicle’s acceptance rate decreasing as the
+% % battery fills up, as we saw in Fig. 4.3.
+
+% % Whenever an event
+% % occurs or the time since the last charging schedule update exceeds a threshold (for
+% % example, 5 min), we compute a new charging schedule.
+
+% % \qquad
+% % Veľa riešení tohoto problému používa algoritmy založené na triedení a algoritmy na zdielanie procesov. Iné prístupy používajú učenie posilovaním, dynamické programovanie a model predictive control. Algoritmy založené na triedení najprv utrieda elektromobily podľa nejakého kritéria. 
+
+% % Každému elektromobilu je potom pridelené maximálne množstvo energie, ktoré sa vypočíta (pre optimalizačný horizont $T = {1}$) pomocou metódy bijekcie, ktorá maximalizuje jednotlivé komponenty siete $u_{k}^{v}(r)$, ktoré tvoria váhovaný súčet $U_{k}(r)$:
+% % \[
+% % U_{k}(r) := \sum_{v=1}^{V} a_{k}^{v} u_{k}^{v}(r),
+% % \]
+% % kde $a_{k}^{v} > 0, k \in K, v \in V$ sú časovo závislé váhy, ktoré priraďuju prioritu jednotlivým komponentom nabíjacej siete. 
+
+
+% % % účelová funkcia $u_{k}^{v}(r)$ má rovnaký tvar ako 6. rovnica v článku 
+% % Problém maximalizovania účelovej funkcie $u_{k}^{v}(r)$ definujeme takto:
+
+
+
+% % \begin{alignat}{2}
+% %     \label{eq:max_problem-specific}
+% %     \underset{r_{i}(t)}{\max} \; u_{k}^{v}(r) \\
+% %     \label{eq:utility-function-specific}
+% %     u_{k}^{v}(r) = r_{i}(t) \\
+% %     \text{subject to:} \notag \\
+% %     \label{eq:first-linear-constraint-specific}
+% %     0 ≤ r_{i}(t) ≤ \overline{r}_{i}(t)  && \qquad  \qquad  t < d_{i}, i ∈ V \\
+% %     \label{eq:second-linear-constraint-specific}
+% %     r_{i}(t) = 0 && t ≥ d_{i}, i ∈ V \\
+% %     \label{eq:third-linear-constraint-specific}
+% %     \sum_{t = a_{i}}^{d_{i} - 1} r_{i}(t) \delta ≤ e_{i} && i ∈ V \\
+% %     \label{eq:network-constraints-specific}
+% %     f_{j}(r_{1}(t), \dots, r_{N}(t) ) ≤ R_{j}(t) && t ∈ T, j ∈ \hat{R}
+% %     % r \in R_{k}
+% % \end{alignat}{2}
+
+
+
+
+
+
+
+% % Tento prístup je dobrý preto, že oproti bežným algoritmom založených na triedení (ktoré používajú lineárne vyhľadávanie na zistenie rýchlosti nabíjania ) používa pokročilejšie metódy (metóda bisekcie, metóda zlatého rezu) na zistenie rýchlosti nabíjania.
+% % najst zdroj
+
+% % $\mathcal{T}$
+
+
+
+
+
+
+
+% % Potom, algoritmy založené na triedení maximalizujú pre každý elektromobil i $u_{k}^{i}(r)$. Maximalizovaním $u_{k}^{i}(r)$ maximalizujeme účelovú funkciu $U_{k}(r)$
+
+
+% % Problém, ktorému sa venujeme je optimalizačným problémom, lebo hľadáme taký plán nabíjania, ktorý maximalizuje účelovú funkciu. 
+
+% % % zarovnat tu pravu cast nejako
+
+% % Formálnejšie definujeme tento optimalizačný problém takto:
+
+% % obidva pristupy riesia ten isty problem len inym sposobom
+
+% % $\overset{above}{main}$
+% % $\underset{\underset{r}{\max}}{SCH}$
+
+% % \begin{alignat}{2}
+% %     &\text{left side} &&= \text{right side} \\
+% %     &\text{left side that is longer} &&= \text{right side} \\
+% %     &\text{short} &&= \text{longer on the right side}
+% % \end{alignat}
+
+
+% %  max r(i)
+% % napisat R so striezkou neviem ako to spravit
+% % \ref{eq:einstein}
+
+% % sa snažíme maximalizovať množstvo dodanej energie elektromobilom. 
 
 
 
@@ -262,47 +708,221 @@ Nezávislý agregátor môže poskytovať jednu službu alebo viac služieb. Med
 
 
 
-% \subsubsection*{Podmienky pre rozhodnutie agregátora.}
-% Podmienky, ktoré by mali byť rozhodnutím agregátora splnené sú:
-% \begin{gather}
-%     s_{t}(j) = 0, \text{ ak $t < a(j)$ alebo $t > d(j)$}, j = 1, \ldots N, \label{tv:pra:1} \\
-%     \sum_{j = 1}^{N} s_{t}(j) = u_{t}, j = 1, \ldots N, \label{tv:pra:3} \\
-%     \sum_{t = 1}^{T} s_{t}(j) = e(j), t = 1, \ldots T, \label{tv:pra:4}\\
-%     0 \leq s_{t}(j) \leq r(j),t = 1, \ldots, T \label{tv:pra:5}.
-% \end{gather}
-% Obe podmienky~\ref{tv:pra:1} a~\ref{tv:pra:5} vždy platia. Dalšie uvedené podmienky nemusia nutne platiť.
+
+
+
+
+% %  elektromobilom v nabíjacej sieti.
 
 
 
 
 
-% % \subsubsection{Maximum flexibility feedback.}
-% % \subsubsection*{Maximálna odozva flexilibity.}
-% % Nech $(p_{1}^{*}, \ldots, p_{n}^{*})$ je unikátne riešenie. Potom maximálnu odozvu entropie označujeme $p_{t}* = \psi_{t}(u_{t})$.
-
-% % "Equation \ref{eq:quadratic} shows a quadratic function."
 
 
 
+% % Riešenie tohoto optimalizačného problému v článku+
+% % pozriet ako toxin li v tom jeho clanku spominal podobne riesenia
 
-% % Operator vie naklady $(c_{1}, \dots, c_{n})$ a odozvu, ale nevie buduce naklady $(c_{i+1}, \dots, c_{T})$ a odozvu $(p_{i+1}, \dots, p_{T})$.
+
+% %first sentences of the thesis strong and clear - to get interest of the reader
+% % \chapter{Cieľ práce}
+% % \label{ciel-prace}
+% % Cieľ práce je navrhnúť a overiť model práce agregátora flexibility pre zvolený typ prosumerov. V našom prípade považujeme vlastníkov elektrických vozidiel za spotrebičov. Model práce agregátora flexibility je v našom prípade tvorba plánu nabíjania elektrických vozidiel pomocou plánovacích algoritmov. Plán nabíjania má spĺňať požadované vlastnosti:
 
 
-% % \subsubsection{Algoritmus hlbokeho ucenia}
+% % % co su presne stabilne dodavky? ze nemoze byt velke oscilacie v nabijani???
+% % \begin{enumerate}
+% %     \item optimalizuje tok energie. V našom prípade optimalizujeme tok energie tak, aby sme dodali najlacnejšiu energiu elektrickým vozidlám a pritom zabezpečili dodanie najväčšieho množstvo požadovanej energie elektrickým vozidlám.
+% %     \item zabezpečuje stabilné dodávky energie. To znamená, že plán nabíjania poskytuje elektrickým vozidlám bez prerušení a bez významných výkyvov v rýchlosti nabíjania.
+% %     \item minimalizuje náklady spotrebiteľov na nabitú energiu. 
+% %     \item rešpektuje obmedzenia \eqref{basic-constraints:subeq1}, \eqref{basic-constraints:subeq2}, \eqref{basic-constraints:subeq3}, \eqref{basic-constraints:subeq4}, \eqref{basic-constraints:subeq5},  počas nabíjania elektrických vozidiel.
+% % \end{enumerate}
+
+% % % TODO:pridat nieco do ciela prace? zatial nic
+
+% % % Vstupom do plánovacich algoritmov, ktoré vyprodukujú plán nabíjania s požadovanými vlastnosťami 
+
+% % % Presnejší popis cieľa práce sa nachádza v kapitole 
+
+
+% % % To znamená, že musíme popísať ako agregátor flexibility dodáva energiu elektromobilom. Energiu agregátor flexbility bude dodávať elektromobilom na základe plánovacieho algoritmu, ktorý rieši optimalizačný problém [odkaz].  
+% % % Vyriešime optimalizačný problém dodania najväčšieho množstva energie elektromobilom pri zachovaní obmedzení infraštruktúry.
+% % %  Využívame pri riešení optimalizačného problému online plánovacie algoritmy (kontrolné alebo triediace), pričom vychádzame zo základných tried v balíku acn portal, ktoré definujú obmedzenia nabíjacej siete a zjednodušujú prácu s novo implementovanými algoritmami.
+ 
+% % %  Vstupom algoritmu, ktorý rieši tento optimalizačný problém sú údaje o príchodoch elektromobilov do nabíjacej siete Caltech. Výstupom tohoto algoritmu je celkový pomer dodanej požadovanej energie elektromobilom a celkové cena dodanej energie elektromobilom atď. Overíme si navrhnutý model agregátora flexibility na verejne dostupných vstupných dátach z Caltech nabíjacej siete.  
+
+
+
+
+
+
+
+
+% % % \section{Činnosti agregátora flexibility}
+
+
+% % \section{Úlohy agregátora flexibility}
+
+
+% % % V súčastnosti pozorujeme pokrok v oblasti distribuovania obnoviteľnej energie. 
+% % % % S čoraz vyšším dopytom po energii sa 
+% % % Výskumníci sa začali zaoberať výskumnou otázkou: Ako môžu spotrebitelia dodávať energiu a zároveň ju prijímať? Výskumníci našli riešenie tejto výskumnej otázky a popísali, čo treba na riešenie tejto výskumnej otázky:
+% % % \begin{enumerate}
+% % %     \item Zmeniť jednosmernú sieť, kde veľké firmy dodávajú energiu spotrebiteľom, na obojsmernú sieť, kde spotrebitelia dodávajú a zároveň prijímajú energiu (skrátene takých spotrebiteľov nazývame prosumeri).
+% % %     \item Zaviesť novú kategóriu hráčov na trhu s energetikou. Túto novú kategóriu hráčov nazývame agregátori. 
+% % % \end{enumerate}
+% % % % . Výskumníci zaviedli novú kategóriu hráčov na trhu s energetikou. Túto novú kategóriu hráčov nazývame agregátori. 
+
+
+% % Agregátor je prostredníkom medzi prosumermi a trhom s elektrinou, tým že združuje flexibilitu od prosumerov, a následne flexibilitu predáva (ako jedna entita) na trhoch s elektrinou. Prosumeri sú odmeňovaní za poskytovanie flexibility agregátorovi. V našom modeli predpokladáme, že prosumeri nie sú odmeňovaní za poskytovanie elektrickej energie agregátorovi.
+
+% % % ako su odmenovani? a ako to funguje v nasom pripade
+% % % ako moze predavat flexibilitu? nerozumiem
+
+
+% % Rola agregátora zatiaľ nie je presne definovaná. Rola agrégatora môže byť určená tretou stranou alebo môže byť určená už učinkujúcim hráčom na trhu s elektrinou, ktorý má napríklad záujem použiť agregátor na doplňujúce veci.
+% % %doplnujuce veci - vysvetlit
+
+% % Nezávislý agregátor môže poskytovať jednu službu alebo viac služieb. Medzi služby agregátora patria agregovanie flexibility, dodávky energie spotrebiteľom a vyváženie dopytu a ponuky na trhoch s elektrinou. \cite{Granado2023}
+
+% % spomenut ako to funguje v nasom pripade
+
+
+% % Systémy v elektrickej sieti môžu mat jeden centrálny agregátor alebo viac agregátorov.
+
+
+
+
+
+
+% % Prosumeri poskytujú agregátorovi svoju flexibilitu. 
+
+
+
+
+% % Agregátor má viacero úloh, ktoré rieši. Agregátor združuje elektrickú energiu od prosumerov. Agregátor pozoruje cenu energie na trhoch. Ak je cena energie veľmi vysoká, tak agregátor poskytuje spotrebiteľom menej energie. Naopak, keď je cena energie nízka, tak agregátor poskytuje spotrebiteľom viac energie.
+
+
+% % optional link
+
+% % https://en.energinet.dk/Electricity/Green-electricity/Demand-side-response/What-is-an-aggregator/
+
+% % nedat toto tam lebo toto predpoklada obojsmernu siet
+% % \begin{figure}[H]
+% %     \includegraphics[width=\textwidth]{images/prosumers_aggregator.png}
+% %     \centering
+% %     \caption[Funkcie agregátora flexibility]{Distribúcia flexibility medzi prosumermi, agregátorom a trhom s elektrinou. Zdroj obrázka je \cite{usef2018}.}
+% %     % \label{onlinealg:obrnotyet}
+% %     \end{figure}
+
+% \begin{figure}[H]
+%     \includegraphics[width=\textwidth]{images/energy_flow_costs.png}
+%     \centering
+%     \caption[Systém toku energie a ziskov.]{Systéme toku energie a aj zisky za energiu. Agregátor (Charging System Operator) kupuje energiu od systémového operátora (utility). Agregátor sa musí rozhodovať: 1. koľko energie od systémového operátora kúpi 2. na rýchlosti nabíjania elektrických vozidiel  3. na distribúcii nákladov za energiu medzi spotrebitľmi elektrických vozidiel. Zdroj obrázka je: \cite{websitpricecharging2023}.}
+%     \label{architectureacnsim:obr2}
+%     \end{figure}
+
+% % overit ze taketo nazvy aggregator = charging system operator a utility= system operator sedia
+
+
+% % Suppose, in the context of demand response, the system
+% % operator (a local utility company, or a building management)
+
+
+
+
+% % \UNFIN
+% % image source https://www.usef.energy/app/uploads/2016/12/USEF_IndependentAggregator.pdf
+
+% % \cite{KUBLI2021110908}
+
+% % \chapter{Východiská}
+% % \label{kapitola:vychodiska}
+% % V tejto kapitole popisujeme technologické a teoretické východiská, ktoré využívame v implementácii. Technologické východiská tvoria najmä Balíke, ktoré implementujú existujúce riešenia. Teoretické východiská zostávajú z veľkej časti podobné ako pri existujúcich riešeniach, aby sme vedeli následne efektívne porovnať našu implementáciu s existujúcimi riešeniami.
+
+
+% % \subsubsection*{Parametre spotrebiteľa.} 
+% % % \subsubsection*{Parametre spotrebiteľa} 
+
+% % Každému spotrebiteľovi $j = 1, \ldots, N$ je pridelená štvorica dát \\ $(a(j), d(j),  e(j), r(j)) \in R^{4}$. Parameter $a(j)$ znamená čas príchodu a parameter $d(j)$ je čas odchodu. Obe premenné sa normalizujú. Parameter $e(j)$ označuje množstvo požadovanej energie v jednotkách kWh a $r(j)$ je maximálne množstvo nabíjacej energie.
+
+% % \subsubsection*{Rozhodnutie agregátora.}
+% % % \subsubsection*{Rozhodnutie agregátora}
+% % Rozhodnutie agregátora v čase $t$ pre všetkých spotrebiteľov označujeme $s_{t}$. Premenná $s_{t}$ obsahuje pridelenie energie pre každého spotrebiteľa v čase $t$ na základe nejakého trediaceho algoritmu. Nech $\pi_{t}$ je použitý triediaci algoritmus (napr. Least Laxity First, Early Deadline First) v čase $t$. Potom premennú $s_{t}$ vypočítame takto:
 % % \begin{equation}
-% %     j(\psi) = \sum_{t = 1}^{T}E [r(x_{t},p_{t}) + aH(\psi(x_{t}))]. \label{eq:Jahu}
+% %     s_{t} = \pi_{t}(u_{t}),
 % % \end{equation}
+% % kde $u_{t} \in U$ je úroveň výkonu agregátnej rozvodne v čase $t$. 
 
-% % MSE 
+% % \subsubsection*{Stav agregátora.}
+% % % \subsubsection*{Stav agregátora}
+% % Stav agregátora v čase $t$ označujeme $x_{t}$. Hodnotu premennej $x_{t}$ zistíme takto:
 % % \begin{equation}
-% % MSE = \frac{\sum_{k = 1}^{L} \sum_{k = 1}^{T} |\sum_{j = 1}^{N} s_{t}^{(k)}(j)  - u_{t}^{k}|^{2}}{L \cdot T \cdot \Omega}. \label{eq:MSE}
+% %     x_{t} = \{(d_{t}(j), e_{t}(j):a(j) < t < d(j)), j = 1, \ldots, N\},
 % % \end{equation}
+% % kde $e_{t}(j)$ je zostávajúca požadovaná energia a $d_{t}(j)$ je  zostávajúci čas na nabíjanie v čase $t$.
 
-% \subsubsection{MPE.} Chyba mean percentage error, v skratke MPE je pomer nedodanej energie k dodanej energii (porušenie podmienky \ref{tv:pra:4}). Počíta sa vzorcom:
-% \begin{equation}
-% MPE = 1 - \sum_{k = 1}^{L} \sum_{t = 1}^{T} \sum_{j = 1}^{N} \frac{s_{t}(j)}{\sum_{j = 1}^{N}e_{j}},  \label{eq:MPE}
-% \end{equation}
-% kde MPE nadobúda hodnoty z intervalu $[0, 1]$.
+% % \subsubsection*{Prechodové funkcie.}
+% % Každé rozhodnutie $s_{t}(j) \in R$ agregátora v čase $t$ pre spotrebiteľa $j$ zmení stav agregátora. Keď sa zmena aplikuje na všetkých spotrebiteľov stav agregátora sa zmení z $x_{t}$ na $x_{t + 1}$. Aplikujeme dve prechodové funkcie na $e_{t}(j)$ a na $d_{t}(j)$ takto:
+
+% % \begin{gather}
+% %     e_{t}(j) = e_{t - 1}(j) - s_{t}(j), \\ 
+% %     d_{t}(j) = d_{t - 1}(j) - \Delta,
+% % \end{gather}
+% % kde časový interval $\Delta$ je 12 minút. Predpokladáme, že nenastane žiadna strata energie. Tým dostaneme nový stav: 
+% % \begin{gather}
+% % x_{t + 1} = f(x_{t} \in X_{t}).
+% % \end{gather}  
+
+
+
+
+
+
+
+
+% % \subsubsection*{Podmienky pre rozhodnutie agregátora.}
+% % Podmienky, ktoré by mali byť rozhodnutím agregátora splnené sú:
+% % \begin{gather}
+% %     s_{t}(j) = 0, \text{ ak $t < a(j)$ alebo $t > d(j)$}, j = 1, \ldots N, \label{tv:pra:1} \\
+% %     \sum_{j = 1}^{N} s_{t}(j) = u_{t}, j = 1, \ldots N, \label{tv:pra:3} \\
+% %     \sum_{t = 1}^{T} s_{t}(j) = e(j), t = 1, \ldots T, \label{tv:pra:4}\\
+% %     0 \leq s_{t}(j) \leq r(j),t = 1, \ldots, T \label{tv:pra:5}.
+% % \end{gather}
+% % Obe podmienky~\ref{tv:pra:1} a~\ref{tv:pra:5} vždy platia. Dalšie uvedené podmienky nemusia nutne platiť.
+
+
+
+
+
+% % % \subsubsection{Maximum flexibility feedback.}
+% % % \subsubsection*{Maximálna odozva flexilibity.}
+% % % Nech $(p_{1}^{*}, \ldots, p_{n}^{*})$ je unikátne riešenie. Potom maximálnu odozvu entropie označujeme $p_{t}* = \psi_{t}(u_{t})$.
+
+% % % "Equation \ref{eq:quadratic} shows a quadratic function."
+
+
+
+
+% % % Operator vie naklady $(c_{1}, \dots, c_{n})$ a odozvu, ale nevie buduce naklady $(c_{i+1}, \dots, c_{T})$ a odozvu $(p_{i+1}, \dots, p_{T})$.
+
+
+% % % \subsubsection{Algoritmus hlbokeho ucenia}
+% % % \begin{equation}
+% % %     j(\psi) = \sum_{t = 1}^{T}E [r(x_{t},p_{t}) + aH(\psi(x_{t}))]. \label{eq:Jahu}
+% % % \end{equation}
+
+% % % MSE 
+% % % \begin{equation}
+% % % MSE = \frac{\sum_{k = 1}^{L} \sum_{k = 1}^{T} |\sum_{j = 1}^{N} s_{t}^{(k)}(j)  - u_{t}^{k}|^{2}}{L \cdot T \cdot \Omega}. \label{eq:MSE}
+% % % \end{equation}
+
+% % \subsubsection{MPE.} Chyba mean percentage error, v skratke MPE je pomer nedodanej energie k dodanej energii (porušenie podmienky \ref{tv:pra:4}). Počíta sa vzorcom:
+% % \begin{equation}
+% % MPE = 1 - \sum_{k = 1}^{L} \sum_{t = 1}^{T} \sum_{j = 1}^{N} \frac{s_{t}(j)}{\sum_{j = 1}^{N}e_{j}},  \label{eq:MPE}
+% % \end{equation}
+% % kde MPE nadobúda hodnoty z intervalu $[0, 1]$.
 
 
 
